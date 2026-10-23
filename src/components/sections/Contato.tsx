@@ -6,7 +6,7 @@ import { IconGitHub, IconLinkedIn, IconMail, IconWhatsApp } from "@/components/u
 import { Reveal } from "@/components/motion/Reveal";
 
 const linkCanal =
-  "flex min-w-0 items-center gap-3 rounded-xl border border-line bg-card px-4 py-3 text-sm text-soft transition hover:border-accent hover:text-white";
+  "inline-flex max-w-full min-w-0 items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-sm text-soft transition hover:border-accent hover:text-white";
 
 export function Contato() {
   return (
@@ -32,23 +32,23 @@ export function Contato() {
             </Botao>
           </div>
 
-          <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:max-w-2xl [&>li]:min-w-0">
+          <ul className="mt-6 flex flex-wrap gap-3 [&>li]:max-w-full [&>li]:min-w-0">
             <li>
               <a href={mailtoUrl(perfil.email)} aria-label={`E-mail: ${perfil.email}`} className={linkCanal}>
-                <IconMail />
+                <IconMail className="h-4 w-4 shrink-0" />
                 <span className="truncate">{perfil.email}</span>
               </a>
             </li>
             <li>
               <a href={perfil.github} target="_blank" rel="noopener noreferrer" className={linkCanal}>
-                <IconGitHub />
+                <IconGitHub className="h-4 w-4 shrink-0" />
                 <span>GitHub</span>
               </a>
             </li>
             {perfil.linkedin && (
               <li>
                 <a href={perfil.linkedin} target="_blank" rel="noopener noreferrer" className={linkCanal}>
-                  <IconLinkedIn />
+                  <IconLinkedIn className="h-4 w-4 shrink-0" />
                   <span>LinkedIn</span>
                 </a>
               </li>

@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Cópia estática do Central Brindes (JS puro, fora das regras do portfólio):
+    "public/demo/**",
   ]),
 ]);
 

@@ -32,8 +32,9 @@ describe("página inicial", () => {
     expect(screen.queryByText(/baixar currículo/i)).toBeNull();
   });
 
-  test("demo do Central Brindes aparece como em breve e desabilitada", () => {
-    expect(screen.getByText(/demo em breve/i).closest("[aria-disabled='true']")).toBeTruthy();
+  test("link para a demo do Central Brindes", () => {
+    expect(screen.getByRole("link", { name: /ver demo/i })).toHaveAttribute("href", "/demo/central-brindes/index.html");
+    expect(screen.queryByText(/demo em breve/i)).toBeNull();
   });
 
   test("link para o código do Central Brindes", () => {

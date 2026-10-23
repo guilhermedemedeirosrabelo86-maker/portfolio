@@ -27,6 +27,11 @@ describe("estudo de caso do Central Brindes", () => {
     expect(screen.getByRole("link", { name: /voltar/i })).toHaveAttribute("href", "/#projetos");
   });
 
+  test("demo linkada e explicada", () => {
+    expect(screen.getByRole("link", { name: /ver demo/i })).toHaveAttribute("href", "/demo/central-brindes/index.html");
+    expect(screen.getByText(/dados fictícios e roda inteira no seu navegador/i)).toBeInTheDocument();
+  });
+
   test("não cita a empresa empregadora", () => {
     expect(document.body.textContent).not.toMatch(/anjo/i);
   });

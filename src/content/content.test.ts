@@ -9,11 +9,11 @@ describe("conteúdo do portfólio", () => {
     expect(projetoDestaque().slug).toBe("central-brindes");
   });
 
-  test("Central Brindes tem link de código e ainda não tem demo", () => {
+  test("Central Brindes tem link de código e de demo", () => {
     expect(projetoDestaque().codigoUrl).toBe(
       "https://github.com/guilhermedemedeirosrabelo86-maker/central-brindes",
     );
-    expect(projetoDestaque().demoUrl ?? "").toBe("");
+    expect(projetoDestaque().demoUrl).toBe("/demo/central-brindes/index.html");
   });
 
   test("outros sites aparecem como em construção", () => {

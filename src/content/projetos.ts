@@ -10,7 +10,7 @@ export const projetos: Projeto[] = [
     tags: ["HTML", "CSS", "JavaScript", "Firebase", "Cloudflare Workers", "SQL"],
     casoUrl: "/projetos/central-brindes",
     codigoUrl: "https://github.com/guilhermedemedeirosrabelo86-maker/central-brindes",
-    demoUrl: "",
+    demoUrl: "/demo/central-brindes/index.html",
     problema:
       "O estoque de brindes era controlado no olho, e o sistema geral da empresa vivia com dados errados e desatualizados.",
     solucao:

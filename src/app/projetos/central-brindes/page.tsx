@@ -64,6 +64,9 @@ export default function CasoCentralBrindes() {
                 <Botao desabilitado>Demo em breve</Botao>
               )}
             </div>
+            {projeto.demoUrl && (
+              <p className="mt-3 text-sm text-muted">A demo usa dados fictícios e roda inteira no seu navegador.</p>
+            )}
           </div>
           <CentralBrindesVisual className="mx-auto w-full max-w-md text-xs" />
         </Reveal>

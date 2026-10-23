@@ -48,7 +48,7 @@ export function LitText({ texto, destaques, className = "" }: LitTextProps) {
               <span
                 data-lit={i < acesas ? "true" : "false"}
                 data-hl={destaque ? "true" : undefined}
-                className="text-[#262a55] transition-colors duration-300 data-[lit=true]:text-white data-[hl=true]:data-[lit=true]:text-[#a78bfa]"
+                className="text-[#2c2b28] transition-colors duration-300 data-[lit=true]:text-white data-[hl=true]:data-[lit=true]:text-accent"
               >
                 {palavra}
               </span>

@@ -15,8 +15,8 @@ export function ProjetoCard({ projeto }: { projeto: Projeto }) {
           aria-hidden="true"
           className={`hidden h-20 w-24 shrink-0 rounded-lg sm:block ${
             emConstrucao
-              ? "bg-[repeating-linear-gradient(135deg,#141738_0_8px,#1a1e48_8px_16px)]"
-              : "bg-gradient-to-br from-[#312e81] to-[#4c1d95]"
+              ? "bg-[repeating-linear-gradient(135deg,#18181a_0_8px,#202023_8px_16px)]"
+              : "bg-gradient-to-br from-[#3a2a05] to-[#1c1a14]"
           }`}
         />
         <div className="flex min-w-0 flex-col">
@@ -39,7 +39,7 @@ export function ProjetoCard({ projeto }: { projeto: Projeto }) {
               href={projeto.linkExterno}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-[#a5b4fc] hover:text-white"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-white"
             >
               Ver {projeto.titulo} <IconExternal />
             </a>

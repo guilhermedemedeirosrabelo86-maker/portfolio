@@ -6,22 +6,22 @@ import { IconGitHub, IconLinkedIn, IconMail, IconWhatsApp } from "@/components/u
 import { Reveal } from "@/components/motion/Reveal";
 
 const linkCanal =
-  "flex min-w-0 items-center gap-3 rounded-xl border border-line bg-card px-4 py-3 text-sm text-[#cfd2ee] transition hover:border-brand-purple hover:text-white";
+  "flex min-w-0 items-center gap-3 rounded-xl border border-line bg-card px-4 py-3 text-sm text-soft transition hover:border-accent hover:text-white";
 
 export function Contato() {
   return (
     <section id="contato" className="scroll-mt-20 py-24">
       <Container>
-        <Reveal className="relative overflow-hidden rounded-3xl border border-indigo-500/30 bg-gradient-to-br from-[#121542] to-[#1a0f3d] p-8 sm:p-12">
+        <Reveal className="relative overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-[#1d1a12] to-[#0f0f10] p-8 sm:p-12">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-brand-purple/25 blur-3xl"
+            className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-accent/25 blur-3xl"
           />
-          <p className="text-xs font-bold tracking-[0.2em] text-brand-purple uppercase">Contato</p>
+          <p className="text-xs font-bold tracking-[0.2em] text-accent uppercase">Contato</p>
           <h2 className="mt-2 max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Vamos conversar sobre uma vaga ou um projeto?
           </h2>
-          <p className="mt-4 max-w-xl text-[#b4b8d6]">
+          <p className="mt-4 max-w-xl text-soft">
             Estou em busca de uma vaga na área de desenvolvimento e topo projetos também. O jeito mais rápido de falar comigo é pelo
             WhatsApp.
           </p>

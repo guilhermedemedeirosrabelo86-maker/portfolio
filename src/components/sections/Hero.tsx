@@ -7,7 +7,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { HeroIlustracao } from "./HeroIlustracao";
 
 const social =
-  "flex h-10 w-10 items-center justify-center rounded-full border border-line text-[#cfd2ee] transition hover:border-brand-purple hover:text-white";
+  "flex h-10 w-10 items-center justify-center rounded-full border border-line text-soft transition hover:border-accent hover:text-white";
 
 export function Hero() {
   return (
@@ -20,7 +20,7 @@ export function Hero() {
           <p className="mt-3 inline-flex items-center gap-1.5 text-sm text-muted">
             <IconPin /> {perfil.cidade}
           </p>
-          <p className="mt-6 max-w-lg leading-relaxed text-[#b4b8d6]">{perfil.frase}</p>
+          <p className="mt-6 max-w-lg leading-relaxed text-soft">{perfil.frase}</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Botao href="#projetos">

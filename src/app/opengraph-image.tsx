@@ -16,15 +16,15 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "0 96px",
-          background: "radial-gradient(ellipse at 80% 0%, #2a2f8a 0%, #0b0d24 55%, #080a1a 100%)",
-          color: "#e8eaf6",
+          background: "radial-gradient(ellipse at 80% 0%, #3a2a05 0%, #121212 55%, #0b0b0c 100%)",
+          color: "#ecebe8",
         }}
       >
         <div
           style={{
             fontSize: 48,
             fontWeight: 800,
-            backgroundImage: "linear-gradient(90deg, #3b82f6, #8b5cf6)",
+            backgroundImage: "linear-gradient(90deg, #f5b301, #ff8a00)",
             backgroundClip: "text",
             color: "transparent",
           }}
@@ -36,14 +36,14 @@ export default function Image() {
           style={{
             fontSize: 56,
             fontWeight: 700,
-            backgroundImage: "linear-gradient(90deg, #3b82f6, #8b5cf6)",
+            backgroundImage: "linear-gradient(90deg, #f5b301, #ff8a00)",
             backgroundClip: "text",
             color: "transparent",
           }}
         >
           {perfil.cargo}
         </div>
-        <div style={{ fontSize: 30, color: "#9da2c8", marginTop: 28 }}>
+        <div style={{ fontSize: 30, color: "#9a9893", marginTop: 28 }}>
           Engenharia de Software · Sistemas que resolvem problemas reais
         </div>
       </div>

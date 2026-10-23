@@ -13,11 +13,11 @@ export function ProjetoDestaqueCard({ projeto }: { projeto: Projeto }) {
   ].filter((e) => e.texto);
 
   return (
-    <TiltCard className="h-full rounded-2xl border border-indigo-500/40 bg-card">
+    <TiltCard className="h-full rounded-2xl border border-accent/40 bg-card">
       <article className="grid h-full gap-6 p-5 sm:p-6 xl:grid-cols-[0.9fr_1.1fr]">
         <CentralBrindesVisual className="self-start" />
         <div className="flex flex-col">
-          <p className="text-[11px] font-bold tracking-[0.18em] text-brand-purple uppercase">Projeto principal</p>
+          <p className="text-[11px] font-bold tracking-[0.18em] text-accent uppercase">Projeto principal</p>
           <h3 className="mt-1 text-2xl font-bold text-white">{projeto.titulo}</h3>
           <p className="mt-2 text-sm leading-relaxed text-muted">{projeto.resumo}</p>
 
@@ -25,7 +25,7 @@ export function ProjetoDestaqueCard({ projeto }: { projeto: Projeto }) {
             {etapas.map((e) => (
               <div key={e.rotulo}>
                 <dt className="inline font-semibold text-white">{e.rotulo}: </dt>
-                <dd className="inline text-[#b4b8d6]">{e.texto}</dd>
+                <dd className="inline text-soft">{e.texto}</dd>
               </div>
             ))}
           </dl>

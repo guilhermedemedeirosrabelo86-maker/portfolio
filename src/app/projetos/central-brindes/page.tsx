@@ -47,9 +47,9 @@ export default function CasoCentralBrindes() {
 
         <Reveal className="mt-8 grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] text-brand-purple uppercase">Estudo de caso</p>
+            <p className="text-xs font-bold tracking-[0.2em] text-accent uppercase">Estudo de caso</p>
             <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">{projeto.titulo}</h1>
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-[#b4b8d6]">{projeto.resumo}</p>
+            <p className="mt-4 max-w-xl text-lg leading-relaxed text-soft">{projeto.resumo}</p>
             <div className="mt-6 flex flex-wrap gap-2">
               {projeto.codigoUrl && (
                 <Botao href={projeto.codigoUrl} externo>
@@ -72,7 +72,7 @@ export default function CasoCentralBrindes() {
           {etapas.map((e, i) => (
             <Reveal key={e.titulo} delay={120 * i} className="rounded-2xl border border-line bg-card p-6">
               <h2 className="text-gradient text-lg font-bold">{e.titulo}</h2>
-              <p className="mt-2 leading-relaxed text-[#cfd2ee]">{e.texto}</p>
+              <p className="mt-2 leading-relaxed text-soft">{e.texto}</p>
             </Reveal>
           ))}
         </div>

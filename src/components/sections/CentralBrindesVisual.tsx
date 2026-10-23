@@ -17,7 +17,7 @@ export function CentralBrindesVisual({ className = "" }: { className?: string })
     <div
       role="img"
       aria-label="Ilustração do painel do Central Brindes com dados fictícios"
-      className={`overflow-hidden rounded-xl border border-line bg-gradient-to-br from-[#141a4a] to-[#1d1145] p-4 text-[11px] ${className}`}
+      className={`overflow-hidden rounded-xl border border-line bg-gradient-to-br from-[#1c1c1f] to-[#111113] p-4 text-[11px] ${className}`}
     >
       <div aria-hidden="true">
         <div className="mb-3 flex items-center justify-between">
@@ -27,7 +27,7 @@ export function CentralBrindesVisual({ className = "" }: { className?: string })
         <ul className="space-y-2">
           {itens.map((i) => (
             <li key={i.nome}>
-              <div className="mb-1 flex justify-between text-[#cfd2ee]">
+              <div className="mb-1 flex justify-between text-soft">
                 <span>{i.nome}</span>
                 <span className={i.baixo ? "font-semibold text-amber-300" : ""}>{i.qtd}</span>
               </div>
@@ -44,7 +44,7 @@ export function CentralBrindesVisual({ className = "" }: { className?: string })
         <ul className="space-y-1.5">
           {envios.map((e) => (
             <li key={e.destino} className="flex items-center justify-between rounded-md bg-white/[0.04] px-2 py-1.5">
-              <span className="text-[#cfd2ee]">{e.destino}</span>
+              <span className="text-soft">{e.destino}</span>
               <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${e.cor}`}>{e.status}</span>
             </li>
           ))}

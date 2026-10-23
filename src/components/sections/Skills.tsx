@@ -19,7 +19,7 @@ export function Skills() {
                 {g.itens.map((item) => (
                   <li
                     key={item}
-                    className="inline-flex items-center gap-2 rounded-lg border border-line bg-white/[0.03] px-3 py-1.5 text-sm text-[#cfd2ee]"
+                    className="inline-flex items-center gap-2 rounded-lg border border-line bg-white/[0.03] px-3 py-1.5 text-sm text-soft"
                   >
                     <TechIcon nome={item} className="h-4 w-4 shrink-0" />
                     {item}

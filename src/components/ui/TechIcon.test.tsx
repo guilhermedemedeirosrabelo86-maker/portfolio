@@ -37,6 +37,6 @@ describe("TechIcon", () => {
 
   test("ícones de marca escuros ficam claros no fundo escuro", () => {
     const { container } = render(<TechIcon nome="GitHub" />);
-    expect(container.querySelector("svg")?.getAttribute("fill")).toBe("#e8eaf6");
+    expect(container.querySelector("svg")?.getAttribute("fill")).toBe("#ecebe8");
   });
 });

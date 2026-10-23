@@ -37,7 +37,7 @@ export function Sobre() {
             <dl className="mt-5 space-y-4">
               {informacoes.map((info) => (
                 <div key={info.rotulo} className="flex items-center gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-line bg-white/[0.03] text-brand-purple">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-line bg-white/[0.03] text-accent">
                     {info.icone}
                   </span>
                   <div className="min-w-0">

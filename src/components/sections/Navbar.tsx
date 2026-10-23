@@ -35,7 +35,7 @@ export function Navbar() {
             href={conversar}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg border border-brand-purple/70 px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-purple/15"
+            className="rounded-lg border border-accent/70 px-4 py-2 text-sm font-medium text-white transition hover:bg-accent/15"
           >
             Vamos conversar
           </a>
@@ -76,7 +76,7 @@ export function Navbar() {
               href={conversar}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gradient-brand mt-2 rounded-lg px-3 py-3 text-center font-semibold text-white"
+              className="bg-gradient-brand mt-2 rounded-lg px-3 py-3 text-center font-semibold text-on-accent"
             >
               Vamos conversar
             </a>

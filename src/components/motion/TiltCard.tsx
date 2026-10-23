@@ -42,7 +42,7 @@ export function TiltCard({ children, className = "" }: { children: ReactNode; cl
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           style={{
             background:
-              "radial-gradient(260px circle at var(--x, 50%) var(--y, 50%), rgb(139 92 246 / 0.3), transparent 60%)",
+              "radial-gradient(260px circle at var(--x, 50%) var(--y, 50%), rgb(245 179 1 / 0.18), transparent 60%)",
           }}
         />
       )}

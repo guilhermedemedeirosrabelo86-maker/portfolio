@@ -35,4 +35,17 @@ describe("conteúdo do portfólio", () => {
       expect(perfil.sobre).toContain(palavra);
     }
   });
+
+  test("informações pessoais e formação", () => {
+    expect(perfil.cidade).toBe("Criciúma, SC");
+    expect(perfil.nascimento).toBe("2006-03-03");
+    expect(perfil.formacao).toEqual([
+      { curso: "Engenharia de Software", instituicao: "UNISATC", situacao: "Em andamento" },
+      { curso: "Ensino médio completo", instituicao: "Colégio Universitário", situacao: "Concluído em 2024" },
+    ]);
+  });
+
+  test("Python está nas skills", () => {
+    expect(perfil.skills.flatMap((g) => g.itens)).toContain("Python");
+  });
 });

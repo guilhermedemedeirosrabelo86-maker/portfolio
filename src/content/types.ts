@@ -18,6 +18,10 @@ export type Projeto = {
 export type Perfil = {
   nome: string;
   cargo: string;
+  cidade: string;
+  /** AAAA-MM-DD — a idade é calculada a partir daqui. */
+  nascimento: string;
+  formacao: { curso: string; instituicao: string; situacao: string }[];
   frase: string;
   sobre: string;
   palavrasDestaque: string[];

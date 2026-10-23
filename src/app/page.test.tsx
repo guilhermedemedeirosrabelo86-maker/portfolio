@@ -1,8 +1,17 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, test } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import Home from "./page";
 
 const hrefs = () => screen.getAllByRole("link").map((a) => a.getAttribute("href"));
+
+beforeAll(() => {
+  vi.useFakeTimers({ toFake: ["Date"] });
+  vi.setSystemTime(new Date(2026, 9, 23));
+});
+
+afterAll(() => {
+  vi.useRealTimers();
+});
 
 beforeEach(() => {
   render(<Home />);
@@ -70,5 +79,13 @@ describe("página inicial", () => {
 
   test("não cita a empresa empregadora", () => {
     expect(document.body.textContent).not.toMatch(/anjo/i);
+  });
+
+  test("mostra cidade, idade e formação", () => {
+    expect(screen.getAllByText(/Criciúma, SC/).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("20 anos")).toBeInTheDocument();
+    expect(screen.getAllByText(/UNISATC/).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(/Colégio Universitário/)).toBeInTheDocument();
+    expect(screen.getByText(/Concluído em 2024/)).toBeInTheDocument();
   });
 });

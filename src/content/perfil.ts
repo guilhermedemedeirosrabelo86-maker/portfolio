@@ -4,6 +4,12 @@ import type { Perfil } from "./types";
 export const perfil: Perfil = {
   nome: "Guilherme Rabelo",
   cargo: "Desenvolvedor Web",
+  cidade: "Criciúma, SC",
+  nascimento: "2006-03-03",
+  formacao: [
+    { curso: "Engenharia de Software", instituicao: "UNISATC", situacao: "Em andamento" },
+    { curso: "Ensino médio completo", instituicao: "Colégio Universitário", situacao: "Concluído em 2024" },
+  ],
   frase:
     "Estudante de Engenharia de Software. Crio sites e sistemas que resolvem problemas reais, como o que construí para a equipe da empresa onde trabalho.",
   sobre:
@@ -18,7 +24,7 @@ export const perfil: Perfil = {
   fotoUrl: "",
   skills: [
     { grupo: "Front-end", itens: ["HTML", "CSS", "JavaScript", "React (estudando)"] },
-    { grupo: "Back-end e dados", itens: ["Firebase", "SQL", "Cloudflare Workers"] },
+    { grupo: "Back-end e dados", itens: ["Python", "Firebase", "SQL", "Cloudflare Workers"] },
     { grupo: "Ferramentas", itens: ["Git", "GitHub"] },
   ],
 };

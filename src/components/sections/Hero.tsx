@@ -2,7 +2,7 @@ import { perfil } from "@/content/perfil";
 import { mailtoUrl, whatsappUrl } from "@/lib/links";
 import { Botao } from "@/components/ui/Botao";
 import { Container } from "@/components/ui/Container";
-import { IconArrowRight, IconDownload, IconGitHub, IconLinkedIn, IconMail, IconWhatsApp } from "@/components/ui/icons";
+import { IconArrowRight, IconDownload, IconGitHub, IconLinkedIn, IconMail, IconPin, IconWhatsApp } from "@/components/ui/icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { HeroIlustracao } from "./HeroIlustracao";
 
@@ -17,6 +17,9 @@ export function Hero() {
           <p className="text-lg text-muted">Olá, eu sou</p>
           <h1 className="mt-1 text-5xl font-extrabold tracking-tight text-white sm:text-6xl">{perfil.nome}</h1>
           <p className="text-gradient mt-2 text-3xl font-bold sm:text-4xl">{perfil.cargo}</p>
+          <p className="mt-3 inline-flex items-center gap-1.5 text-sm text-muted">
+            <IconPin /> {perfil.cidade}
+          </p>
           <p className="mt-6 max-w-lg leading-relaxed text-[#b4b8d6]">{perfil.frase}</p>
 
           <div className="mt-8 flex flex-wrap gap-3">

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ScrollProgress } from "@/components/motion/ScrollProgress";
+import { Footer } from "@/components/sections/Footer";
+import { Navbar } from "@/components/sections/Navbar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,7 +18,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" data-scroll-behavior="smooth" className={`${inter.variable} antialiased`}>
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen">
+        <ScrollProgress />
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -32,6 +32,12 @@ describe("página inicial", () => {
     expect(screen.queryByText(/baixar currículo/i)).toBeNull();
   });
 
+  test("card do Central Brindes mostra o print do sistema", () => {
+    const img = screen.getByRole("img", { name: /tela inicial do central brindes/i });
+    expect(img.getAttribute("src")).toMatch(/central-brindes-painel\.jpg/);
+    expect(screen.queryByRole("img", { name: /ilustração do painel/i })).toBeNull();
+  });
+
   test("link para a demo do Central Brindes", () => {
     expect(screen.getByRole("link", { name: /ver demo/i })).toHaveAttribute("href", "/demo/central-brindes/index.html");
     expect(screen.queryByText(/demo em breve/i)).toBeNull();

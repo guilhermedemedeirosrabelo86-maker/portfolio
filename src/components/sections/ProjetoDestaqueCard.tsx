@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Projeto } from "@/content/types";
 import { Botao } from "@/components/ui/Botao";
 import { Tags } from "@/components/ui/Tags";
@@ -14,8 +15,19 @@ export function ProjetoDestaqueCard({ projeto }: { projeto: Projeto }) {
 
   return (
     <TiltCard className="h-full rounded-2xl border border-accent/40 bg-card">
-      <article className="grid h-full gap-6 p-5 sm:p-6 xl:grid-cols-[0.9fr_1.1fr]">
-        <CentralBrindesVisual className="self-start" />
+      <article className="flex h-full flex-col gap-6 p-5 sm:p-6">
+        {projeto.imagem ? (
+          <Image
+            src={projeto.imagem}
+            alt={`Tela inicial do ${projeto.titulo} (demonstração com dados fictícios)`}
+            width={1536}
+            height={730}
+            sizes="(min-width: 1024px) 680px, 100vw"
+            className="w-full rounded-xl border border-line object-cover object-left-top"
+          />
+        ) : (
+          <CentralBrindesVisual />
+        )}
         <div className="flex flex-col">
           <p className="text-[11px] font-bold tracking-[0.18em] text-accent uppercase">Projeto principal</p>
           <h3 className="mt-1 text-2xl font-bold text-white">{projeto.titulo}</h3>

@@ -8,6 +8,7 @@ export const projetos: Projeto[] = [
     destaque: true,
     status: "pronto",
     tags: ["HTML", "CSS", "JavaScript", "Firebase", "Cloudflare Workers", "SQL"],
+    imagem: "/projetos/central-brindes-painel.jpg",
     casoUrl: "/projetos/central-brindes",
     codigoUrl: "https://github.com/guilhermedemedeirosrabelo86-maker/central-brindes",
     demoUrl: "/demo/central-brindes/index.html",

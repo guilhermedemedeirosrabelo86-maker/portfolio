@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { casoCentralBrindes } from "@/content/casoCentralBrindes";
 import { projetoDestaque } from "@/content/projetos";
@@ -68,7 +69,19 @@ export default function CasoCentralBrindes() {
               <p className="mt-3 text-sm text-muted">A demo usa dados fictícios e roda inteira no seu navegador.</p>
             )}
           </div>
-          <CentralBrindesVisual className="mx-auto w-full max-w-md text-xs" />
+          {projeto.imagem ? (
+            <Image
+              src={projeto.imagem}
+              alt={`Tela inicial do ${projeto.titulo} (demonstração com dados fictícios)`}
+              width={1536}
+              height={730}
+              priority
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="w-full rounded-xl border border-line shadow-2xl shadow-black/40"
+            />
+          ) : (
+            <CentralBrindesVisual className="mx-auto w-full max-w-md text-xs" />
+          )}
         </Reveal>
 
         <div className="mt-16 grid gap-5 md:grid-cols-3">
@@ -107,7 +120,7 @@ export default function CasoCentralBrindes() {
             <Tags tags={casoCentralBrindes.stack} />
           </div>
           <p className="mt-6 text-sm text-muted">
-            As imagens desta página são ilustrativas e usam dados fictícios.
+            As imagens desta página vêm da demonstração e usam dados fictícios.
           </p>
         </Reveal>
       </Container>

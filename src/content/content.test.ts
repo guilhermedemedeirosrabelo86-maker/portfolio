@@ -16,6 +16,10 @@ describe("conteúdo do portfólio", () => {
     expect(projetoDestaque().demoUrl).toBe("/demo/central-brindes/index.html");
   });
 
+  test("Central Brindes tem print do sistema", () => {
+    expect(projetoDestaque().imagem).toBe("/projetos/central-brindes-painel.jpg");
+  });
+
   test("outros sites aparecem como em construção", () => {
     expect(projetos.find((p) => p.slug === "outros-sites")?.status).toBe("em-construcao");
   });

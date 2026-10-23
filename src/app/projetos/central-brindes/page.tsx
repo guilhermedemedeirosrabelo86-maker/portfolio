@@ -10,9 +10,24 @@ import { Reveal } from "@/components/motion/Reveal";
 import { TiltCard } from "@/components/motion/TiltCard";
 import { CentralBrindesVisual } from "@/components/sections/CentralBrindesVisual";
 
+const titulo = "Central Brindes · Guilherme Rabelo";
+const imagem = { url: "/opengraph-image", width: 1200, height: 630, alt: "Guilherme Rabelo · Desenvolvedor Web" };
+const descricao = "Estudo de caso: sistema web de estoque e envios criado por Guilherme Rabelo.";
+
 export const metadata: Metadata = {
-  title: "Central Brindes · Guilherme Rabelo",
-  description: "Estudo de caso: sistema web de estoque e envios criado por Guilherme Rabelo.",
+  title: titulo,
+  description: descricao,
+  alternates: { canonical: "/projetos/central-brindes" },
+  openGraph: {
+    type: "article",
+    locale: "pt_BR",
+    url: "/projetos/central-brindes",
+    siteName: "Guilherme Rabelo",
+    title: titulo,
+    description: descricao,
+    images: [imagem],
+  },
+  twitter: { card: "summary_large_image", title: titulo, description: descricao, images: [imagem.url] },
 };
 
 export default function CasoCentralBrindes() {

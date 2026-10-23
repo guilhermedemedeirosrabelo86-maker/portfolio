@@ -21,6 +21,9 @@ export function Reveal({ children, delay = 0, as: Tag = "div", className = "" }:
   useEffect(() => {
     const el = ref.current;
     if (reduzido || !el || typeof window.IntersectionObserver === "undefined") return;
+    // O que já está na tela ao carregar fica como está, para não piscar.
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) return;
     setAnimar(true);
     const observer = new IntersectionObserver(
       (entradas) => {
@@ -35,14 +38,17 @@ export function Reveal({ children, delay = 0, as: Tag = "div", className = "" }:
     return () => observer.disconnect();
   }, [reduzido]);
 
-  const revelado = !animar || visto;
+  // Derivado (não guardado) para que ligar o movimento reduzido depois de
+  // hidratar nunca deixe o conteúdo preso escondido.
+  const ativo = animar && !reduzido;
+  const revelado = !ativo || visto;
 
   return (
     <Tag
       ref={ref}
       data-revealed={revelado ? "true" : "false"}
-      style={animar ? { transitionDelay: `${delay}ms` } : undefined}
-      className={`${animar ? "transition-[opacity,translate] duration-700 ease-[cubic-bezier(.2,.7,.2,1)]" : ""} ${
+      style={ativo ? { transitionDelay: `${delay}ms` } : undefined}
+      className={`${ativo ? "transition-[opacity,translate] duration-700 ease-[cubic-bezier(.2,.7,.2,1)]" : ""} ${
         revelado ? "" : "translate-y-10 opacity-0"
       } ${className}`}
     >

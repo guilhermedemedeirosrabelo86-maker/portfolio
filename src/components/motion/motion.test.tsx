@@ -1,4 +1,6 @@
 import { act, render, screen } from "@testing-library/react";
+import { hydrateRoot } from "react-dom/client";
+import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { LitText } from "./LitText";
 import { Reveal } from "./Reveal";
@@ -76,6 +78,33 @@ describe("Reveal", () => {
       );
     });
     expect(revelado("oi")).toBe("true");
+  });
+});
+
+describe("Reveal após hidratação do servidor", () => {
+  test("com movimento reduzido continua visível depois de hidratar", async () => {
+    configurarMidia({ reduzido: true });
+    const html = renderToString(<Reveal>oi</Reveal>);
+    const container = document.createElement("div");
+    container.innerHTML = html;
+    document.body.appendChild(container);
+    await act(async () => {
+      hydrateRoot(container, <Reveal>oi</Reveal>);
+    });
+    expect(container.querySelector("[data-revealed]")).toHaveAttribute("data-revealed", "true");
+    expect(container.querySelector("[data-revealed]")?.className).not.toMatch(/opacity-0/);
+    container.remove();
+  });
+});
+
+describe("Reveal já visível ao carregar", () => {
+  test("não esconde o que já está na tela (sem piscar)", () => {
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
+      top: 100, bottom: 300, left: 0, right: 100, width: 100, height: 200, x: 0, y: 100, toJSON: () => ({}),
+    } as DOMRect);
+    render(<Reveal>oi</Reveal>);
+    expect(revelado("oi")).toBe("true");
+    expect(screen.getByText("oi").closest("[data-revealed]")?.className).not.toMatch(/opacity-0/);
   });
 });
 

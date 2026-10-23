@@ -6,7 +6,7 @@ import { IconGitHub, IconLinkedIn, IconMail, IconWhatsApp } from "@/components/u
 import { Reveal } from "@/components/motion/Reveal";
 
 const linkCanal =
-  "flex items-center gap-3 rounded-xl border border-line bg-card px-4 py-3 text-sm text-[#cfd2ee] transition hover:border-brand-purple hover:text-white";
+  "flex min-w-0 items-center gap-3 rounded-xl border border-line bg-card px-4 py-3 text-sm text-[#cfd2ee] transition hover:border-brand-purple hover:text-white";
 
 export function Contato() {
   return (
@@ -32,7 +32,7 @@ export function Contato() {
             </Botao>
           </div>
 
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:max-w-2xl">
+          <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:max-w-2xl [&>li]:min-w-0">
             <li>
               <a href={mailtoUrl(perfil.email)} aria-label={`E-mail: ${perfil.email}`} className={linkCanal}>
                 <IconMail />

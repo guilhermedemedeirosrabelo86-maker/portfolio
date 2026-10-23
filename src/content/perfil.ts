@@ -7,7 +7,7 @@ export const perfil: Perfil = {
   frase:
     "Estudante de Engenharia de Software. Crio sites e sistemas que resolvem problemas reais, como o que construí para a equipe da empresa onde trabalho.",
   sobre:
-    "Trabalho o dia todo, estudo Engenharia de Software à noite e, mesmo assim, construí sozinho um sistema completo que a equipe da empresa usa todos os dias. Gosto de olhar para um problema real e transformar em software que funciona.",
+    "Trabalho o dia todo, estudo Engenharia de Software e, mesmo assim, construí sozinho um sistema completo que a equipe da empresa usa todos os dias. Gosto de olhar para um problema real e transformar em software que funciona.",
   palavrasDestaque: ["Engenharia", "Software", "sistema", "completo", "problema"],
   whatsapp: "5548998230477",
   mensagemWhatsapp: "Olá, Guilherme! Vi seu portfólio e gostaria de conversar.",

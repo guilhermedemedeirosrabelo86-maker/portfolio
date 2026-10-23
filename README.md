@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfólio · Guilherme Rabelo
 
-## Getting Started
+Portfólio pessoal feito com **Next.js**, **TypeScript** e **Tailwind CSS**.
 
-First, run the development server:
+## Rodar no computador
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # abre em http://localhost:3000
+npm test        # roda os testes
+npm run build   # gera a versão de produção
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Onde editar o conteúdo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Tudo o que aparece no site fica em `src/content/`. Não precisa mexer no layout.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Quero... | Arquivo | O que fazer |
+|---|---|---|
+| Colocar minha foto | `src/content/perfil.ts` | Salve a foto em `public/` (ex.: `public/foto.jpg`) e preencha `fotoUrl: "/foto.jpg"` |
+| Ligar o botão de currículo | `src/content/perfil.ts` | Salve o PDF em `public/` e preencha `cvUrl: "/curriculo.pdf"` |
+| Mostrar o LinkedIn | `src/content/perfil.ts` | Preencha `linkedin` com o link do perfil |
+| Ligar a demo do Central Brindes | `src/content/projetos.ts` | Preencha `demoUrl` no projeto `central-brindes` |
+| Adicionar um projeto | `src/content/projetos.ts` | Copie um item da lista e ajuste os campos |
+| Trocar o endereço do site | `src/content/site.ts` | Mude `url` quando tiver domínio próprio |
 
-## Learn More
+Campos com `""` ficam escondidos no site até serem preenchidos.
 
-To learn more about Next.js, take a look at the following resources:
+## Publicar
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+O site é publicado na [Vercel](https://vercel.com): importe este repositório do GitHub e a cada `git push` uma nova versão vai ao ar.

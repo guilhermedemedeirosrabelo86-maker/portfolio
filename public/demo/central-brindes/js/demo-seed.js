@@ -46,8 +46,8 @@
       ["MK0118", "GUARDA-CHUVA", "Acessórios", 20, 27],
       ["MK0119", "BANNER DE LOJA", "Comunicação visual", 5, 14],
       ["MK0120", "DISPLAY DE BALCÃO", "Comunicação visual", 5, 3],
-      ["MK0121", "CATÁLOGO DE CORES", "Comunicação visual", 100, 380],
-      ["MK0122", "LEQUE DE CORES", "Comunicação visual", 50, 75],
+      ["MK0121", "CATÁLOGO DE PRODUTOS", "Comunicação visual", 100, 380],
+      ["MK0122", "MOSTRUÁRIO DE PRODUTOS", "Comunicação visual", 50, 75],
       ["MK0123", "PEN DRIVE 16 GB", "Tecnologia", 20, 26],
       ["MK0124", "CARREGADOR PORTÁTIL", "Tecnologia", 10, 9],
     ];
@@ -57,13 +57,13 @@
       movimentos["mv" + ++m] = { itemId: l[0], tipo: "entrada", qtd: l[4] + 40, obs: "Compra inicial", por: "carla", em: ha(90 - (i % 10)) };
     });
     movimentos["mv" + ++m] = { itemId: "MK0101", tipo: "saida", qtd: -20, motivo: "Evento", retiradoPor: "Bruno Lima", obs: "Feira regional", por: "bruno", em: ha(12) };
-    movimentos["mv" + ++m] = { itemId: "MK0110", tipo: "saida", qtd: -15, motivo: "Evento", retiradoPor: "Ana Souza", obs: "Treinamento de pintores", por: "ana", em: ha(8) };
+    movimentos["mv" + ++m] = { itemId: "MK0110", tipo: "saida", qtd: -15, motivo: "Evento", retiradoPor: "Ana Souza", obs: "Treinamento de vendedores", por: "ana", em: ha(8) };
     movimentos["mv" + ++m] = { itemId: "MK0105", tipo: "contagem", qtd: -3, obs: "Contagem mensal", por: "carla", em: ha(5) };
     movimentos["mv" + ++m] = { itemId: "MK0121", tipo: "entrada", qtd: 200, obs: "Reposição", por: "ana", em: ha(3) };
 
     /* ---------- representantes ---------- */
     var reps = {
-      r1: { nome: "Paulo Henrique Ficticio", regiao: "Sul de SC", cidade: "Criciúma", uf: "SC", cep: "88800-000", endereco: "Rua Exemplo, 100", telefone: "(48) 90000-0001", email: "paulo@exemplo.com", obs: "" },
+      r1: { nome: "Paulo Henrique Ficticio", regiao: "Sul de SC", cidade: "Tubarão", uf: "SC", cep: "88700-000", endereco: "Rua Exemplo, 100", telefone: "(48) 90000-0001", email: "paulo@exemplo.com", obs: "" },
       r2: { nome: "Mariana Exemplar", regiao: "Grande Florianópolis", cidade: "Florianópolis", uf: "SC", cep: "88000-000", endereco: "Av. Modelo, 200", telefone: "(48) 90000-0002", email: "mariana@exemplo.com", obs: "" },
       r3: { nome: "Rafael Demonstração", regiao: "Oeste do PR", cidade: "Cascavel", uf: "PR", cep: "85800-000", endereco: "Rua Teste, 300", telefone: "(45) 90000-0003", email: "rafael@exemplo.com", obs: "" },
       r4: { nome: "Juliana Fictícia", regiao: "Serra Gaúcha", cidade: "Caxias do Sul", uf: "RS", cep: "95000-000", endereco: "Rua Amostra, 400", telefone: "(54) 90000-0004", email: "juliana@exemplo.com", obs: "" },
@@ -95,7 +95,7 @@
       e6: envio({ repId: "r6", status: "entregue", d: 20, rastreio: "AA000000003BR", itens: [{ itemId: "MK0109", qtd: 12 }, { itemId: "MK0105", qtd: 30 }] }),
       e7: envio({ repId: "r1", status: "entregue", d: 30, rastreio: "AA000000004BR", itens: [{ itemId: "MK0111", qtd: 100 }] }),
       e8: envio({ repId: "r2", status: "cancelado", d: 9, itens: [{ itemId: "MK0123", qtd: 5 }], obs: "Evento adiado" }),
-      e9: envio({ destinatario: "Loja Exemplo Tintas Ltda", cidade: "Tubarão", uf: "SC", status: "pendente", d: 2, itens: [{ itemId: "MK0117", qtd: 10 }, { itemId: "MK0110", qtd: 10 }], por: "carla" }),
+      e9: envio({ destinatario: "Loja Exemplo Ltda", cidade: "Tubarão", uf: "SC", status: "pendente", d: 2, itens: [{ itemId: "MK0117", qtd: 10 }, { itemId: "MK0110", qtd: 10 }], por: "carla" }),
     };
 
     /* página pública do envio de exemplo (o sistema mantém isso sozinho depois) */
@@ -112,7 +112,7 @@
     /* ---------- kits ---------- */
     var kits = {
       k1: { nome: "Kit loja nova", itens: [{ itemId: "MK0119", qtd: 1 }, { itemId: "MK0121", qtd: 20 }, { itemId: "MK0101", qtd: 50 }], criadoPor: "carla", criadoEm: ha(60), atualizadoEm: ha(60) },
-      k2: { nome: "Kit pintor", itens: [{ itemId: "MK0113", qtd: 1 }, { itemId: "MK0117", qtd: 1 }, { itemId: "MK0107", qtd: 1 }], criadoPor: "ana", criadoEm: ha(45), atualizadoEm: ha(20) },
+      k2: { nome: "Kit vendedor", itens: [{ itemId: "MK0113", qtd: 1 }, { itemId: "MK0117", qtd: 1 }, { itemId: "MK0107", qtd: 1 }], criadoPor: "ana", criadoEm: ha(45), atualizadoEm: ha(20) },
       k3: { nome: "Kit evento", itens: [{ itemId: "MK0110", qtd: 30 }, { itemId: "MK0105", qtd: 30 }, { itemId: "MK0102", qtd: 30 }], criadoPor: "ana", criadoEm: ha(30), atualizadoEm: ha(30) },
     };
 
@@ -121,7 +121,7 @@
       p1: { texto: "Separar o envio do Paulo para a inauguração", tipo: "envio", autor: "carla", responsavel: "bruno", prazo: diaISO(agora + DIA), status: "andamento", envioId: "e1", criadoEm: ha(1) },
       p2: { texto: "Orçar 200 bonés novos com dois fornecedores", tipo: "tarefa", autor: "carla", responsavel: "ana", prazo: diaISO(agora + 3 * DIA), status: "aberto", criadoEm: ha(2) },
       p3: { texto: "Conferir displays de balcão que chegaram com avaria", tipo: "tarefa", autor: "ana", responsavel: "visitante", prazo: diaISO(agora - DIA), status: "aberto", criadoEm: ha(4) },
-      p4: { texto: "Atualizar o catálogo de cores no estoque", tipo: "tarefa", autor: "bruno", responsavel: "bruno", prazo: diaISO(agora - 2 * DIA), status: "concluido", concluidoPor: "bruno", concluidoEm: ha(3), criadoEm: ha(6) },
+      p4: { texto: "Atualizar o catálogo de produtos no estoque", tipo: "tarefa", autor: "bruno", responsavel: "bruno", prazo: diaISO(agora - 2 * DIA), status: "concluido", concluidoPor: "bruno", concluidoEm: ha(3), criadoEm: ha(6) },
     };
 
     var seed = {
@@ -129,7 +129,7 @@
       perfis: perfis, usuarios: usuarios, conversas: {}, acompanhamento: acompanhamento,
       config: {
         setup: { admin: "carla", em: ha(150) },
-        remetente: { nome: "Empresa Demo", endereco: "Rua da Demonstração, 1", cidade: "Criciúma", uf: "SC", cep: "88800-000", ac: "Marketing" },
+        remetente: { nome: "Empresa Demo", endereco: "Rua da Demonstração, 1", cidade: "Curitiba", uf: "PR", cep: "80000-000", ac: "Marketing", correioWhats: "5548900000000" },
       },
       "pedidos/p1/respostas": { r1: { texto: "Já separei as canetas, falta a ecobag.", autor: "bruno", em: ha(0, 5) } },
       "pedidos/p2/respostas": { r1: { texto: "Mandei pedido para dois fornecedores, aguardando.", autor: "ana", em: ha(1, 3) } },

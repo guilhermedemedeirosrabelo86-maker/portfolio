@@ -32,8 +32,8 @@ function ligarCep(m) {
 
 /* ----- remetente (dados da empresa que envia) ----- */
 /* ---------- chamar o Correio para a coleta ---------- */
-const CORREIO_PADRAO = "5548999420503";
-// número com DDI 55: aceita "48 99942-0503" ou "55 48 99942-0503"
+const CORREIO_PADRAO = "5548900000000";   // DEMO: número fictício
+// número com DDI 55: aceita "48 90000-0000" ou "55 48 90000-0000"
 const foneBR = t => { const d = String(t || "").replace(/\D/g, ""); return d.length === 10 || d.length === 11 ? "55" + d : d; };
 const foneCorreio = () => foneBR(REM?.correioWhats) || CORREIO_PADRAO;
 const fmtFone = d => d.length >= 12 ? `(${d.slice(2, 4)}) ${d.slice(4, -4)}-${d.slice(-4)}` : d;

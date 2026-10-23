@@ -51,6 +51,18 @@ describe("firestore falso", () => {
     await expect(db.doc("itens/nao-existe").update({ a: 1 })).rejects.toBeTruthy();
   });
 
+  test("snapshot de documento tem metadata (página pública lê fromCache)", async () => {
+    const { db } = iniciar({ acompanhamento: { t: { status: "postado" } } });
+    const s = await db.doc("acompanhamento/t").get();
+    expect(s.metadata).toEqual({ fromCache: false, hasPendingWrites: false });
+    const vistos: string[] = [];
+    db.doc("acompanhamento/t").onSnapshot((sn: any) => vistos.push(sn.metadata.fromCache ? "cache" : sn.data().status));
+    await tick();
+    await db.doc("acompanhamento/t").update({ status: "entregue" });
+    await tick();
+    expect(vistos).toEqual(["postado", "entregue"]);
+  });
+
   test("set com merge mantém campos", async () => {
     const { db } = iniciar({ config: { remetente: { nome: "A", cidade: "B" } } });
     await db.doc("config/remetente").set({ nome: "C" }, { merge: true });
@@ -224,6 +236,12 @@ describe("auth, messaging e rede falsos", () => {
     iniciar();
     const r = await window.fetch("/api/notify", { method: "POST" });
     expect(await r.json()).toEqual({ ok: true });
+  });
+
+  test("fetch para /api/backups devolve lista vazia", async () => {
+    iniciar();
+    const r = await window.fetch("/api/backups", { method: "POST" });
+    expect(await r.json()).toEqual({ ok: true, lista: [] });
   });
 
   test("define configuração falsa", () => {

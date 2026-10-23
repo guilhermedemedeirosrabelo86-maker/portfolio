@@ -117,7 +117,7 @@
   /* ---------- snapshots ---------- */
   function DocSnap(ref) {
     var d = docs[ref.path];
-    return { id: ref.id, ref: ref, exists: d !== undefined, data: function () { return clonar(docs[ref.path]); }, get: function (c) { return lerCampo(docs[ref.path] || {}, c); } };
+    return { id: ref.id, ref: ref, exists: d !== undefined, metadata: { fromCache: false, hasPendingWrites: false }, data: function () { return clonar(docs[ref.path]); }, get: function (c) { return lerCampo(docs[ref.path] || {}, c); } };
   }
   function QuerySnap(lista) {
     return {
@@ -332,9 +332,9 @@
   window.fetch = function (entrada, init) {
     var url = typeof entrada === "string" ? entrada : (entrada && entrada.url) || "";
     if (/(^|\/)api\//.test(url)) {
-      var corpo = JSON.stringify({ ok: true });
+      var corpo = JSON.stringify(/\/api\/backups/.test(url) ? { ok: true, lista: [] } : { ok: true });
       if (typeof Response === "function") return Promise.resolve(new Response(corpo, { status: 200, headers: { "content-type": "application/json" } }));
-      return Promise.resolve({ ok: true, status: 200, json: function () { return Promise.resolve({ ok: true }); }, text: function () { return Promise.resolve(corpo); } });
+      return Promise.resolve({ ok: true, status: 200, json: function () { return Promise.resolve(JSON.parse(corpo)); }, text: function () { return Promise.resolve(corpo); } });
     }
     return original ? original.call(window, entrada, init) : Promise.reject(new Error("sem rede na demo"));
   };

@@ -4,7 +4,8 @@ import { join, relative } from "node:path";
 import { describe, expect, test } from "vitest";
 
 const RAIZ = join(process.cwd(), "public/demo/central-brindes");
-const PROIBIDOS = [/anjo/i, /AIza/, /firebaseapp\.com/i, /workers\.dev/i, /gstatic\.com\/firebasejs/i, /controle-brindes/i, /brindes-anjotintas/i];
+// telefone celular brasileiro com DDI (55 + DDD + 9 + 8 dígitos) que não seja o falso 9000…
+const PROIBIDOS = [/\b55\d{2}9(?!0000)\d{8}\b/, /\b9(?!0000|9999-0000)\d{4}-\d{4}\b/, /anjo/i, /AIza/, /firebaseapp\.com/i, /workers\.dev/i, /gstatic\.com\/firebasejs/i, /controle-brindes/i, /brindes-anjotintas/i];
 const TEXTO = /\.(html|js|css|json|webmanifest|txt|svg)$/;
 
 function arquivos(dir: string): string[] {
@@ -70,6 +71,9 @@ describe("arquivos da demo", () => {
     const status = new Set(Object.values<any>(s.envios).map((e) => e.status));
     for (const st of ["pendente", "separado", "entregue", "cancelado"]) expect(status.has(st), st).toBe(true);
     expect(s.config.setup).toBeTruthy();
+    const texto = JSON.stringify(s);
+    expect(texto).not.toMatch(/tinta|pintor|cores|crici[uú]ma/i);
+    expect(s.config.remetente.correioWhats).toMatch(/^55\d{2}9?0000/);
     const emails = JSON.stringify(s).match(/[\w.+-]+@[\w.-]+/g) || [];
     expect(emails.filter((e) => !/@(demo\.local|exemplo\.com)$/.test(e))).toEqual([]);
   });

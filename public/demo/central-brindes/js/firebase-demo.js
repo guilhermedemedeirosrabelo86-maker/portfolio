@@ -93,8 +93,17 @@
   if (!docs) { docs = sementeInicial(); salvar(); }
 
   /* ---------- ouvintes ---------- */
-  var ouvintes = [];
-  function avisarTodos() { ouvintes.slice().forEach(function (o) { if (o.ativo) o.disparar(); }); }
+  // Como no Firebase de verdade: avisos chegam depois (assíncronos), agrupados,
+  // e só para quem teve alguma mudança. Isso evita laço quando um ouvinte grava.
+  var ouvintes = [], avisoAgendado = false;
+  function avisarTodos() {
+    if (avisoAgendado) return;
+    avisoAgendado = true;
+    Promise.resolve().then(function () {
+      avisoAgendado = false;
+      ouvintes.slice().forEach(function (o) { if (o.ativo) o.disparar(); });
+    });
+  }
 
   if (window.__demoStorageHandler) window.removeEventListener("storage", window.__demoStorageHandler);
   window.__demoStorageHandler = function (e) {
@@ -146,7 +155,7 @@
       delete: function () { aplicarDelete(path); confirmar(); return Promise.resolve(); },
       onSnapshot: function (next, erro) {
         if (typeof next === "object" && next) { erro = next.error; next = next.next; }
-        return ouvir(function () { next(DocSnap(ref)); }, erro);
+        return ouvir(function () { var sn = DocSnap(ref); return { snap: sn, assinatura: JSON.stringify([sn.exists, docs[path]]) }; }, next, erro);
       },
       isEqual: function (o) { return o && o.path === path; },
     };
@@ -186,7 +195,7 @@
       get: function () { return Promise.resolve(resultado()); },
       onSnapshot: function (next, erro) {
         if (typeof next === "object" && next) { erro = next.error; next = next.next; }
-        return ouvir(function () { next(resultado()); }, erro);
+        return ouvir(function () { var sn = resultado(); return { snap: sn, assinatura: JSON.stringify(sn.docs.map(function (d) { return [d.id, docs[d.ref.path]]; })) }; }, next, erro);
       },
     };
     return q;
@@ -217,8 +226,16 @@
     return base;
   }
 
-  function ouvir(disparar, erro) {
-    var o = { ativo: true, disparar: function () { try { disparar(); } catch (e) { if (erro) erro(e); else setTimeout(function () { throw e; }); } } };
+  function ouvir(calcular, entregar, erro) {
+    var o = { ativo: true, ultima: null };
+    o.disparar = function () {
+      try {
+        var r = calcular();
+        if (r.assinatura === o.ultima) return;
+        o.ultima = r.assinatura;
+        entregar(r.snap);
+      } catch (e) { if (erro) erro(e); else setTimeout(function () { throw e; }); }
+    };
     ouvintes.push(o);
     Promise.resolve().then(function () { if (o.ativo) o.disparar(); });
     return function () { o.ativo = false; ouvintes = ouvintes.filter(function (x) { return x !== o; }); };

@@ -1,0 +1,15 @@
+{
+  "name": "Central de Brindes · Empresa Demo",
+  "short_name": "Central Brindes",
+  "description": "Estoque, envios, conversas e tarefas do Marketing",
+  "lang": "pt-BR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#D61C38",
+  "theme_color": "#141414",
+  "icons": [
+    { "src": "assets/simbolo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

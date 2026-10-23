@@ -11,6 +11,10 @@ function iniciar(seed?: Record<string, Record<string, unknown>>, opcoes?: { limp
   return { firebase, demoStore, db: firebase.firestore(), auth: firebase.auth() };
 }
 
+const tick = async () => {
+  for (let i = 0; i < 5; i++) await Promise.resolve();
+};
+
 beforeEach(() => {
   delete w.criarSeedDemo;
 });
@@ -85,6 +89,7 @@ describe("firestore falso", () => {
     const parar = db.collection("itens").onSnapshot((s: any) => tamanhos.push(s.size));
     await Promise.resolve();
     await db.collection("itens").add({ n: 2 });
+    await tick();
     parar();
     await db.collection("itens").add({ n: 3 });
     expect(tamanhos).toEqual([1, 2]);
@@ -96,7 +101,30 @@ describe("firestore falso", () => {
     db.doc("config/remetente").onSnapshot((s: any) => vistos.push(s.exists));
     await Promise.resolve();
     await db.doc("config/remetente").set({ nome: "A" });
+    await tick();
     expect(vistos).toEqual([false, true]);
+  });
+
+  test("ouvinte que grava o mesmo dado não entra em loop", async () => {
+    const { db } = iniciar({ conversas: {} });
+    let chamadas = 0;
+    db.collection("conversas").onSnapshot(() => {
+      chamadas++;
+      if (chamadas > 50) throw new Error("loop");
+      db.doc("conversas/equipe").set({ nome: "Equipe" }, { merge: true });
+    });
+    for (let i = 0; i < 10; i++) await Promise.resolve();
+    expect(chamadas).toBeLessThanOrEqual(3);
+  });
+
+  test("não avisa de novo quando nada mudou", async () => {
+    const { db } = iniciar({ itens: { a: { n: 1 } } });
+    const vistos: number[] = [];
+    db.collection("itens").onSnapshot((s: any) => vistos.push(s.size));
+    await tick();
+    await db.doc("outros/x").set({ y: 1 });
+    await tick();
+    expect(vistos).toEqual([1]);
   });
 
   test("batch aplica tudo no commit", async () => {
@@ -149,6 +177,7 @@ describe("firestore falso", () => {
     outraAba.docs["itens/b"] = { n: 2 };
     localStorage.setItem(CHAVE, JSON.stringify(outraAba));
     window.dispatchEvent(new StorageEvent("storage", { key: CHAVE }));
+    await tick();
     expect(tamanhos).toEqual([1, 2]);
   });
 
@@ -159,6 +188,7 @@ describe("firestore falso", () => {
     await Promise.resolve();
     await db.collection("itens").add({ n: 2 });
     demoStore.reset();
+    await tick();
     expect(tamanhos).toEqual([1, 2, 1]);
     expect((await db.collection("itens").get()).size).toBe(1);
   });

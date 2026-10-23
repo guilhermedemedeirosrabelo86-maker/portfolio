@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#141414">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/simbolo.svg">
+<link rel="apple-touch-icon" href="assets/simbolo.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Central Brindes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Central de Brindes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Abertura: aparece na hora e some quando o sistema está pronto -->
+<div id="splash" class="splash" aria-hidden="true"><div class="sp-in">
+  <img src="assets/logo.svg" alt="" width="488" height="157">
+  <span class="sp-tag">Central de Brindes</span>
+</div></div>
+
+<!-- Tela de login / primeiro acesso -->
+<div id="gateRoot"></div>
+
+<!-- Barra superior -->
+<header class="topbar">
+  <button class="tb-menu" id="menuBtn" aria-label="Abrir menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg>
+  </button>
+  <img class="tb-logo" src="assets/simbolo.svg" alt="Empresa Demo">
+  <img class="tb-marca" src="assets/logo.svg" alt="Empresa Demo" width="292" height="94">
+  <span class="tb-sis"><b>Central de Brindes</b><small>Marketing</small></span>
+  <span class="tb-div" aria-hidden="true"></span>
+  <span class="tb-title" id="tbTitle">Início</span>
+  <div class="tb-right">
+    <button class="tb-search" id="searchBtn" aria-label="Buscar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <span>Buscar …</span><kbd>Ctrl+K</kbd>
+    </button>
+    <button class="icon-btn tb-novo" id="quickBtn" title="Criar" aria-label="Criar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Novo</span>
+    </button>
+    <button class="icon-btn" id="themeBtn" title="Trocar tema" aria-label="Trocar tema"></button>
+    <button class="icon-btn tb-help" id="helpBtn" title="Como usar" aria-label="Como usar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><path d="M12 17.2v.1"/></svg>
+    </button>
+    <button class="tb-av" id="meBtn" aria-label="Meu perfil"><span class="tb-who"><b id="meNome"></b><small id="meCargo"></small></span><span class="av" id="meAv"></span></button>
+  </div>
+</header>
+
+<!-- Menu lateral (abre pelo botão ☰) -->
+<div id="navRoot"></div>
+<!-- Menu fixo à esquerda (só em telas largas) -->
+<aside class="sidenav" id="sideNav" aria-label="Menu"></aside>
+
+<main class="content">
+  <div id="banner"></div>
+  <div id="vhead"></div>
+  <div id="vbody"></div>
+</main>
+
+<!-- Rodapé -->
+<footer class="footer" id="footer"></footer>
+
+<!-- Barra de navegação do celular -->
+<nav class="bnav" id="bnav" aria-label="Navegação"></nav>
+<div id="selRoot"></div>
+
+<div id="drawerRoot"></div>
+<div id="paletteRoot"></div>
+<div id="menuRoot"></div>
+<div id="sepRoot"></div>
+<div id="scanRoot"></div>
+<div class="toasts" id="toastRoot" aria-live="polite"></div>
+
+<!-- DEMO: Firebase falso (tudo fica no seu navegador) + dados fictícios -->
+<script src="js/demo-seed.js"></script>
+<script src="js/firebase-demo.js"></script>
+<!-- Sistema (em ordem: cada arquivo usa o que os anteriores definem) -->
+<script src="js/app/01-base.js"></script>
+<script src="js/app/02-telas.js"></script>
+<script src="js/app/03-tarefas.js"></script>
+<script src="js/app/04-conversas.js"></script>
+<script src="js/app/05-correios-app.js"></script>
+<script src="js/app/06-sql.js"></script>
+<script src="js/app/07-envios.js"></script>
+<script src="js/app/08-notas-fiscais.js"></script>
+<script src="js/app/09-operacao.js"></script>
+<script src="js/app/10-envios-acoes.js"></script>
+<script src="js/app/11-cadastros.js"></script>
+<script src="js/app/12-busca-ajuda.js"></script>
+<script src="js/app/13-acesso.js"></script>
+<script src="js/app/14-inicio.js"></script>
+<script src="js/demo-ui.js"></script>
+</body>
+</html>

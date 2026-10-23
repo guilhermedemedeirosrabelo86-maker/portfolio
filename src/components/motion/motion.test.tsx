@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { hydrateRoot } from "react-dom/client";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
@@ -119,6 +119,14 @@ describe("TiltCard", () => {
     configurarMidia({ reduzido: true });
     render(<TiltCard>c</TiltCard>);
     expect(screen.getByText("c").closest("[data-tilt]")).toHaveAttribute("data-tilt", "off");
+  });
+
+  test("o card não se mexe quando o mouse passa por cima", () => {
+    render(<TiltCard>c</TiltCard>);
+    const card = screen.getByText("c").closest("[data-tilt]") as HTMLElement;
+    fireEvent.mouseMove(card, { clientX: 10, clientY: 10 });
+    expect(card.style.transform).toBe("");
+    expect(card.className).not.toMatch(/transition-transform/);
   });
 
   test("liga com mouse", () => {

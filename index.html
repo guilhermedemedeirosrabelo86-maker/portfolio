@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Guilherme Rabelo · Desenvolvedor Web</title>
   <meta name="description" content="Portfólio de Guilherme Rabelo: desenvolvedor web e estudante de Engenharia de Software que cria sistemas para resolver problemas reais.">
+  <meta name="theme-color" content="#0e0d0b">
   <link rel="canonical" href="https://guilherme-rabelo.vercel.app/">
 
   <!-- Prévia quando o link é compartilhado (WhatsApp, LinkedIn etc.) -->
@@ -20,276 +21,274 @@
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..600&display=swap">
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Avisa o CSS que o JavaScript está ligado. Sem JS, nada fica escondido. -->
+  <script>document.documentElement.classList.add("js");</script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
+  <a href="#conteudo" class="pular">Pular para o conteúdo</a>
   <div class="barra-progresso" aria-hidden="true"></div>
 
   <header class="navbar">
     <div class="container navbar-conteudo">
-      <a href="#inicio" class="logo texto-gradiente" aria-label="Início">GR.</a>
+      <a href="#inicio" class="logo" aria-label="Início">GR<span>.</span></a>
 
       <nav aria-label="Principal" class="menu-desktop">
-        <a href="#inicio">Início</a>
-        <a href="#sobre">Sobre</a>
+        <span class="menu-indicador" aria-hidden="true"></span>
         <a href="#projetos">Projetos</a>
+        <a href="#sobre">Sobre</a>
         <a href="#skills">Skills</a>
         <a href="#contato">Contato</a>
-        <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="navbar-conversar">Vamos conversar</a>
       </nav>
 
+      <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-pequeno botao-contorno navbar-conversar">Vamos conversar</a>
+
       <button type="button" class="botao-menu" aria-expanded="false" aria-controls="menu-celular" aria-label="Abrir menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <path class="icone-abrir" d="M4 7h16M4 12h16M4 17h16" />
-          <path class="icone-fechar" d="M6 6l12 12M18 6 6 18" />
-        </svg>
+        <span></span><span></span>
       </button>
     </div>
 
     <nav id="menu-celular" aria-label="Menu" class="menu-celular" hidden>
       <div class="container">
-        <a href="#inicio">Início</a>
-        <a href="#sobre">Sobre</a>
         <a href="#projetos">Projetos</a>
+        <a href="#sobre">Sobre</a>
         <a href="#skills">Skills</a>
         <a href="#contato">Contato</a>
-        <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="menu-celular-conversar">Vamos conversar</a>
+        <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-primario">Vamos conversar</a>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main id="conteudo">
     <!-- ===== Início ===== -->
-    <section id="inicio" class="secao-ancora">
-      <div class="container hero">
-        <div data-reveal>
-          <p class="hero-ola">Olá, eu sou</p>
-          <h1 class="hero-nome">Guilherme Rabelo</h1>
-          <p class="hero-cargo texto-gradiente">Desenvolvedor Web</p>
-          <p class="hero-cidade">
-            <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z" stroke-linejoin="round" /><circle cx="12" cy="9.5" r="2.5" /></svg>
-            Criciúma, SC
+    <section id="inicio" class="hero">
+      <div class="container hero-grade">
+        <div class="hero-texto">
+          <p class="hero-status entrada" style="--i: 0">
+            <span class="ponto-online"><span></span></span>
+            Aberto a vagas de desenvolvimento
           </p>
-          <p class="hero-frase">Estudante de Engenharia de Software. Crio sites e sistemas que resolvem problemas reais, como o que construí para a equipe da empresa onde trabalho.</p>
 
-          <div class="botoes">
+          <!-- Cada linha fica dentro de uma "máscara" e sobe ao carregar a página -->
+          <h1 class="hero-nome">
+            <span class="linha"><span class="entrada" style="--i: 1">Guilherme</span></span>
+            <span class="linha"><span class="entrada" style="--i: 2">Rabelo</span></span>
+          </h1>
+
+          <p class="hero-frase entrada" style="--i: 3">
+            Desenvolvedor web e estudante de Engenharia de Software em Criciúma, SC.
+            Construí sozinho o sistema de estoque e envios que a equipe da empresa onde trabalho usa todos os dias.
+          </p>
+
+          <div class="botoes entrada" style="--i: 4">
             <a href="#projetos" class="botao botao-primario">
               Ver projetos
-              <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              <svg class="icone-sm seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
             </a>
             <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-contorno">
               <svg class="icone-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.98L2 22l5.17-1.5A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.07.89.9-3-.2-.31a8.2 8.2 0 1 1 6.85 3.75Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.16.25-.63.8-.78.97-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.72-1.33.08-.16.04-.3-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04c0 1.2.88 2.37 1 2.53.12.16 1.73 2.64 4.2 3.7 1.56.67 2.17.73 2.95.61.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.1-.22-.16-.47-.28Z" /></svg>
-              Fale comigo no WhatsApp
+              WhatsApp
+            </a>
+            <a href="https://github.com/guilhermedemedeirosrabelo86-maker" target="_blank" rel="noopener noreferrer" class="botao botao-icone" aria-label="GitHub">
+              <svg class="icone" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" /></svg>
+            </a>
+            <a href="mailto:guilhermedemedeirosrabelo86@gmail.com" class="botao botao-icone" aria-label="E-mail">
+              <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </a>
           </div>
-
-          <ul class="redes">
-            <li>
-              <a href="https://github.com/guilhermedemedeirosrabelo86-maker" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="rede">
-                <svg class="icone" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" /></svg>
-              </a>
-            </li>
-            <li>
-              <a href="mailto:guilhermedemedeirosrabelo86@gmail.com" aria-label="E-mail" class="rede">
-                <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </a>
-            </li>
-          </ul>
         </div>
 
-        <div data-reveal data-delay="150">
-          <div class="hero-ilustracao">
-            <div class="hero-anel" aria-hidden="true"></div>
-            <div class="hero-pontos" aria-hidden="true"></div>
+        <!-- Miniatura do Central Brindes "funcionando". O js/main.js anima os envios. -->
+        <figure class="hero-palco entrada" style="--i: 3">
+          <div class="painel" role="img" aria-label="Miniatura animada do Central Brindes: um envio passa de pendente para separado e entregue, e o estoque é atualizado.">
+            <div class="painel-topo" aria-hidden="true">
+              <span class="painel-bolinhas"><i></i><i></i><i></i></span>
+              <span class="painel-endereco">central-brindes · envios</span>
+            </div>
 
-            <svg class="hero-janela" viewBox="0 0 320 320" role="img" aria-label="Ilustração de uma janela de código">
-              <defs>
-                <linearGradient id="hero-grad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#f5b301" />
-                  <stop offset="1" stop-color="#ff8a00" />
-                </linearGradient>
-                <linearGradient id="hero-fundo" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#1c1c1f" />
-                  <stop offset="1" stop-color="#111113" />
-                </linearGradient>
-              </defs>
-              <circle cx="250" cy="70" r="26" fill="url(#hero-grad)" opacity="0.25" />
-              <circle cx="62" cy="262" r="18" fill="url(#hero-grad)" opacity="0.3" />
-              <g transform="rotate(-4 160 160)">
-                <rect x="40" y="70" width="240" height="180" rx="16" fill="url(#hero-fundo)" stroke="#333338" />
-                <circle cx="62" cy="92" r="5" fill="#f87171" />
-                <circle cx="78" cy="92" r="5" fill="#fbbf24" />
-                <circle cx="94" cy="92" r="5" fill="#34d399" />
-                <rect x="60" y="120" width="70" height="8" rx="4" fill="#f5b301" />
-                <rect x="138" y="120" width="90" height="8" rx="4" fill="#3a3a40" />
-                <rect x="76" y="140" width="110" height="8" rx="4" fill="#ffd166" />
-                <rect x="76" y="160" width="60" height="8" rx="4" fill="#3a3a40" />
-                <rect x="144" y="160" width="70" height="8" rx="4" fill="#ff8a00" />
-                <rect x="76" y="180" width="130" height="8" rx="4" fill="#3a3a40" />
-                <rect x="60" y="200" width="40" height="8" rx="4" fill="#f5b301" />
-                <rect x="60" y="222" width="12" height="8" rx="2" fill="#ecebe8" class="cursor-piscando" />
-              </g>
-              <g transform="translate(206 196)">
-                <rect width="88" height="56" rx="12" fill="#151517" stroke="url(#hero-grad)" stroke-width="1.5" />
-                <text x="44" y="37" text-anchor="middle" font-size="22" font-weight="700" fill="url(#hero-grad)" font-family="ui-monospace, monospace">&lt;/&gt;</text>
-              </g>
-            </svg>
+            <div class="painel-corpo" aria-hidden="true">
+              <div class="envio">
+                <div class="envio-cabeca">
+                  <div>
+                    <p class="envio-numero">Envio <span data-envio-numero>#1042</span></p>
+                    <p class="envio-destino" data-envio-destino>Representante em Joinville, SC</p>
+                  </div>
+                  <span class="envio-selo" data-envio-selo>Pendente</span>
+                </div>
 
-            <div class="hero-disponivel">
-              <p class="hero-disponivel-titulo">
-                Aberto a oportunidades
-                <span class="ponto-online"><span></span></span>
-              </p>
-              <p class="hero-disponivel-texto">Vagas de desenvolvimento e projetos.</p>
+                <!-- As 3 etapas do envio. O JS muda data-etapa (0, 1 ou 2). -->
+                <ol class="etapas" data-etapa="0">
+                  <li>Pendente</li>
+                  <li>Separado</li>
+                  <li>Entregue</li>
+                </ol>
+
+                <ul class="envio-itens">
+                  <li><span>Caneta personalizada</span><span>× 40</span></li>
+                  <li><span>Ecobag</span><span>× 12</span></li>
+                </ul>
+              </div>
+
+              <div class="estoque">
+                <p class="estoque-titulo">Estoque disponível</p>
+                <ul>
+                  <li>
+                    <span>Caneta personalizada</span>
+                    <strong data-estoque="caneta">340</strong>
+                    <span class="estoque-barra"><span data-barra="caneta" style="--valor: 0.85"></span></span>
+                  </li>
+                  <li>
+                    <span>Ecobag</span>
+                    <strong data-estoque="ecobag">120</strong>
+                    <span class="estoque-barra"><span data-barra="ecobag" style="--valor: 0.48"></span></span>
+                  </li>
+                  <li class="estoque-baixo">
+                    <span>Boné</span>
+                    <strong>12</strong>
+                    <span class="estoque-barra"><span style="--valor: 0.08"></span></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="painel-aviso" data-aviso aria-hidden="true">
+              <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10" /></svg>
+              <span data-aviso-texto>Envio #1042 entregue</span>
             </div>
           </div>
-        </div>
+          <figcaption class="hero-legenda">Central Brindes, o sistema que criei. Dados fictícios.</figcaption>
+        </figure>
       </div>
     </section>
 
     <!-- ===== Projetos ===== -->
-    <section id="projetos" class="secao secao-escura secao-ancora">
+    <section id="projetos" class="secao secao-ancora">
       <div class="container">
-        <div class="secao-titulo" data-reveal>
-          <p class="rotulo">Portfólio</p>
-          <h2>Projetos em destaque</h2>
-        </div>
+        <header class="secao-cabeca" data-reveal>
+          <h2>Projetos</h2>
+          <p>Sistemas que resolvem problemas reais, do layout ao banco de dados.</p>
+        </header>
 
-        <div class="projetos-grade">
-          <div data-reveal>
-            <div class="card card-destaque card-luz">
-              <article class="destaque">
-                <img src="img/central-brindes-painel.jpg" alt="Tela inicial do Central Brindes (demonstração com dados fictícios)" width="1536" height="730" class="destaque-imagem" loading="lazy">
-                <div>
-                  <p class="rotulo rotulo-pequeno">Projeto principal</p>
-                  <h3 class="destaque-titulo">Central Brindes</h3>
-                  <p class="texto-apagado">Sistema web de estoque e envios que criei para a equipe de Marketing da empresa onde trabalho.</p>
-
-                  <dl class="destaque-etapas">
-                    <div><dt>Problema: </dt><dd>O estoque de brindes era controlado no olho, e o sistema geral da empresa vivia com dados errados e desatualizados.</dd></div>
-                    <div><dt>Solução: </dt><dd>Criei por iniciativa própria um sistema web completo de estoque e envios pelo Correio para representantes.</dd></div>
-                    <div><dt>Resultado: </dt><dd>A equipe de Marketing usa o sistema no dia a dia.</dd></div>
-                  </dl>
-
-                  <ul class="tags" aria-label="Tecnologias">
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JavaScript</li>
-                    <li>Firebase</li>
-                    <li>Cloudflare Workers</li>
-                    <li>SQL</li>
-                  </ul>
-
-                  <div class="botoes botoes-pequenos">
-                    <a href="projetos/central-brindes/index.html" class="botao botao-primario">
-                      Ver estudo de caso
-                      <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-                    </a>
-                    <a href="https://github.com/guilhermedemedeirosrabelo86-maker/central-brindes" target="_blank" rel="noopener noreferrer" class="botao botao-contorno">
-                      <svg class="icone-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" /></svg>
-                      Ver código
-                    </a>
-                    <a href="demo/central-brindes/index.html" target="_blank" rel="noopener noreferrer" class="botao botao-contorno">
-                      Ver demo
-                      <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
-                    </a>
-                  </div>
-                </div>
-              </article>
+        <article class="destaque">
+          <div class="destaque-texto" data-reveal>
+            <h3 class="destaque-titulo">Central Brindes</h3>
+            <p class="destaque-resumo">Sistema web de estoque e envios que criei, por iniciativa própria, para a equipe de Marketing da empresa onde trabalho.</p>
+            <ul class="tags" aria-label="Tecnologias">
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+              <li>Firebase</li>
+              <li>Cloudflare Workers</li>
+              <li>SQL</li>
+            </ul>
+            <div class="botoes">
+              <a href="projetos/central-brindes/index.html" class="botao botao-primario">
+                Ver estudo de caso
+                <svg class="icone-sm seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </a>
+              <a href="demo/central-brindes/index.html" target="_blank" rel="noopener noreferrer" class="botao botao-contorno">
+                Abrir a demo
+                <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+              </a>
+              <a href="https://github.com/guilhermedemedeirosrabelo86-maker/central-brindes" target="_blank" rel="noopener noreferrer" class="botao botao-icone" aria-label="Código no GitHub">
+                <svg class="icone" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" /></svg>
+              </a>
             </div>
           </div>
 
-          <div class="projetos-lista">
-            <div data-reveal data-delay="120">
-              <div class="card card-luz">
-                <article class="projeto">
-                  <div class="projeto-miniatura" aria-hidden="true"></div>
-                  <div class="projeto-info">
-                    <h3>GR Digital</h3>
-                    <p class="texto-apagado">Site do meu negócio de criação de sites para pequenas empresas.</p>
-                    <ul class="tags" aria-label="Tecnologias">
-                      <li>HTML</li>
-                      <li>CSS</li>
-                      <li>JavaScript</li>
-                    </ul>
-                    <a href="https://github.com/guilhermedemedeirosrabelo86-maker/GR-Digital" target="_blank" rel="noopener noreferrer" class="link-acento">
-                      Ver GR Digital
-                      <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
-                    </a>
-                  </div>
-                </article>
-              </div>
-            </div>
-
-            <div data-reveal data-delay="240">
-              <div class="card card-tracejado card-luz">
-                <article class="projeto">
-                  <div class="projeto-miniatura projeto-miniatura-listrada" aria-hidden="true"></div>
-                  <div class="projeto-info">
-                    <div class="projeto-titulo-linha">
-                      <h3>Outros sites</h3>
-                      <span class="selo-construcao">Em construção</span>
-                    </div>
-                    <p class="texto-apagado">Novos sites chegando por aqui.</p>
-                  </div>
-                </article>
-              </div>
+          <!-- O print "deita" para trás e se endireita conforme a rolagem (js/main.js) -->
+          <div class="vitrine" data-vitrine>
+            <div class="vitrine-janela">
+              <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
+              <img src="img/central-brindes-painel.jpg" alt="Tela inicial do Central Brindes (demonstração com dados fictícios)" width="1536" height="730" loading="lazy">
             </div>
           </div>
-        </div>
+
+          <!-- Problema, solução e resultado: é uma sequência, por isso os números -->
+          <ol class="historia">
+            <li data-reveal>
+              <h4>Problema</h4>
+              <p>O estoque de brindes era controlado no olho, e o sistema geral da empresa vivia com dados errados e desatualizados.</p>
+            </li>
+            <li data-reveal data-delay="100">
+              <h4>Solução</h4>
+              <p>Um sistema web completo de estoque e envios pelo Correio para representantes, feito sozinho.</p>
+            </li>
+            <li data-reveal data-delay="200">
+              <h4>Resultado</h4>
+              <p>A equipe de Marketing usa o sistema no dia a dia.</p>
+            </li>
+          </ol>
+        </article>
+
+        <ul class="outros">
+          <li data-reveal>
+            <a href="https://sitesgrdigital.com.br" target="_blank" rel="noopener noreferrer" class="outro">
+              <div>
+                <h3>GR Digital</h3>
+                <p>Site do meu negócio de criação de sites para pequenas empresas.</p>
+              </div>
+              <ul class="tags" aria-label="Tecnologias">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+              </ul>
+              <svg class="outro-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+            </a>
+          </li>
+          <li data-reveal>
+            <div class="outro outro-em-breve">
+              <div>
+                <h3>Outros sites <span class="selo">Em construção</span></h3>
+                <p>Novos sites chegando por aqui.</p>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
 
     <!-- ===== Sobre ===== -->
-    <section id="sobre" class="secao secao-grande secao-ancora">
+    <section id="sobre" class="secao secao-ancora">
       <div class="container">
-        <div class="secao-titulo" data-reveal>
-          <p class="rotulo">Sobre mim</p>
-          <h2>Quem é o Guilherme</h2>
-        </div>
+        <header class="secao-cabeca" data-reveal>
+          <h2>Sobre</h2>
+        </header>
 
         <!-- O JS separa este texto em palavras que "acendem" com a rolagem.
-             data-destaques: palavras que acendem em amarelo. -->
+             data-destaques: palavras que acendem em âmbar. -->
         <p class="texto-acende" data-destaques="Engenharia Software sistema completo problema">Trabalho o dia todo, estudo Engenharia de Software e, mesmo assim, construí sozinho um sistema completo que a equipe da empresa usa todos os dias. Gosto de olhar para um problema real e transformar em software que funciona.</p>
 
         <div class="sobre-grade">
-          <div class="card card-padding" data-reveal>
-            <h3 class="card-titulo">Informações</h3>
-            <dl class="informacoes">
-              <div class="informacao">
-                <span class="informacao-icone">
-                  <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z" stroke-linejoin="round" /><circle cx="12" cy="9.5" r="2.5" /></svg>
-                </span>
-                <div><dt>Cidade</dt><dd>Criciúma, SC</dd></div>
-              </div>
-              <div class="informacao">
-                <span class="informacao-icone">
-                  <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 21V12a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9M3 21h18M4 15c2 1.3 4 1.3 5.3 0 1.4 1.3 4 1.3 5.4 0 1.3 1.3 3.3 1.3 5.3 0M12 10V7" stroke-linecap="round" stroke-linejoin="round" /><path d="M12 3.5c.8.8.8 2 0 2.5-.8-.5-.8-1.7 0-2.5Z" /></svg>
-                </span>
-                <!-- A idade é calculada pelo JS a partir da data de nascimento -->
-                <div><dt>Idade</dt><dd data-nascimento="2006-03-03"></dd></div>
-              </div>
-              <div class="informacao">
-                <span class="informacao-icone">
-                  <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Z" stroke-linejoin="round" /><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5" stroke-linejoin="round" /></svg>
-                </span>
-                <div><dt>Graduação</dt><dd>Engenharia de Software · UNISATC</dd></div>
-              </div>
-            </dl>
-          </div>
+          <dl class="fichas" data-reveal>
+            <div>
+              <dt>Cidade</dt>
+              <dd>Criciúma, SC</dd>
+            </div>
+            <div>
+              <dt>Idade</dt>
+              <!-- Calculada pelo JS a partir da data de nascimento -->
+              <dd data-nascimento="2006-03-03"></dd>
+            </div>
+            <div>
+              <dt>Graduação</dt>
+              <dd>Engenharia de Software, UNISATC</dd>
+            </div>
+          </dl>
 
-          <div class="card card-padding" data-reveal data-delay="120">
-            <h3 class="card-titulo">Formação</h3>
+          <div data-reveal data-delay="100">
+            <h3 class="sobre-subtitulo">Formação</h3>
             <ol class="linha-tempo">
               <li>
                 <p class="linha-tempo-curso">Engenharia de Software</p>
-                <p class="linha-tempo-detalhe">UNISATC · Em andamento</p>
+                <p class="linha-tempo-detalhe">UNISATC, em andamento</p>
               </li>
               <li>
-                <p class="linha-tempo-curso">Ensino médio completo</p>
-                <p class="linha-tempo-detalhe">Colégio Universitário · Concluído em 2024</p>
+                <p class="linha-tempo-curso">Ensino médio</p>
+                <p class="linha-tempo-detalhe">Colégio Universitário, concluído em 2024</p>
               </li>
             </ol>
           </div>
@@ -298,16 +297,16 @@
     </section>
 
     <!-- ===== Skills ===== -->
-    <section id="skills" class="secao secao-escura secao-ancora">
+    <section id="skills" class="secao secao-ancora">
       <div class="container">
-        <div class="secao-titulo" data-reveal>
-          <p class="rotulo">Skills</p>
-          <h2>Com o que eu trabalho</h2>
-        </div>
+        <header class="secao-cabeca" data-reveal>
+          <h2>Skills</h2>
+          <p>O que eu uso para construir.</p>
+        </header>
 
-        <div class="grade-3">
-          <div class="card card-padding" data-reveal>
-            <h3 class="card-titulo">Front-end</h3>
+        <div class="skills-grade">
+          <div class="skills-grupo" data-reveal>
+            <h3>Front-end</h3>
             <ul class="skills">
               <li>HTML</li>
               <li>CSS</li>
@@ -315,8 +314,8 @@
               <li>React (estudando)</li>
             </ul>
           </div>
-          <div class="card card-padding" data-reveal data-delay="120">
-            <h3 class="card-titulo">Back-end e dados</h3>
+          <div class="skills-grupo" data-reveal data-delay="100">
+            <h3>Back-end e dados</h3>
             <ul class="skills">
               <li>Python</li>
               <li>Firebase</li>
@@ -324,8 +323,8 @@
               <li>Cloudflare Workers</li>
             </ul>
           </div>
-          <div class="card card-padding" data-reveal data-delay="240">
-            <h3 class="card-titulo">Ferramentas</h3>
+          <div class="skills-grupo" data-reveal data-delay="200">
+            <h3>Ferramentas</h3>
             <ul class="skills">
               <li>Git</li>
               <li>GitHub</li>
@@ -336,44 +335,36 @@
     </section>
 
     <!-- ===== Contato ===== -->
-    <section id="contato" class="secao secao-grande secao-ancora">
-      <div class="container">
-        <div class="contato" data-reveal>
-          <div class="contato-brilho" aria-hidden="true"></div>
-          <p class="rotulo">Contato</p>
-          <h2 class="contato-titulo">Vamos conversar sobre uma vaga ou um projeto?</h2>
-          <p class="contato-texto">Estou em busca de uma vaga na área de desenvolvimento e topo projetos também. O jeito mais rápido de falar comigo é pelo WhatsApp.</p>
+    <section id="contato" class="contato secao-ancora">
+      <div class="container" data-reveal>
+        <h2 class="contato-titulo">Vamos conversar sobre uma vaga ou um projeto?</h2>
+        <p class="contato-texto">Estou em busca de uma vaga na área de desenvolvimento e topo projetos também. O jeito mais rápido de falar comigo é pelo WhatsApp.</p>
 
-          <div class="botoes">
-            <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-primario">
-              <svg class="icone-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.98L2 22l5.17-1.5A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.07.89.9-3-.2-.31a8.2 8.2 0 1 1 6.85 3.75Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.16.25-.63.8-.78.97-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.72-1.33.08-.16.04-.3-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04c0 1.2.88 2.37 1 2.53.12.16 1.73 2.64 4.2 3.7 1.56.67 2.17.73 2.95.61.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.1-.22-.16-.47-.28Z" /></svg>
-              Chamar no WhatsApp
-            </a>
-          </div>
-
-          <ul class="canais">
-            <li>
-              <a href="mailto:guilhermedemedeirosrabelo86@gmail.com" aria-label="E-mail: guilhermedemedeirosrabelo86@gmail.com" class="canal">
-                <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                <span class="canal-texto">guilhermedemedeirosrabelo86@gmail.com</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/guilhermedemedeirosrabelo86-maker" target="_blank" rel="noopener noreferrer" class="canal">
-                <svg class="icone-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" /></svg>
-                <span>GitHub</span>
-              </a>
-            </li>
-          </ul>
+        <div class="botoes">
+          <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-primario botao-grande">
+            <svg class="icone" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.98L2 22l5.17-1.5A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.07.89.9-3-.2-.31a8.2 8.2 0 1 1 6.85 3.75Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.16.25-.63.8-.78.97-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.72-1.33.08-.16.04-.3-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04c0 1.2.88 2.37 1 2.53.12.16 1.73 2.64 4.2 3.7 1.56.67 2.17.73 2.95.61.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.1-.22-.16-.47-.28Z" /></svg>
+            Chamar no WhatsApp
+          </a>
         </div>
+
+        <ul class="canais">
+          <li>
+            <!-- O JS copia o e-mail ao clicar no botão ao lado -->
+            <a href="mailto:guilhermedemedeirosrabelo86@gmail.com" class="canal">guilhermedemedeirosrabelo86@gmail.com</a>
+            <button type="button" class="copiar" data-copiar="guilhermedemedeirosrabelo86@gmail.com">Copiar</button>
+          </li>
+          <li>
+            <a href="https://github.com/guilhermedemedeirosrabelo86-maker" target="_blank" rel="noopener noreferrer" class="canal">GitHub</a>
+          </li>
+        </ul>
       </div>
     </section>
   </main>
 
   <footer class="rodape">
     <div class="container rodape-conteudo">
-      <p><span class="texto-gradiente negrito">GR.</span> Guilherme Rabelo</p>
-      <p>Feito com HTML, CSS e JavaScript.</p>
+      <p><span class="logo">GR<span>.</span></span> Guilherme Rabelo</p>
+      <p>Feito à mão com HTML, CSS e JavaScript.</p>
     </div>
   </footer>
 </body>

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Central Brindes · Guilherme Rabelo</title>
   <meta name="description" content="Estudo de caso: sistema web de estoque e envios criado por Guilherme Rabelo.">
+  <meta name="theme-color" content="#0e0d0b">
   <link rel="canonical" href="https://guilherme-rabelo.vercel.app/projetos/central-brindes/">
 
   <meta property="og:type" content="article">
@@ -19,161 +20,139 @@
   <link rel="icon" href="../../img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..600&display=swap">
   <link rel="stylesheet" href="../../css/style.css">
+
+  <!-- Avisa o CSS que o JavaScript está ligado. Sem JS, nada fica escondido. -->
+  <script>document.documentElement.classList.add("js");</script>
   <script src="../../js/main.js" defer></script>
 </head>
 <body>
+  <a href="#conteudo" class="pular">Pular para o conteúdo</a>
   <div class="barra-progresso" aria-hidden="true"></div>
 
   <header class="navbar">
     <div class="container navbar-conteudo">
-      <a href="../../index.html#inicio" class="logo texto-gradiente" aria-label="Início">GR.</a>
+      <a href="../../index.html" class="logo" aria-label="Início">GR<span>.</span></a>
 
       <nav aria-label="Principal" class="menu-desktop">
-        <a href="../../index.html#inicio">Início</a>
-        <a href="../../index.html#sobre">Sobre</a>
         <a href="../../index.html#projetos">Projetos</a>
+        <a href="../../index.html#sobre">Sobre</a>
         <a href="../../index.html#skills">Skills</a>
         <a href="../../index.html#contato">Contato</a>
-        <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="navbar-conversar">Vamos conversar</a>
       </nav>
 
+      <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-pequeno botao-contorno navbar-conversar">Vamos conversar</a>
+
       <button type="button" class="botao-menu" aria-expanded="false" aria-controls="menu-celular" aria-label="Abrir menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <path class="icone-abrir" d="M4 7h16M4 12h16M4 17h16" />
-          <path class="icone-fechar" d="M6 6l12 12M18 6 6 18" />
-        </svg>
+        <span></span><span></span>
       </button>
     </div>
 
     <nav id="menu-celular" aria-label="Menu" class="menu-celular" hidden>
       <div class="container">
-        <a href="../../index.html#inicio">Início</a>
-        <a href="../../index.html#sobre">Sobre</a>
         <a href="../../index.html#projetos">Projetos</a>
+        <a href="../../index.html#sobre">Sobre</a>
         <a href="../../index.html#skills">Skills</a>
         <a href="../../index.html#contato">Contato</a>
-        <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="menu-celular-conversar">Vamos conversar</a>
+        <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-primario">Vamos conversar</a>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main id="conteudo">
     <div class="container caso">
-      <a href="../../index.html#projetos" class="voltar"><span aria-hidden="true">←</span> Voltar aos projetos</a>
+      <a href="../../index.html#projetos" class="voltar entrada" style="--i: 0"><span aria-hidden="true">←</span> Voltar aos projetos</a>
 
-      <div class="caso-topo" data-reveal>
-        <div>
-          <p class="rotulo">Estudo de caso</p>
-          <h1 class="caso-titulo">Central Brindes</h1>
-          <p class="caso-resumo">Sistema web de estoque e envios que criei para a equipe de Marketing da empresa onde trabalho.</p>
-          <div class="botoes botoes-pequenos">
-            <a href="https://github.com/guilhermedemedeirosrabelo86-maker/central-brindes" target="_blank" rel="noopener noreferrer" class="botao botao-primario">
-              <svg class="icone-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" /></svg>
-              Ver código
-            </a>
-            <a href="../../demo/central-brindes/index.html" target="_blank" rel="noopener noreferrer" class="botao botao-contorno">
-              Ver demo
-              <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
-            </a>
-          </div>
-          <p class="caso-aviso">A demo usa dados fictícios e roda inteira no seu navegador.</p>
+      <h1 class="caso-titulo">
+        <span class="linha"><span class="entrada" style="--i: 1">Central</span></span>
+        <span class="linha"><span class="entrada" style="--i: 2">Brindes</span></span>
+      </h1>
+
+      <p class="caso-resumo entrada" style="--i: 3">Sistema web de estoque e envios que criei, por iniciativa própria, para a equipe de Marketing da empresa onde trabalho.</p>
+
+      <div class="botoes entrada" style="--i: 4">
+        <a href="../../demo/central-brindes/index.html" target="_blank" rel="noopener noreferrer" class="botao botao-primario">
+          Abrir a demo
+          <svg class="icone-sm seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+        </a>
+        <a href="https://github.com/guilhermedemedeirosrabelo86-maker/central-brindes" target="_blank" rel="noopener noreferrer" class="botao botao-contorno">
+          <svg class="icone-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" /></svg>
+          Ver código
+        </a>
+      </div>
+      <p class="caso-aviso entrada" style="--i: 4">A demo usa dados fictícios e roda inteira no seu navegador.</p>
+
+      <!-- O print "deita" para trás e se endireita conforme a rolagem (js/main.js) -->
+      <div class="vitrine entrada" style="--i: 5" data-vitrine>
+        <div class="vitrine-janela">
+          <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
+          <img src="../../img/central-brindes-painel.jpg" alt="Tela inicial do Central Brindes (demonstração com dados fictícios)" width="1536" height="730">
         </div>
-        <img src="../../img/central-brindes-painel.jpg" alt="Tela inicial do Central Brindes (demonstração com dados fictícios)" width="1536" height="730" class="caso-imagem">
       </div>
 
-      <div class="grade-3 caso-etapas">
-        <div class="card card-padding" data-reveal>
-          <h2 class="etapa-titulo texto-gradiente">Problema</h2>
-          <p class="texto-suave">O estoque de brindes era controlado no olho, e o sistema geral da empresa vivia com dados errados e desatualizados.</p>
-        </div>
-        <div class="card card-padding" data-reveal data-delay="120">
-          <h2 class="etapa-titulo texto-gradiente">Solução</h2>
-          <p class="texto-suave">Criei por iniciativa própria um sistema web completo de estoque e envios pelo Correio para representantes.</p>
-        </div>
-        <div class="card card-padding" data-reveal data-delay="240">
-          <h2 class="etapa-titulo texto-gradiente">Resultado</h2>
-          <p class="texto-suave">A equipe de Marketing usa o sistema no dia a dia.</p>
-        </div>
-      </div>
+      <!-- Problema, solução e resultado: é uma sequência, por isso os números -->
+      <ol class="historia">
+        <li data-reveal>
+          <h2 class="historia-titulo">Problema</h2>
+          <p>O estoque de brindes era controlado no olho, e o sistema geral da empresa vivia com dados errados e desatualizados.</p>
+        </li>
+        <li data-reveal data-delay="100">
+          <h2 class="historia-titulo">Solução</h2>
+          <p>Criei por iniciativa própria um sistema web completo de estoque e envios pelo Correio para representantes.</p>
+        </li>
+        <li data-reveal data-delay="200">
+          <h2 class="historia-titulo">Resultado</h2>
+          <p>A equipe de Marketing usa o sistema no dia a dia.</p>
+        </li>
+      </ol>
 
       <section class="caso-secao">
-        <div data-reveal>
-          <h2 class="caso-subtitulo">Destaques técnicos</h2>
-          <p class="texto-apagado caso-intro">Feito sozinho, por iniciativa própria, com HTML, CSS e JavaScript puros e serviços gratuitos.</p>
-        </div>
+        <header class="secao-cabeca" data-reveal>
+          <h2>Destaques técnicos</h2>
+          <p>Feito sozinho, com HTML, CSS e JavaScript puros e serviços gratuitos.</p>
+        </header>
         <ul class="destaques">
           <li data-reveal>
-            <div class="card card-luz">
-              <div class="card-padding">
-                <h3>Estoque que nunca desencontra</h3>
-                <p>O saldo não é um número digitado: é calculado a partir do histórico (entradas + ajustes − saídas − envios). Mostra o que está reservado e o que está disponível, e cancelar um envio devolve os itens sozinho.</p>
-              </div>
-            </div>
+            <h3>Estoque que nunca desencontra</h3>
+            <p>O saldo não é um número digitado: é calculado a partir do histórico (entradas + ajustes − saídas − envios). Mostra o que está reservado e o que está disponível, e cancelar um envio devolve os itens sozinho.</p>
           </li>
-          <li data-reveal data-delay="80">
-            <div class="card card-luz">
-              <div class="card-padding">
-                <h3>Envios com etapas e nota fiscal</h3>
-                <p>Cada envio passa por pendente → separado → entregue, com rastreio e fotos da caixa. Basta arrastar o XML ou o PDF da nota fiscal para criar o envio já com os itens ligados ao estoque.</p>
-              </div>
-            </div>
+          <li data-reveal data-delay="100">
+            <h3>Envios com etapas e nota fiscal</h3>
+            <p>Cada envio passa por pendente → separado → entregue, com rastreio e fotos da caixa. Basta arrastar o XML ou o PDF da nota fiscal para criar o envio já com os itens ligados ao estoque.</p>
           </li>
           <li data-reveal>
-            <div class="card card-luz">
-              <div class="card-padding">
-                <h3>Página pública de acompanhamento</h3>
-                <p>O representante abre um link próprio, vê o andamento do envio e confirma o recebimento.</p>
-              </div>
-            </div>
+            <h3>Página pública de acompanhamento</h3>
+            <p>O representante abre um link próprio, vê o andamento do envio e confirma o recebimento.</p>
           </li>
-          <li data-reveal data-delay="80">
-            <div class="card card-luz">
-              <div class="card-padding">
-                <h3>Tarefas, conversas e notificações</h3>
-                <p>A equipe troca pedidos e tarefas dentro do sistema e recebe notificações push no celular.</p>
-              </div>
-            </div>
+          <li data-reveal data-delay="100">
+            <h3>Tarefas, conversas e notificações</h3>
+            <p>A equipe troca pedidos e tarefas dentro do sistema e recebe notificações push no celular.</p>
           </li>
           <li data-reveal>
-            <div class="card card-luz">
-              <div class="card-padding">
-                <h3>Rotinas automáticas</h3>
-                <p>Nos dias úteis, resumos às 8h e às 14h, lembrete para chamar o Correio às 11h30, alerta de estoque baixo e backup semanal automático.</p>
-              </div>
-            </div>
+            <h3>Rotinas automáticas</h3>
+            <p>Nos dias úteis, resumos às 8h e às 14h, lembrete para chamar o Correio às 11h30, alerta de estoque baixo e backup semanal automático.</p>
           </li>
-          <li data-reveal data-delay="80">
-            <div class="card card-luz">
-              <div class="card-padding">
-                <h3>Login e permissões</h3>
-                <p>Acesso por usuário e senha, papéis de administrador e equipe, e regras de segurança no banco que impedem alterar o que não é seu.</p>
-              </div>
-            </div>
+          <li data-reveal data-delay="100">
+            <h3>Login e permissões</h3>
+            <p>Acesso por usuário e senha, papéis de administrador e equipe, e regras de segurança no banco que impedem alterar o que não é seu.</p>
           </li>
           <li data-reveal>
-            <div class="card card-luz">
-              <div class="card-padding">
-                <h3>Consultas SQL no navegador</h3>
-                <p>Administradores consultam os dados com SQL (SQLite rodando no próprio navegador) e exportam um banco para Excel ou Power BI.</p>
-              </div>
-            </div>
+            <h3>Consultas SQL no navegador</h3>
+            <p>Administradores consultam os dados com SQL (SQLite rodando no próprio navegador) e exportam um banco para Excel ou Power BI.</p>
           </li>
-          <li data-reveal data-delay="80">
-            <div class="card card-luz">
-              <div class="card-padding">
-                <h3>Deploy automático</h3>
-                <p>Cada push no GitHub publica a nova versão sozinho no Cloudflare.</p>
-              </div>
-            </div>
+          <li data-reveal data-delay="100">
+            <h3>Deploy automático</h3>
+            <p>Cada push no GitHub publica a nova versão sozinho no Cloudflare.</p>
           </li>
         </ul>
       </section>
 
-      <section class="caso-secao" data-reveal>
-        <h2 class="caso-subtitulo">Stack</h2>
-        <ul class="tags caso-stack" aria-label="Tecnologias">
+      <section class="caso-secao">
+        <header class="secao-cabeca" data-reveal>
+          <h2>Stack</h2>
+        </header>
+        <ul class="tags caso-stack" aria-label="Tecnologias" data-reveal>
           <li>HTML</li>
           <li>CSS</li>
           <li>JavaScript</li>
@@ -183,15 +162,28 @@
           <li>Cloudflare Workers</li>
           <li>SQLite (no navegador)</li>
         </ul>
-        <p class="texto-apagado caso-nota">As imagens desta página vêm da demonstração e usam dados fictícios.</p>
+        <p class="caso-nota">As imagens desta página vêm da demonstração e usam dados fictícios.</p>
       </section>
     </div>
+
+    <section class="contato">
+      <div class="container" data-reveal>
+        <h2 class="contato-titulo">Gostou do projeto? Vamos conversar.</h2>
+        <div class="botoes">
+          <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-primario botao-grande">
+            <svg class="icone" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.98L2 22l5.17-1.5A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.07.89.9-3-.2-.31a8.2 8.2 0 1 1 6.85 3.75Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.16.25-.63.8-.78.97-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.72-1.33.08-.16.04-.3-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04c0 1.2.88 2.37 1 2.53.12.16 1.73 2.64 4.2 3.7 1.56.67 2.17.73 2.95.61.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.1-.22-.16-.47-.28Z" /></svg>
+            Chamar no WhatsApp
+          </a>
+          <a href="../../index.html#projetos" class="botao botao-contorno botao-grande">Ver outros projetos</a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="rodape">
     <div class="container rodape-conteudo">
-      <p><span class="texto-gradiente negrito">GR.</span> Guilherme Rabelo</p>
-      <p>Feito com HTML, CSS e JavaScript.</p>
+      <p><span class="logo">GR<span>.</span></span> Guilherme Rabelo</p>
+      <p>Feito à mão com HTML, CSS e JavaScript.</p>
     </div>
   </footer>
 </body>

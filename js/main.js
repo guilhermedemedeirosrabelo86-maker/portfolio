@@ -7,10 +7,30 @@
 
 // O usuário pediu "menos movimento" nas configurações do sistema?
 const menosMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Tem mouse (computador)? No celular, efeitos que seguem o mouse ficam desligados.
+const temMouse = window.matchMedia("(pointer: fine)").matches;
+
+// ---------- Entrada da página ----------
+// Espera as fontes carregarem (para o texto não "pular") e coloca a classe
+// "pronto" no <html>. O CSS usa essa classe para animar as peças com .entrada.
+function iniciarEntrada() {
+  const raiz = document.documentElement;
+  let feito = false;
+  function mostrar() {
+    if (feito) return;
+    feito = true;
+    // Ler offsetHeight obriga o navegador a calcular o estado inicial (escondido)
+    // antes de trocarmos a classe; assim a transição acontece.
+    void raiz.offsetHeight;
+    setTimeout(() => raiz.classList.add("pronto"), 30);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(mostrar);
+  setTimeout(mostrar, 700); // se as fontes demorarem, mostra assim mesmo
+}
 
 // ---------- Menu do celular ----------
-// O botão ☰ mostra e esconde o menu. aria-expanded avisa leitores de tela
-// se o menu está aberto (e o CSS usa isso para trocar o ícone por ✕).
+// O botão mostra e esconde o menu. aria-expanded avisa leitores de tela
+// se o menu está aberto (e o CSS usa isso para virar as linhas em X).
 function iniciarMenu() {
   const botao = document.querySelector(".botao-menu");
   const menu = document.getElementById("menu-celular");
@@ -30,24 +50,226 @@ function iniciarMenu() {
   });
 }
 
+// ---------- Navbar ----------
+// 1. Ganha fundo depois que a página rola um pouco.
+// 2. Uma pílula desliza até o link da seção que está no meio da tela.
+function iniciarNavbar() {
+  const navbar = document.querySelector(".navbar");
+  if (!navbar) return;
+
+  aoRolar(() => navbar.classList.toggle("rolou", window.scrollY > 8));
+
+  const indicador = document.querySelector(".menu-indicador");
+  const links = [...document.querySelectorAll(".menu-desktop a[href^='#']")];
+  if (!indicador || links.length === 0 || !("IntersectionObserver" in window)) return;
+
+  let ativo = null;
+
+  function moverPara(link) {
+    ativo = link;
+    links.forEach((l) => l.classList.toggle("ativo", l === link));
+    if (!link) {
+      indicador.style.opacity = "0";
+      return;
+    }
+    indicador.style.opacity = "1";
+    indicador.style.width = `${link.offsetWidth}px`;
+    indicador.style.transform = `translateX(${link.offsetLeft}px)`;
+  }
+
+  // Observa uma faixa fina no meio da tela: a seção que passa por ela é a "atual".
+  const observador = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((entrada) => {
+        const link = links.find((l) => l.getAttribute("href") === `#${entrada.target.id}`);
+        if (entrada.isIntersecting) moverPara(link);
+        else if (ativo === link) moverPara(null);
+      });
+    },
+    { rootMargin: "-45% 0px -50% 0px" },
+  );
+
+  links.forEach((link) => {
+    const secao = document.querySelector(link.getAttribute("href"));
+    if (secao) observador.observe(secao);
+  });
+
+  window.addEventListener("resize", () => ativo && moverPara(ativo));
+}
+
 // ---------- Barra de progresso da rolagem ----------
 // Vai de 0 (topo da página) até 1 (final) e estica a barrinha com scaleX.
 function iniciarBarraProgresso() {
   const barra = document.querySelector(".barra-progresso");
   if (!barra) return;
 
-  function atualizar() {
+  aoRolar(() => {
     const doc = document.documentElement;
     const total = doc.scrollHeight - doc.clientHeight;
     const progresso = total > 0 ? doc.scrollTop / total : 0;
     barra.style.transform = `scaleX(${progresso})`;
-  }
-
-  aoRolar(atualizar);
+  });
 }
 
-// ---------- Elementos que aparecem ao rolar ----------
-// Quem tem o atributo data-reveal surge de baixo para cima quando entra na tela.
+// ---------- Painel animado do topo (mini Central Brindes) ----------
+// Repete um ciclo: o envio fica pendente → é separado (o estoque baixa)
+// → é entregue (aparece o aviso) → começa o próximo envio.
+const envios = [
+  { numero: 1042, destino: "Representante em Joinville, SC", caneta: 40, ecobag: 12 },
+  { numero: 1043, destino: "Representante em Curitiba, PR", caneta: 25, ecobag: 8 },
+  { numero: 1044, destino: "Representante em Porto Alegre, RS", caneta: 30, ecobag: 15 },
+];
+const nomesEtapas = ["Pendente", "Separado", "Entregue"];
+
+function iniciarPainel() {
+  const painel = document.querySelector(".painel");
+  if (!painel) return;
+
+  const el = {
+    envio: painel.querySelector(".envio"),
+    etapas: painel.querySelector(".etapas"),
+    selo: painel.querySelector("[data-envio-selo]"),
+    numero: painel.querySelector("[data-envio-numero]"),
+    destino: painel.querySelector("[data-envio-destino]"),
+    itens: painel.querySelectorAll(".envio-itens li span:last-child"),
+    caneta: painel.querySelector("[data-estoque='caneta']"),
+    ecobag: painel.querySelector("[data-estoque='ecobag']"),
+    barraCaneta: painel.querySelector("[data-barra='caneta']"),
+    barraEcobag: painel.querySelector("[data-barra='ecobag']"),
+    aviso: painel.querySelector("[data-aviso]"),
+    avisoTexto: painel.querySelector("[data-aviso-texto]"),
+  };
+
+  inclinarComMouse(painel);
+  if (menosMovimento) return; // fica parado no primeiro estado
+
+  const estoque = { caneta: 340, ecobag: 120 };
+  let indice = 0;
+  let etapa = 0;
+  let naTela = true;
+
+  // Pausa a animação quando o painel sai da tela (economiza bateria).
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => (naTela = e.isIntersecting)).observe(painel);
+  }
+
+  function atualizarSeloEEtapas() {
+    el.etapas.dataset.etapa = etapa;
+    el.selo.textContent = nomesEtapas[etapa];
+    el.selo.dataset.status = nomesEtapas[etapa].toLowerCase();
+  }
+
+  function mostrarEtapa() {
+    const envio = envios[indice];
+
+    if (etapa === 0) {
+      // Novo envio: esconde o card, troca os dados e mostra de novo.
+      el.aviso.classList.remove("visivel");
+      el.envio.classList.add("trocando");
+      setTimeout(() => {
+        el.numero.textContent = `#${envio.numero}`;
+        el.destino.textContent = envio.destino;
+        el.itens[0].textContent = `× ${envio.caneta}`;
+        el.itens[1].textContent = `× ${envio.ecobag}`;
+        atualizarSeloEEtapas();
+        el.envio.classList.remove("trocando");
+      }, 300);
+      return;
+    }
+
+    atualizarSeloEEtapas();
+
+    if (etapa === 1) {
+      // Separar o envio tira os itens do estoque.
+      contar(el.caneta, estoque.caneta, (estoque.caneta -= envio.caneta));
+      contar(el.ecobag, estoque.ecobag, (estoque.ecobag -= envio.ecobag));
+      el.barraCaneta.style.setProperty("--valor", estoque.caneta / 400);
+      el.barraEcobag.style.setProperty("--valor", estoque.ecobag / 250);
+    }
+
+    if (etapa === 2) {
+      el.avisoTexto.textContent = `Envio #${envio.numero} entregue`;
+      el.aviso.classList.add("visivel");
+    }
+  }
+
+  function avancar() {
+    if (naTela) {
+      etapa += 1;
+      if (etapa > 2) {
+        etapa = 0;
+        indice = (indice + 1) % envios.length;
+        // Quando volta ao primeiro envio, o estoque é reabastecido.
+        if (indice === 0) {
+          contar(el.caneta, estoque.caneta, (estoque.caneta = 340));
+          contar(el.ecobag, estoque.ecobag, (estoque.ecobag = 120));
+          el.barraCaneta.style.setProperty("--valor", 0.85);
+          el.barraEcobag.style.setProperty("--valor", 0.48);
+        }
+      }
+      mostrarEtapa();
+    }
+    // Cada etapa fica um tempo diferente na tela.
+    setTimeout(avancar, [1700, 1900, 2600][etapa]);
+  }
+
+  // Começa depois da entrada da página.
+  setTimeout(avancar, 2200);
+}
+
+// Anima um número de "de" até "para" (ex.: 340 → 300) em 700 ms.
+function contar(elemento, de, para) {
+  let inicio = null;
+  function passo(agora) {
+    if (inicio === null) inicio = agora; // o tempo começa a contar no primeiro quadro
+    const t = Math.min((agora - inicio) / 700, 1);
+    const suave = 1 - Math.pow(1 - t, 3); // começa rápido e freia
+    elemento.textContent = Math.round(de + (para - de) * suave);
+    if (t < 1) requestAnimationFrame(passo);
+  }
+  requestAnimationFrame(passo);
+}
+
+// Inclina o elemento de leve na direção do mouse (efeito 3D).
+// As variáveis --rx e --ry são usadas no transform do CSS.
+function inclinarComMouse(elemento) {
+  if (!temMouse || menosMovimento) return;
+  const area = elemento.closest(".hero") || elemento;
+
+  area.addEventListener("mousemove", (evento) => {
+    const r = elemento.getBoundingClientRect();
+    // Posição do mouse de -0.5 a 0.5 em relação ao centro do elemento
+    const x = (evento.clientX - r.left) / r.width - 0.5;
+    const y = (evento.clientY - r.top) / r.height - 0.5;
+    elemento.style.setProperty("--ry", `${(x * 8).toFixed(2)}deg`);
+    elemento.style.setProperty("--rx", `${(-y * 6).toFixed(2)}deg`);
+  });
+
+  area.addEventListener("mouseleave", () => {
+    elemento.style.setProperty("--ry", "0deg");
+    elemento.style.setProperty("--rx", "0deg");
+  });
+}
+
+// ---------- Print do projeto que se endireita ao rolar ----------
+// Quando entra na tela ele está deitado para trás e menor; conforme sobe,
+// fica reto e no tamanho normal.
+function iniciarVitrine() {
+  const vitrine = document.querySelector("[data-vitrine]");
+  if (!vitrine || menosMovimento) return;
+  const janela = vitrine.querySelector(".vitrine-janela");
+
+  aoRolar(() => {
+    const topo = vitrine.getBoundingClientRect().top;
+    const progresso = (window.innerHeight - topo) / (window.innerHeight * 0.75);
+    const p = Math.min(Math.max(progresso, 0), 1); // entre 0 e 1
+    janela.style.setProperty("--inclinacao", `${((1 - p) * 24).toFixed(2)}deg`);
+    janela.style.setProperty("--escala", (0.9 + 0.1 * p).toFixed(3));
+  });
+}
+
+// ---------- Blocos que aparecem ao rolar ----------
+// Quem tem o atributo data-reveal surge (de baixo e sem desfoque) quando entra na tela.
 // Sem JS ou com "menos movimento" nada é escondido: o conteúdo sempre aparece.
 function iniciarRevelar() {
   if (menosMovimento || !("IntersectionObserver" in window)) return;
@@ -71,7 +293,7 @@ function iniciarRevelar() {
     if (r.top < window.innerHeight && r.bottom > 0) return;
 
     el.classList.add("revelar", "escondido");
-    // data-delay="120" faz o elemento esperar 120 ms (efeito "um depois do outro").
+    // data-delay="100" faz o elemento esperar 100 ms (efeito "um depois do outro").
     if (el.dataset.delay) el.style.transitionDelay = `${el.dataset.delay}ms`;
     observador.observe(el);
   });
@@ -116,29 +338,30 @@ function iniciarTextoAcende() {
     return;
   }
 
-  function atualizar() {
+  aoRolar(() => {
     const topo = paragrafo.getBoundingClientRect().top;
     const progresso = (window.innerHeight * 0.85 - topo) / (window.innerHeight * 0.6);
     const limitado = Math.min(Math.max(progresso, 0), 1); // entre 0 e 1
     const acesas = Math.round(limitado * spans.length);
     spans.forEach((s, i) => s.classList.toggle("acesa", i < acesas));
-  }
-
-  aoRolar(atualizar);
+  });
 }
 
-// ---------- Luz que segue o mouse nos cards ----------
-// Salva a posição do mouse dentro do card nas variáveis CSS --x e --y.
-// O CSS (.card-luz::before) usa essas variáveis para posicionar a luz.
-function iniciarCardsLuz() {
-  const temMouse = window.matchMedia("(pointer: fine)").matches;
-  if (!temMouse || menosMovimento) return;
-
-  document.querySelectorAll(".card-luz").forEach((card) => {
-    card.addEventListener("mousemove", (evento) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty("--x", `${evento.clientX - r.left}px`);
-      card.style.setProperty("--y", `${evento.clientY - r.top}px`);
+// ---------- Botão "Copiar" do e-mail ----------
+function iniciarCopiar() {
+  document.querySelectorAll("[data-copiar]").forEach((botao) => {
+    botao.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(botao.dataset.copiar);
+        botao.textContent = "Copiado";
+        botao.classList.add("copiado");
+        setTimeout(() => {
+          botao.textContent = "Copiar";
+          botao.classList.remove("copiado");
+        }, 2000);
+      } catch {
+        botao.textContent = "Não deu para copiar";
+      }
     });
   });
 }
@@ -207,10 +430,14 @@ function aoRolar(funcao) {
 }
 
 // ---------- Liga tudo ----------
+iniciarEntrada();
 iniciarMenu();
+iniciarNavbar();
 iniciarBarraProgresso();
 iniciarIdade();
 iniciarIcones();
+iniciarPainel();
+iniciarVitrine();
 iniciarTextoAcende();
 iniciarRevelar();
-iniciarCardsLuz();
+iniciarCopiar();

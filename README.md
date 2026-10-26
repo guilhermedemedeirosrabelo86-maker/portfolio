@@ -31,13 +31,17 @@ Cada parte é uma função em `js/main.js`:
 
 | Função | O que faz |
 |---|---|
-| `iniciarMenu` | Abre e fecha o menu ☰ no celular |
-| `iniciarBarraProgresso` | Barrinha amarela no topo que acompanha a rolagem |
-| `iniciarRevelar` | Faz os blocos com `data-reveal` surgirem ao entrar na tela (usa `IntersectionObserver`) |
-| `iniciarTextoAcende` | Acende as palavras do "Sobre mim" conforme a rolagem |
-| `iniciarCardsLuz` | Luz que segue o mouse nos cards (variáveis CSS `--x` e `--y`) |
+| `iniciarEntrada` | Anima o topo ao abrir a página (o CSS usa a classe `pronto`) |
+| `iniciarMenu` | Abre e fecha o menu do celular |
+| `iniciarNavbar` | Dá fundo à navbar ao rolar e desliza a pílula até a seção atual |
+| `iniciarBarraProgresso` | Barrinha âmbar no topo que acompanha a rolagem |
+| `iniciarPainel` | Mini Central Brindes do topo: envios passam por pendente → separado → entregue |
+| `iniciarVitrine` | O print do projeto se endireita conforme a rolagem |
+| `iniciarRevelar` | Blocos com `data-reveal` surgem ao entrar na tela (`IntersectionObserver`) |
+| `iniciarTextoAcende` | Acende as palavras do "Sobre" conforme a rolagem |
+| `iniciarCopiar` | Botão que copia o e-mail |
 | `iniciarIdade` | Calcula a idade a partir da data de nascimento |
-| `iniciarIcones` | Coloca o ícone de cada tecnologia nas listas de tags |
+| `iniciarIcones` | Coloca o ícone de cada tecnologia nas listas |
 
 Quem ativou "reduzir movimento" no sistema vê tudo sem animação (`prefers-reduced-motion`).
 
@@ -47,8 +51,8 @@ Quem ativou "reduzir movimento" no sistema vê tudo sem animação (`prefers-red
 |---|---|
 | Mudar textos | Direto no `index.html` |
 | Mudar as cores | Variáveis no começo do `css/style.css` |
-| Colocar o LinkedIn | Copie um item da lista `.redes` (início) e `.canais` (contato) no `index.html` |
-| Adicionar um projeto | Copie um bloco `<div data-reveal>` dentro de `.projetos-lista` |
+| Colocar o LinkedIn | Copie o botão do GitHub no topo e o item GitHub da lista `.canais` (contato) |
+| Adicionar um projeto | Copie um `<li>` da lista `.outros` no `index.html` |
 | Trocar o endereço do site | Procure `guilherme-rabelo.vercel.app` nos `.html`, `sitemap.xml` e `robots.txt` |
 
 ## Publicar

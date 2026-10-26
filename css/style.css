@@ -5,7 +5,7 @@
    2. Utilitários
    3. Botões e tags
    4. Navbar e barra de progresso
-   5. Hero (início) e painel animado
+   5. Hero (início) e foto
    6. Seções
    7. Projetos
    8. Sobre
@@ -452,7 +452,7 @@ button {
   margin-top: 1.25rem;
 }
 
-/* ---------- 5. Hero (início) e painel animado ---------- */
+/* ---------- 5. Hero (início) e foto ---------- */
 
 /* overflow-x: clip corta o brilho só nas laterais (sem rolagem para o lado),
    mas deixa ele vazar para baixo, sem uma linha reta no fim da seção */
@@ -461,7 +461,7 @@ button {
   overflow-x: clip;
 }
 
-/* Brilho âmbar atrás do painel */
+/* Brilho âmbar atrás da foto */
 .hero::before {
   content: "";
   position: absolute;
@@ -1229,9 +1229,6 @@ a.outro:hover h3 {
     padding-inline: 1.5rem;
   }
 
-  .painel-corpo {
-    grid-template-columns: 1.15fr 1fr;
-  }
 
   .outro {
     grid-template-columns: 1fr auto;

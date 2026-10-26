@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://guilherme-rabelo.vercel.app/sitemap.xml
+Sitemap: https://portfolio-lyart-eta-yv04rf5tdp.vercel.app/sitemap.xml

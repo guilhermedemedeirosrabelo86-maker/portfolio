@@ -54,7 +54,7 @@ Quem ativou "reduzir movimento" no sistema vê tudo sem animação (`prefers-red
 | Mudar as cores | Variáveis no começo do `css/style.css` |
 | Trocar a foto | Substitua `img/guilherme.jpg` (de preferência 720 × 900, retrato) |
 | Adicionar um projeto | Copie um `<li>` da lista `.outros` no `index.html` |
-| Trocar o endereço do site | Procure `guilherme-rabelo.vercel.app` nos `.html`, `sitemap.xml` e `robots.txt` |
+| Trocar o endereço do site | Procure `portfolio-lyart-eta-yv04rf5tdp.vercel.app` nos `.html`, `sitemap.xml` e `robots.txt` |
 
 ## Publicar
 

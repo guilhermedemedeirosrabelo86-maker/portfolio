@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://guilherme-rabelo.vercel.app/sitemap.xml

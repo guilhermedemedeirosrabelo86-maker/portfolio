@@ -1,0 +1,1185 @@
+/* =========================================================
+   Portfólio · Guilherme Rabelo
+   Índice:
+   1. Cores e base
+   2. Utilitários (container, textos, ícones)
+   3. Botões e tags
+   4. Navbar e barra de progresso
+   5. Seções e cards
+   6. Hero (início)
+   7. Projetos
+   8. Sobre
+   9. Skills e contato
+   10. Rodapé
+   11. Página do estudo de caso
+   12. Animações
+   ========================================================= */
+
+/* ---------- 1. Cores e base ---------- */
+
+/* Todas as cores do site ficam aqui. Mudou aqui, muda em tudo. */
+:root {
+  --base: #0b0b0c;      /* fundo da página */
+  --card: #151517;      /* fundo dos cards */
+  --linha: #26262a;     /* bordas */
+  --tinta: #ecebe8;     /* texto principal */
+  --suave: #cfcdc7;     /* texto secundário */
+  --apagado: #9a9893;   /* texto mais fraco */
+  --acento: #f5b301;    /* amarelo */
+  --acento-2: #ff8a00;  /* laranja */
+  --sobre-acento: #111111; /* texto em cima do amarelo */
+  --ok: #22c55e;        /* verde "online" */
+  --gradiente: linear-gradient(90deg, var(--acento), #f59e0b);
+  --raio: 1rem;         /* cantos arredondados dos cards */
+
+  color-scheme: dark;
+}
+
+/* Faz padding e borda contarem dentro da largura (evita surpresas) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Rolagem suave só para quem não pediu "menos movimento" no sistema */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--base);
+  /* brilho amarelo bem fraco no canto de cima */
+  background-image: radial-gradient(ellipse 80% 60% at 80% 0%, rgb(245 179 1 / 0.08) 0%, transparent 60%);
+  background-repeat: no-repeat;
+  color: var(--tinta);
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+::selection {
+  background: rgb(245 179 1 / 0.35);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+h1,
+h2,
+h3 {
+  color: #fff;
+  line-height: 1.2;
+}
+
+/* Some com o elemento da tela, mas leitores de tela continuam lendo */
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- 2. Utilitários ---------- */
+
+.container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.texto-gradiente {
+  background-image: linear-gradient(90deg, var(--acento), var(--acento-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.negrito {
+  font-weight: 700;
+}
+
+.texto-suave {
+  color: var(--suave);
+  line-height: 1.625;
+}
+
+.texto-apagado {
+  color: var(--apagado);
+  font-size: 0.875rem;
+  line-height: 1.625;
+}
+
+/* Rótulo pequeno amarelo em cima dos títulos ("PORTFÓLIO", "CONTATO"...) */
+.rotulo {
+  color: var(--acento);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.rotulo-pequeno {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+
+.icone {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.icone-sm {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+/* ---------- 3. Botões e tags ---------- */
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.botoes-pequenos {
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.botao:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.botao-primario {
+  background-image: var(--gradiente);
+  color: var(--sobre-acento);
+  box-shadow: 0 8px 30px -8px rgb(245 179 1 / 0.45);
+}
+
+.botao-primario:hover {
+  filter: brightness(1.1);
+}
+
+.botao-contorno {
+  border: 1px solid var(--linha);
+  background: rgb(255 255 255 / 0.02);
+  color: var(--tinta);
+}
+
+.botao-contorno:hover {
+  border-color: var(--acento);
+  background: rgb(255 255 255 / 0.05);
+}
+
+/* Lista de tecnologias. O ícone de cada uma é colocado pelo js/main.js */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--linha);
+  border-radius: 0.375rem;
+  background: rgb(255 255 255 / 0.02);
+  color: var(--suave);
+  font-size: 0.75rem;
+}
+
+.tags li svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+
+/* ---------- 4. Navbar e barra de progresso ---------- */
+
+/* Barrinha amarela no topo que cresce conforme a rolagem (o JS muda o scaleX) */
+.barra-progresso {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  height: 3px;
+  background-image: var(--gradiente);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid rgb(255 255 255 / 0.05);
+  background: rgb(11 11 12 / 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.navbar-conteudo {
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.menu-desktop {
+  display: none; /* aparece só em telas grandes, ver media query abaixo */
+  align-items: center;
+  gap: 2rem;
+}
+
+.menu-desktop a {
+  color: var(--apagado);
+  font-size: 0.875rem;
+  transition: color 0.15s;
+}
+
+.menu-desktop a:hover {
+  color: #fff;
+}
+
+.menu-desktop .navbar-conversar {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgb(245 179 1 / 0.7);
+  border-radius: 0.5rem;
+  color: #fff;
+  font-weight: 500;
+}
+
+.menu-desktop .navbar-conversar:hover {
+  background: rgb(245 179 1 / 0.15);
+}
+
+.botao-menu {
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--linha);
+  border-radius: 0.5rem;
+  background: none;
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.botao-menu svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Troca o ícone ☰ pelo ✕ quando o menu está aberto */
+.botao-menu .icone-fechar,
+.botao-menu[aria-expanded="true"] .icone-abrir {
+  display: none;
+}
+
+.botao-menu[aria-expanded="true"] .icone-fechar {
+  display: inline;
+}
+
+.menu-celular {
+  border-top: 1px solid rgb(255 255 255 / 0.05);
+  background: rgb(11 11 12 / 0.95);
+}
+
+.menu-celular .container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-block: 1rem;
+}
+
+.menu-celular a {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  color: var(--tinta);
+}
+
+.menu-celular a:hover {
+  background: rgb(255 255 255 / 0.05);
+}
+
+.menu-celular .menu-celular-conversar {
+  margin-top: 0.5rem;
+  background-image: var(--gradiente);
+  color: var(--sobre-acento);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ---------- 5. Seções e cards ---------- */
+
+/* Compensa a navbar fixa quando um link leva até a seção (#projetos etc.) */
+.secao-ancora {
+  scroll-margin-top: 5rem;
+}
+
+.secao {
+  padding-block: 5rem;
+}
+
+.secao-grande {
+  padding-block: 6rem;
+}
+
+.secao-escura {
+  border-top: 1px solid rgb(255 255 255 / 0.05);
+  background: rgb(0 0 0 / 0.2);
+}
+
+.secao-titulo {
+  margin-bottom: 2.5rem;
+}
+
+.secao-titulo .rotulo {
+  margin-bottom: 0.5rem;
+}
+
+.secao-titulo h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.card {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  background: var(--card);
+}
+
+.card-padding {
+  padding: 1.5rem;
+}
+
+.card-titulo {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.card-tracejado {
+  border-style: dashed;
+}
+
+/* Luz amarela que segue o mouse. O JS atualiza --x e --y.
+   Só liga com mouse (não no celular) e sem "menos movimento". */
+.card-luz::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(260px circle at var(--x, 50%) var(--y, 50%), rgb(245 179 1 / 0.18), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.card-luz > * {
+  position: relative; /* conteúdo fica por cima da luz */
+}
+
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card-luz:hover::before {
+    opacity: 1;
+  }
+}
+
+.grade-3 {
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* ---------- 6. Hero (início) ---------- */
+
+.hero {
+  display: grid;
+  align-items: center;
+  gap: 3rem;
+  padding-block: 4rem;
+}
+
+.hero-ola {
+  color: var(--apagado);
+  font-size: 1.125rem;
+}
+
+.hero-nome {
+  margin-top: 0.25rem;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.hero-cargo {
+  margin-top: 0.5rem;
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+
+.hero-cidade {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+  color: var(--apagado);
+  font-size: 0.875rem;
+}
+
+.hero-frase {
+  max-width: 32rem;
+  margin-top: 1.5rem;
+  color: var(--suave);
+  line-height: 1.625;
+}
+
+.redes {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.rede {
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  color: var(--suave);
+  transition: all 0.15s;
+}
+
+.rede:hover {
+  border-color: var(--acento);
+  color: #fff;
+}
+
+.hero-ilustracao {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  margin-inline: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-anel {
+  position: absolute;
+  inset: 6%;
+  border: 1px solid rgb(245 179 1 / 0.5);
+  border-radius: 999px;
+  box-shadow: 0 0 80px rgb(245 179 1 / 0.22), inset 0 0 80px rgb(245 179 1 / 0.12);
+}
+
+/* Fundo de pontinhos que some nas bordas */
+.hero-pontos {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  opacity: 0.4;
+  background-image: radial-gradient(rgb(245 179 1 / 0.35) 1px, transparent 1px);
+  background-size: 18px 18px;
+  -webkit-mask-image: radial-gradient(circle, black 30%, transparent 70%);
+  mask-image: radial-gradient(circle, black 30%, transparent 70%);
+}
+
+.hero-janela {
+  position: relative;
+  width: 78%;
+}
+
+.hero-disponivel {
+  position: absolute;
+  right: 0;
+  bottom: 6%;
+  width: 12rem;
+  padding: 1rem;
+  border: 1px solid rgb(245 179 1 / 0.4);
+  border-radius: 0.75rem;
+  background: rgb(21 21 23 / 0.9);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.hero-disponivel-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.hero-disponivel-texto {
+  margin-top: 0.375rem;
+  color: var(--apagado);
+  font-size: 0.75rem;
+}
+
+/* Bolinha verde com uma "onda" saindo dela */
+.ponto-online {
+  position: relative;
+  display: flex;
+  width: 0.625rem;
+  height: 0.625rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--ok);
+}
+
+.ponto-online span {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--ok);
+  opacity: 0.6;
+}
+
+/* ---------- 7. Projetos ---------- */
+
+.projetos-grade {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.projetos-lista {
+  display: grid;
+  align-content: start;
+  gap: 1.25rem;
+}
+
+.card-destaque {
+  border-color: rgb(245 179 1 / 0.4);
+}
+
+.destaque {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+  padding: 1.25rem;
+}
+
+.destaque-imagem {
+  width: 100%;
+  border: 1px solid var(--linha);
+  border-radius: 0.75rem;
+  object-fit: cover;
+  object-position: left top;
+}
+
+.destaque-titulo {
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.destaque-etapas {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.destaque-etapas dt,
+.destaque-etapas dd {
+  display: inline;
+}
+
+.destaque-etapas dt {
+  color: #fff;
+  font-weight: 600;
+}
+
+.destaque-etapas dd {
+  color: var(--suave);
+}
+
+.projeto {
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+  padding: 1.25rem;
+}
+
+.projeto-miniatura {
+  display: none; /* só aparece a partir de 640px */
+  width: 6rem;
+  height: 5rem;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  background: linear-gradient(to bottom right, #3a2a05, #1c1a14);
+}
+
+.projeto-miniatura-listrada {
+  background: repeating-linear-gradient(135deg, #18181a 0 8px, #202023 8px 16px);
+}
+
+.projeto-info {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.projeto-info h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.projeto-info .texto-apagado {
+  margin-top: 0.25rem;
+}
+
+.projeto-info .tags {
+  margin-top: 0.75rem;
+}
+
+.projeto-titulo-linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.selo-construcao {
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  background: rgb(251 191 36 / 0.15);
+  color: #fcd34d;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.link-acento {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.75rem;
+  color: var(--acento);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.link-acento:hover {
+  color: #fff;
+}
+
+/* ---------- 8. Sobre ---------- */
+
+/* O JS divide o texto em palavras. Começam apagadas e acendem com a rolagem. */
+.texto-acende {
+  max-width: 56rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.375;
+}
+
+.texto-acende .palavra {
+  color: #2c2b28;
+  transition: color 0.3s;
+}
+
+.texto-acende .palavra.acesa {
+  color: #fff;
+}
+
+.texto-acende .palavra.acesa.palavra-destaque {
+  color: var(--acento);
+}
+
+.sobre-grade {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 3.5rem;
+}
+
+.informacoes {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.informacao {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.informacao > div {
+  min-width: 0;
+}
+
+.informacao-icone {
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--linha);
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 0.03);
+  color: var(--acento);
+}
+
+.informacao dt {
+  color: var(--apagado);
+  font-size: 0.75rem;
+}
+
+.informacao dd {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Linha do tempo da formação: linha à esquerda com bolinhas */
+.linha-tempo {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--linha);
+}
+
+.linha-tempo li {
+  position: relative;
+}
+
+.linha-tempo li::before {
+  content: "";
+  position: absolute;
+  top: 0.375rem;
+  left: -29px;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 999px;
+  background-image: var(--gradiente);
+  box-shadow: 0 0 0 4px var(--card);
+}
+
+.linha-tempo-curso {
+  color: #fff;
+  font-weight: 500;
+}
+
+.linha-tempo-detalhe {
+  color: var(--apagado);
+  font-size: 0.875rem;
+}
+
+/* ---------- 9. Skills e contato ---------- */
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.skills li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--linha);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 0.03);
+  color: var(--suave);
+  font-size: 0.875rem;
+}
+
+.skills li svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.contato {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+  border: 1px solid rgb(245 179 1 / 0.3);
+  border-radius: 1.5rem;
+  background: linear-gradient(to bottom right, #1d1a12, #0f0f10);
+}
+
+.contato-brilho {
+  position: absolute;
+  top: -6rem;
+  right: -6rem;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 999px;
+  background: rgb(245 179 1 / 0.25);
+  filter: blur(64px);
+  pointer-events: none;
+}
+
+.contato-titulo {
+  max-width: 42rem;
+  margin-top: 0.5rem;
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.contato-texto {
+  max-width: 36rem;
+  margin-top: 1rem;
+  color: var(--suave);
+}
+
+.canais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.canais li {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.canal {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--suave);
+  font-size: 0.875rem;
+  transition: all 0.15s;
+}
+
+.canal:hover {
+  border-color: var(--acento);
+  color: #fff;
+}
+
+/* E-mail longo vira "guilherme...@gmail.com" em telas pequenas */
+.canal-texto {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 10. Rodapé ---------- */
+
+.rodape {
+  padding-block: 2rem;
+  border-top: 1px solid rgb(255 255 255 / 0.05);
+}
+
+.rodape-conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--apagado);
+  font-size: 0.875rem;
+}
+
+/* ---------- 11. Página do estudo de caso ---------- */
+
+.caso {
+  padding-block: 3rem;
+}
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--apagado);
+  font-size: 0.875rem;
+  transition: color 0.15s;
+}
+
+.voltar:hover {
+  color: #fff;
+}
+
+.caso-topo {
+  display: grid;
+  align-items: center;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+.caso-titulo {
+  margin-top: 0.5rem;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.caso-resumo {
+  max-width: 36rem;
+  margin-top: 1rem;
+  color: var(--suave);
+  font-size: 1.125rem;
+  line-height: 1.625;
+}
+
+.caso-aviso {
+  margin-top: 0.75rem;
+  color: var(--apagado);
+  font-size: 0.875rem;
+}
+
+.caso-imagem {
+  width: 100%;
+  border: 1px solid var(--linha);
+  border-radius: 0.75rem;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+}
+
+.caso-etapas {
+  margin-top: 4rem;
+}
+
+.etapa-titulo {
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.caso-secao {
+  margin-top: 5rem;
+}
+
+.caso-subtitulo {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.caso-intro {
+  max-width: 42rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.destaques {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.destaques h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.destaques p {
+  margin-top: 0.5rem;
+  color: var(--apagado);
+  font-size: 0.875rem;
+  line-height: 1.625;
+}
+
+.caso-stack {
+  margin-top: 1.5rem;
+}
+
+.caso-nota {
+  margin-top: 1.5rem;
+}
+
+/* ---------- Telas maiores (o site é feito "do celular para cima") ---------- */
+
+/* 640px+ : celular deitado / tablet pequeno */
+@media (min-width: 640px) {
+  .container {
+    padding-inline: 1.5rem;
+  }
+
+  .hero-nome {
+    font-size: 3.75rem;
+  }
+
+  .hero-cargo,
+  .secao-titulo h2,
+  .contato-titulo {
+    font-size: 2.25rem;
+  }
+
+  .texto-acende {
+    font-size: 2.25rem;
+    line-height: 1.25;
+  }
+
+  .destaque {
+    padding: 1.5rem;
+  }
+
+  .projeto-miniatura {
+    display: block;
+  }
+
+  .contato {
+    padding: 3rem;
+  }
+
+  .rodape-conteudo {
+    flex-direction: row;
+  }
+
+  .caso-titulo {
+    font-size: 3rem;
+  }
+
+  .destaques {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 768px+ : tablet */
+@media (min-width: 768px) {
+  .menu-desktop {
+    display: flex;
+  }
+
+  .botao-menu,
+  .menu-celular {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1.15fr 1fr;
+    padding-block: 6rem;
+  }
+
+  .grade-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sobre-grade {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .caso {
+    padding-block: 5rem;
+  }
+}
+
+/* 1024px+ : computador */
+@media (min-width: 1024px) {
+  .projetos-grade {
+    grid-template-columns: 1.6fr 1fr;
+  }
+
+  .caso-topo {
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+
+/* ---------- 12. Animações ---------- */
+
+/* Elemento escondido esperando aparecer na tela (o JS coloca e tira essa classe) */
+.revelar {
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.revelar.escondido {
+  opacity: 0;
+  translate: 0 2.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cursor-piscando {
+    animation: piscar 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .ponto-online span {
+    animation: onda 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes piscar {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes onda {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}

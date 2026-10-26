@@ -1,31 +1,59 @@
 # Portfólio · Guilherme Rabelo
 
-Portfólio pessoal feito com **Next.js**, **TypeScript** e **Tailwind CSS**.
+Portfólio pessoal feito com **HTML, CSS e JavaScript puros**, sem frameworks e sem etapa de build.
 
 ## Rodar no computador
 
+Não precisa instalar nada: é só abrir o `index.html` no navegador.
+
+Se quiser um servidor local (o mesmo jeito que o site roda publicado), use a extensão
+**Live Server** do VS Code, ou rode no terminal:
+
 ```bash
-npm install
-npm run dev     # abre em http://localhost:3000
-npm test        # roda os testes
-npm run build   # gera a versão de produção
+npx serve .
 ```
 
-## Onde editar o conteúdo
+## Estrutura
 
-Tudo o que aparece no site fica em `src/content/`. Não precisa mexer no layout.
+```
+index.html                      página principal (início, projetos, sobre, skills, contato)
+projetos/central-brindes/       página do estudo de caso
+css/style.css                   todo o visual do site (cores no topo, em :root)
+js/main.js                      tudo o que é dinâmico (menu, animações, idade, ícones)
+img/                            imagens, favicon e imagem de compartilhamento
+demo/central-brindes/           demonstração do Central Brindes com dados fictícios
+sitemap.xml, robots.txt         ajudam o Google a encontrar as páginas
+```
 
-| Quero... | Arquivo | O que fazer |
-|---|---|---|
-| Colocar minha foto | `src/content/perfil.ts` | Salve a foto em `public/` (ex.: `public/foto.jpg`) e preencha `fotoUrl: "/foto.jpg"` |
-| Ligar o botão de currículo | `src/content/perfil.ts` | Salve o PDF em `public/` e preencha `cvUrl: "/curriculo.pdf"` |
-| Mostrar o LinkedIn | `src/content/perfil.ts` | Preencha `linkedin` com o link do perfil |
-| Ligar a demo do Central Brindes | `src/content/projetos.ts` | Preencha `demoUrl` no projeto `central-brindes` |
-| Adicionar um projeto | `src/content/projetos.ts` | Copie um item da lista e ajuste os campos |
-| Trocar o endereço do site | `src/content/site.ts` | Mude `url` quando tiver domínio próprio |
+## O que o JavaScript faz
 
-Campos com `""` ficam escondidos no site até serem preenchidos.
+Cada parte é uma função em `js/main.js`:
+
+| Função | O que faz |
+|---|---|
+| `iniciarMenu` | Abre e fecha o menu ☰ no celular |
+| `iniciarBarraProgresso` | Barrinha amarela no topo que acompanha a rolagem |
+| `iniciarRevelar` | Faz os blocos com `data-reveal` surgirem ao entrar na tela (usa `IntersectionObserver`) |
+| `iniciarTextoAcende` | Acende as palavras do "Sobre mim" conforme a rolagem |
+| `iniciarCardsLuz` | Luz que segue o mouse nos cards (variáveis CSS `--x` e `--y`) |
+| `iniciarIdade` | Calcula a idade a partir da data de nascimento |
+| `iniciarIcones` | Coloca o ícone de cada tecnologia nas listas de tags |
+
+Quem ativou "reduzir movimento" no sistema vê tudo sem animação (`prefers-reduced-motion`).
+
+## Onde editar
+
+| Quero... | Onde |
+|---|---|
+| Mudar textos | Direto no `index.html` |
+| Mudar as cores | Variáveis no começo do `css/style.css` |
+| Colocar o LinkedIn | Copie um item da lista `.redes` (início) e `.canais` (contato) no `index.html` |
+| Adicionar um projeto | Copie um bloco `<div data-reveal>` dentro de `.projetos-lista` |
+| Trocar o endereço do site | Procure `guilherme-rabelo.vercel.app` nos `.html`, `sitemap.xml` e `robots.txt` |
 
 ## Publicar
 
-O site é publicado na [Vercel](https://vercel.com): importe este repositório do GitHub e a cada `git push` uma nova versão vai ao ar.
+Por ser um site estático, funciona em qualquer hospedagem gratuita:
+
+- **GitHub Pages:** no repositório, vá em *Settings → Pages* e escolha a branch `main` e a pasta `/ (root)`.
+- **Vercel:** importe o repositório; não precisa configurar nada.

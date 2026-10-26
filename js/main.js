@@ -136,22 +136,36 @@ function iniciarVitrine() {
   });
 }
 
-// ---------- Galeria do Meu Prédio ----------
-// Cada botão guarda o print e a descrição dele (data-src e data-alt).
-// Ao clicar, a imagem da janela é trocada e o botão fica marcado.
+// ---------- Carrossel do Meu Prédio ----------
+// Quem arrasta é o próprio navegador (scroll-snap no CSS). Aqui o JS só:
+// 1) descobre qual print está na tela e marca o nome, o pontinho e a pílula;
+// 2) faz as pílulas (no computador) rolarem até o print certo.
 function iniciarGaleria() {
   const galeria = document.querySelector("[data-galeria]");
   if (!galeria) return;
-  const imagem = galeria.querySelector("img");
-  const botoes = galeria.querySelectorAll("button");
+  const trilho = galeria.querySelector(".galeria-trilho");
+  const nome = galeria.querySelector(".galeria-nome");
+  const pontos = galeria.querySelectorAll(".galeria-pontos i");
+  const botoes = galeria.querySelectorAll(".galeria-botoes button");
 
-  botoes.forEach((botao) => {
+  function marcar() {
+    // Cada print ocupa a largura inteira do trilho, então a posição dividida
+    // pela largura dá o número do print (0 a 4).
+    const atual = Math.round(trilho.scrollLeft / trilho.clientWidth);
+    nome.textContent = botoes[atual].textContent;
+    pontos.forEach((ponto, i) => ponto.classList.toggle("ativo", i === atual));
+    botoes.forEach((botao, i) => botao.setAttribute("aria-pressed", String(i === atual)));
+  }
+
+  botoes.forEach((botao, i) => {
     botao.addEventListener("click", () => {
-      imagem.src = botao.dataset.src;
-      imagem.alt = botao.dataset.alt;
-      botoes.forEach((b) => b.setAttribute("aria-pressed", String(b === botao)));
+      trilho.scrollTo({ left: i * trilho.clientWidth });
     });
   });
+
+  // marcar() só mexe em 5 elementos, então pode rodar a cada rolagem.
+  trilho.addEventListener("scroll", marcar, { passive: true });
+  marcar();
 }
 
 // ---------- Blocos que aparecem ao rolar ----------

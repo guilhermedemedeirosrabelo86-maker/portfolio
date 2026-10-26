@@ -218,18 +218,29 @@
             </li>
           </ul>
 
-          <!-- Os botões trocam o print mostrado na janela (js/main.js) -->
+          <!-- Carrossel: no celular arrasta com o dedo, no computador usa as pílulas.
+               O arrastar é a rolagem do próprio navegador (scroll-snap); o JS só marca a tela atual. -->
           <div class="galeria" data-galeria data-reveal>
             <div class="vitrine-janela">
               <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
-              <img src="img/meu-predio-inicio.jpg" alt="Tela inicial do morador no Meu Prédio" width="1536" height="724" loading="lazy">
+              <div class="galeria-trilho" tabindex="0" aria-label="Telas do Meu Prédio. Arraste para o lado para ver as outras.">
+                <img src="img/meu-predio-inicio.jpg" alt="Tela inicial do morador no Meu Prédio" width="1536" height="724" loading="lazy">
+                <img src="img/meu-predio-reservas.jpg" alt="Calendário de reservas da churrasqueira" width="1536" height="724" loading="lazy">
+                <img src="img/meu-predio-contas.jpg" alt="Prestação de contas do condomínio" width="1536" height="724" loading="lazy">
+                <img src="img/meu-predio-moradores.jpg" alt="Tela do síndico para convidar moradores e cadastrar unidades" width="1536" height="724" loading="lazy">
+                <img src="img/meu-predio-portaria.jpg" alt="Tela da portaria para validar o QR Code do visitante" width="1536" height="724" loading="lazy">
+              </div>
+            </div>
+            <div class="galeria-rodape">
+              <p class="galeria-nome" aria-hidden="true">Início</p>
+              <div class="galeria-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             </div>
             <div class="galeria-botoes" aria-label="Telas do Meu Prédio">
-              <button type="button" aria-pressed="true" data-src="img/meu-predio-inicio.jpg" data-alt="Tela inicial do morador no Meu Prédio">Início</button>
-              <button type="button" aria-pressed="false" data-src="img/meu-predio-reservas.jpg" data-alt="Calendário de reservas da churrasqueira">Reservas</button>
-              <button type="button" aria-pressed="false" data-src="img/meu-predio-contas.jpg" data-alt="Prestação de contas do condomínio">Contas</button>
-              <button type="button" aria-pressed="false" data-src="img/meu-predio-moradores.jpg" data-alt="Tela do síndico para convidar moradores e cadastrar unidades">Moradores</button>
-              <button type="button" aria-pressed="false" data-src="img/meu-predio-portaria.jpg" data-alt="Tela da portaria para validar o QR Code do visitante">Portaria</button>
+              <button type="button" aria-pressed="true">Início</button>
+              <button type="button" aria-pressed="false">Reservas</button>
+              <button type="button" aria-pressed="false">Contas</button>
+              <button type="button" aria-pressed="false">Moradores</button>
+              <button type="button" aria-pressed="false">Portaria</button>
             </div>
           </div>
         </article>
@@ -327,7 +338,7 @@
               <li>HTML</li>
               <li>CSS</li>
               <li>JavaScript</li>
-              <li>React (estudando)</li>
+              <li>React <small>(estudando)</small></li>
             </ul>
           </div>
           <div class="skills-grupo" data-reveal data-delay="100">

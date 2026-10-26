@@ -7,8 +7,6 @@
 
 // O usuário pediu "menos movimento" nas configurações do sistema?
 const menosMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-// Tem mouse (computador)? No celular, efeitos que seguem o mouse ficam desligados.
-const temMouse = window.matchMedia("(pointer: fine)").matches;
 
 // ---------- Entrada da página ----------
 // Espera as fontes carregarem (para o texto não "pular") e coloca a classe
@@ -111,35 +109,6 @@ function iniciarBarraProgresso() {
   });
 }
 
-// ---------- Foto do topo ----------
-// 1. Inclina de leve seguindo o mouse.
-// 2. Ao rolar, a foto anda um pouco dentro da moldura (efeito de profundidade).
-// 3. A bolinha do círculo atrás da cabeça gira devagar.
-function iniciarRetrato() {
-  const retrato = document.querySelector("[data-retrato]");
-  if (!retrato) return;
-
-  inclinarComMouse(retrato);
-  if (menosMovimento) return;
-
-  const foto = retrato.querySelector("img");
-  aoRolar(() => {
-    // Quanto mais a página desce, mais a foto desce dentro da moldura (até 40px).
-    const deslocamento = Math.min(window.scrollY * 0.12, 40);
-    foto.style.setProperty("--parallax", `${deslocamento.toFixed(1)}px`);
-  });
-
-  // Gira a bolinha: uma volta a cada 24 segundos.
-  let inicio = null;
-  function girar(agora) {
-    if (inicio === null) inicio = agora;
-    const graus = ((agora - inicio) / 24000) * 360;
-    retrato.style.setProperty("--giro", `${graus % 360}deg`);
-    requestAnimationFrame(girar);
-  }
-  requestAnimationFrame(girar);
-}
-
 // ---------- Títulos que sobem de dentro de uma máscara ----------
 // Coloca o texto do título dentro de <span class="linha"><span>…</span></span>.
 // O CSS esconde o texto embaixo da "linha" e ele sobe quando o bloco aparece.
@@ -147,45 +116,6 @@ function iniciarTitulos() {
   document.querySelectorAll(".secao-cabeca h2, .contato-titulo").forEach((titulo) => {
     titulo.classList.add("dividido");
     titulo.innerHTML = `<span class="linha"><span>${titulo.innerHTML}</span></span>`;
-  });
-}
-
-// ---------- Botões "magnéticos" ----------
-// Com mouse, o botão principal é puxado de leve na direção do cursor.
-function iniciarMagnetico() {
-  if (!temMouse || menosMovimento) return;
-
-  document.querySelectorAll(".botao-primario").forEach((botao) => {
-    botao.addEventListener("mousemove", (evento) => {
-      const r = botao.getBoundingClientRect();
-      const x = evento.clientX - (r.left + r.width / 2);
-      const y = evento.clientY - (r.top + r.height / 2);
-      botao.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
-    });
-    botao.addEventListener("mouseleave", () => {
-      botao.style.transform = "";
-    });
-  });
-}
-
-// Inclina o elemento de leve na direção do mouse (efeito 3D).
-// As variáveis --rx e --ry são usadas no transform do CSS.
-function inclinarComMouse(elemento) {
-  if (!temMouse || menosMovimento) return;
-  const area = elemento.closest("section") || elemento;
-
-  area.addEventListener("mousemove", (evento) => {
-    const r = elemento.getBoundingClientRect();
-    // Posição do mouse de -0.5 a 0.5 em relação ao centro do elemento
-    const x = (evento.clientX - r.left) / r.width - 0.5;
-    const y = (evento.clientY - r.top) / r.height - 0.5;
-    elemento.style.setProperty("--ry", `${(x * 8).toFixed(2)}deg`);
-    elemento.style.setProperty("--rx", `${(-y * 6).toFixed(2)}deg`);
-  });
-
-  area.addEventListener("mouseleave", () => {
-    elemento.style.setProperty("--ry", "0deg");
-    elemento.style.setProperty("--rx", "0deg");
   });
 }
 
@@ -374,9 +304,7 @@ iniciarNavbar();
 iniciarBarraProgresso();
 iniciarIdade();
 iniciarIcones();
-iniciarRetrato();
 iniciarTitulos();
-iniciarMagnetico();
 iniciarVitrine();
 iniciarTextoAcende();
 iniciarRevelar();

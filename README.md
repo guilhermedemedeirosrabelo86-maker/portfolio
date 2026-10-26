@@ -35,9 +35,7 @@ Cada parte é uma função em `js/main.js`:
 | `iniciarMenu` | Abre e fecha o menu do celular |
 | `iniciarNavbar` | Dá fundo à navbar ao rolar e desliza a pílula até a seção atual |
 | `iniciarBarraProgresso` | Barrinha âmbar no topo que acompanha a rolagem |
-| `iniciarRetrato` | Foto do topo: inclina com o mouse, anda dentro da moldura ao rolar e faz a bolinha girar |
 | `iniciarTitulos` | Coloca os títulos numa "máscara" para o texto subir quando aparece |
-| `iniciarMagnetico` | Botões principais puxados de leve na direção do mouse |
 | `iniciarVitrine` | O print do projeto se endireita conforme a rolagem |
 | `iniciarRevelar` | Blocos com `data-reveal` surgem ao entrar na tela (`IntersectionObserver`) |
 | `iniciarTextoAcende` | Acende as palavras do "Sobre" conforme a rolagem |

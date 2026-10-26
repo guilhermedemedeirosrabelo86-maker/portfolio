@@ -61,4 +61,4 @@ Quem ativou "reduzir movimento" no sistema vê tudo sem animação (`prefers-red
 Por ser um site estático, funciona em qualquer hospedagem gratuita:
 
 - **GitHub Pages:** no repositório, vá em *Settings → Pages* e escolha a branch `main` e a pasta `/ (root)`.
-- **Vercel:** importe o repositório; não precisa configurar nada.
+- **Vercel:** importe o repositório. O `vercel.json` avisa que é um site estático (sem framework), então não precisa configurar nada.

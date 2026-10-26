@@ -136,6 +136,24 @@ function iniciarVitrine() {
   });
 }
 
+// ---------- Galeria do Meu Prédio ----------
+// Cada botão guarda o print e a descrição dele (data-src e data-alt).
+// Ao clicar, a imagem da janela é trocada e o botão fica marcado.
+function iniciarGaleria() {
+  const galeria = document.querySelector("[data-galeria]");
+  if (!galeria) return;
+  const imagem = galeria.querySelector("img");
+  const botoes = galeria.querySelectorAll("button");
+
+  botoes.forEach((botao) => {
+    botao.addEventListener("click", () => {
+      imagem.src = botao.dataset.src;
+      imagem.alt = botao.dataset.alt;
+      botoes.forEach((b) => b.setAttribute("aria-pressed", String(b === botao)));
+    });
+  });
+}
+
 // ---------- Blocos que aparecem ao rolar ----------
 // Quem tem o atributo data-reveal surge (de baixo e sem desfoque) quando entra na tela.
 // Sem JS ou com "menos movimento" nada é escondido: o conteúdo sempre aparece.
@@ -307,6 +325,7 @@ iniciarIdade();
 iniciarIcones();
 iniciarTitulos();
 iniciarVitrine();
+iniciarGaleria();
 iniciarTextoAcende();
 iniciarRevelar();
 iniciarCopiar();

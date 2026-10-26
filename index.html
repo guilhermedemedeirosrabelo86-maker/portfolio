@@ -170,7 +170,7 @@
           </ol>
         </article>
 
-        <!-- Segundo projeto: sem print por enquanto, então as funcionalidades fazem esse papel -->
+        <!-- Segundo projeto: texto e funcionalidades, e embaixo os prints com botões para trocar de tela -->
         <article class="segundo">
           <div class="segundo-texto" data-reveal>
             <h3 class="destaque-titulo">Meu Prédio <span class="selo">Em desenvolvimento</span></h3>
@@ -217,6 +217,21 @@
               <p>Python sem bibliotecas externas, banco SQLite e testes automatizados da API inteira.</p>
             </li>
           </ul>
+
+          <!-- Os botões trocam o print mostrado na janela (js/main.js) -->
+          <div class="galeria" data-galeria data-reveal>
+            <div class="vitrine-janela">
+              <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
+              <img src="img/meu-predio-inicio.jpg" alt="Tela inicial do morador no Meu Prédio" width="1536" height="724" loading="lazy">
+            </div>
+            <div class="galeria-botoes" aria-label="Telas do Meu Prédio">
+              <button type="button" aria-pressed="true" data-src="img/meu-predio-inicio.jpg" data-alt="Tela inicial do morador no Meu Prédio">Início</button>
+              <button type="button" aria-pressed="false" data-src="img/meu-predio-reservas.jpg" data-alt="Calendário de reservas da churrasqueira">Reservas</button>
+              <button type="button" aria-pressed="false" data-src="img/meu-predio-contas.jpg" data-alt="Prestação de contas do condomínio">Contas</button>
+              <button type="button" aria-pressed="false" data-src="img/meu-predio-moradores.jpg" data-alt="Tela do síndico para convidar moradores e cadastrar unidades">Moradores</button>
+              <button type="button" aria-pressed="false" data-src="img/meu-predio-portaria.jpg" data-alt="Tela da portaria para validar o QR Code do visitante">Portaria</button>
+            </div>
+          </div>
         </article>
 
         <ul class="outros">

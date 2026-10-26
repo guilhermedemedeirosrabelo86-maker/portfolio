@@ -739,6 +739,45 @@ button {
   font-size: 0.9375rem;
 }
 
+/* Prints do Meu Prédio: ocupa a largura toda, abaixo do texto e das funcionalidades */
+.galeria {
+  grid-column: 1 / -1;
+}
+
+.galeria .vitrine-janela {
+  box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.9);
+}
+
+.galeria-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.galeria-botoes button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--suave);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.galeria-botoes button:hover {
+  color: var(--papel);
+  border-color: var(--poeira);
+}
+
+.galeria-botoes button[aria-pressed="true"] {
+  border-color: var(--ambar);
+  background: var(--ambar-fundo);
+  color: var(--ambar);
+}
+
 /* Outros projetos: lista com linhas finas em vez de cards */
 .outros {
   margin-top: 5rem;

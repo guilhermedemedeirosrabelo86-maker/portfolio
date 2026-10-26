@@ -706,6 +706,39 @@ button {
   color: var(--suave);
 }
 
+/* Segundo projeto: texto de um lado, funcionalidades do outro */
+.segundo {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 6rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--linha);
+}
+
+.destaque-titulo .selo {
+  font-size: 0.75rem;
+}
+
+.recursos {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.recursos li {
+  padding-left: 1rem;
+  border-left: 2px solid var(--ambar);
+}
+
+.recursos h4 {
+  font-size: 1.125rem;
+}
+
+.recursos p {
+  margin-top: 0.25rem;
+  color: var(--suave);
+  font-size: 0.9375rem;
+}
+
 /* Outros projetos: lista com linhas finas em vez de cards */
 .outros {
   margin-top: 5rem;
@@ -753,9 +786,6 @@ a.outro:hover h3 {
   transition: color 0.2s;
 }
 
-.outro-em-breve h3 {
-  color: var(--suave);
-}
 
 /* ---------- 8. Sobre ---------- */
 
@@ -1116,6 +1146,29 @@ a.outro:hover h3 {
   font-size: 0.875rem;
 }
 
+/* ----- Página 404 ----- */
+
+.nao-encontrada {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+}
+
+.nao-encontrada h1 {
+  margin-top: 3rem;
+  font-size: clamp(2.75rem, 9vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.nao-encontrada p {
+  max-width: 30rem;
+  margin-top: 1.25rem;
+  color: var(--suave);
+  font-size: 1.125rem;
+}
+
 /* ---------- 12. Telas maiores (o site é feito "do celular para cima") ---------- */
 
 @media (max-width: 1023px) {
@@ -1170,6 +1223,11 @@ a.outro:hover h3 {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  .recursos {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+  }
+
   .destaques {
     grid-template-columns: repeat(2, 1fr);
     column-gap: 3rem;
@@ -1201,6 +1259,11 @@ a.outro:hover h3 {
 
   .hero-nome {
     font-size: clamp(5rem, 9vw, 8.5rem);
+  }
+
+  .segundo {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4rem;
   }
 
   .sobre-grade {

@@ -22,6 +22,7 @@ css/style.css                   todo o visual do site (cores no topo, em :root)
 js/main.js                      tudo o que é dinâmico (menu, animações, idade, ícones)
 img/                            sua foto, print do projeto, favicon e imagem de compartilhamento
 demo/central-brindes/           demonstração do Central Brindes com dados fictícios
+404.html                        página de "não encontrada" (Vercel e GitHub Pages usam sozinhos)
 sitemap.xml, robots.txt         ajudam o Google a encontrar as páginas
 ```
 

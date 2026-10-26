@@ -111,130 +111,68 @@ function iniciarBarraProgresso() {
   });
 }
 
-// ---------- Painel animado do topo (mini Central Brindes) ----------
-// Repete um ciclo: o envio fica pendente → é separado (o estoque baixa)
-// → é entregue (aparece o aviso) → começa o próximo envio.
-const envios = [
-  { numero: 1042, destino: "Representante em Joinville, SC", caneta: 40, ecobag: 12 },
-  { numero: 1043, destino: "Representante em Curitiba, PR", caneta: 25, ecobag: 8 },
-  { numero: 1044, destino: "Representante em Porto Alegre, RS", caneta: 30, ecobag: 15 },
-];
-const nomesEtapas = ["Pendente", "Separado", "Entregue"];
+// ---------- Foto do topo ----------
+// 1. Inclina de leve seguindo o mouse.
+// 2. Ao rolar, a foto anda um pouco dentro da moldura (efeito de profundidade).
+// 3. A bolinha do círculo atrás da cabeça gira devagar.
+function iniciarRetrato() {
+  const retrato = document.querySelector("[data-retrato]");
+  if (!retrato) return;
 
-function iniciarPainel() {
-  const painel = document.querySelector(".painel");
-  if (!painel) return;
+  inclinarComMouse(retrato);
+  if (menosMovimento) return;
 
-  const el = {
-    envio: painel.querySelector(".envio"),
-    etapas: painel.querySelector(".etapas"),
-    selo: painel.querySelector("[data-envio-selo]"),
-    numero: painel.querySelector("[data-envio-numero]"),
-    destino: painel.querySelector("[data-envio-destino]"),
-    itens: painel.querySelectorAll(".envio-itens li span:last-child"),
-    caneta: painel.querySelector("[data-estoque='caneta']"),
-    ecobag: painel.querySelector("[data-estoque='ecobag']"),
-    barraCaneta: painel.querySelector("[data-barra='caneta']"),
-    barraEcobag: painel.querySelector("[data-barra='ecobag']"),
-    aviso: painel.querySelector("[data-aviso]"),
-    avisoTexto: painel.querySelector("[data-aviso-texto]"),
-  };
+  const foto = retrato.querySelector("img");
+  aoRolar(() => {
+    // Quanto mais a página desce, mais a foto desce dentro da moldura (até 40px).
+    const deslocamento = Math.min(window.scrollY * 0.12, 40);
+    foto.style.setProperty("--parallax", `${deslocamento.toFixed(1)}px`);
+  });
 
-  inclinarComMouse(painel);
-  if (menosMovimento) return; // fica parado no primeiro estado
-
-  const estoque = { caneta: 340, ecobag: 120 };
-  let indice = 0;
-  let etapa = 0;
-  let naTela = true;
-
-  // Pausa a animação quando o painel sai da tela (economiza bateria).
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(([e]) => (naTela = e.isIntersecting)).observe(painel);
+  // Gira a bolinha: uma volta a cada 24 segundos.
+  let inicio = null;
+  function girar(agora) {
+    if (inicio === null) inicio = agora;
+    const graus = ((agora - inicio) / 24000) * 360;
+    retrato.style.setProperty("--giro", `${graus % 360}deg`);
+    requestAnimationFrame(girar);
   }
-
-  function atualizarSeloEEtapas() {
-    el.etapas.dataset.etapa = etapa;
-    el.selo.textContent = nomesEtapas[etapa];
-    el.selo.dataset.status = nomesEtapas[etapa].toLowerCase();
-  }
-
-  function mostrarEtapa() {
-    const envio = envios[indice];
-
-    if (etapa === 0) {
-      // Novo envio: esconde o card, troca os dados e mostra de novo.
-      el.aviso.classList.remove("visivel");
-      el.envio.classList.add("trocando");
-      setTimeout(() => {
-        el.numero.textContent = `#${envio.numero}`;
-        el.destino.textContent = envio.destino;
-        el.itens[0].textContent = `× ${envio.caneta}`;
-        el.itens[1].textContent = `× ${envio.ecobag}`;
-        atualizarSeloEEtapas();
-        el.envio.classList.remove("trocando");
-      }, 300);
-      return;
-    }
-
-    atualizarSeloEEtapas();
-
-    if (etapa === 1) {
-      // Separar o envio tira os itens do estoque.
-      contar(el.caneta, estoque.caneta, (estoque.caneta -= envio.caneta));
-      contar(el.ecobag, estoque.ecobag, (estoque.ecobag -= envio.ecobag));
-      el.barraCaneta.style.setProperty("--valor", estoque.caneta / 400);
-      el.barraEcobag.style.setProperty("--valor", estoque.ecobag / 250);
-    }
-
-    if (etapa === 2) {
-      el.avisoTexto.textContent = `Envio #${envio.numero} entregue`;
-      el.aviso.classList.add("visivel");
-    }
-  }
-
-  function avancar() {
-    if (naTela) {
-      etapa += 1;
-      if (etapa > 2) {
-        etapa = 0;
-        indice = (indice + 1) % envios.length;
-        // Quando volta ao primeiro envio, o estoque é reabastecido.
-        if (indice === 0) {
-          contar(el.caneta, estoque.caneta, (estoque.caneta = 340));
-          contar(el.ecobag, estoque.ecobag, (estoque.ecobag = 120));
-          el.barraCaneta.style.setProperty("--valor", 0.85);
-          el.barraEcobag.style.setProperty("--valor", 0.48);
-        }
-      }
-      mostrarEtapa();
-    }
-    // Cada etapa fica um tempo diferente na tela.
-    setTimeout(avancar, [1700, 1900, 2600][etapa]);
-  }
-
-  // Começa depois da entrada da página.
-  setTimeout(avancar, 2200);
+  requestAnimationFrame(girar);
 }
 
-// Anima um número de "de" até "para" (ex.: 340 → 300) em 700 ms.
-function contar(elemento, de, para) {
-  let inicio = null;
-  function passo(agora) {
-    if (inicio === null) inicio = agora; // o tempo começa a contar no primeiro quadro
-    const t = Math.min((agora - inicio) / 700, 1);
-    const suave = 1 - Math.pow(1 - t, 3); // começa rápido e freia
-    elemento.textContent = Math.round(de + (para - de) * suave);
-    if (t < 1) requestAnimationFrame(passo);
-  }
-  requestAnimationFrame(passo);
+// ---------- Títulos que sobem de dentro de uma máscara ----------
+// Coloca o texto do título dentro de <span class="linha"><span>…</span></span>.
+// O CSS esconde o texto embaixo da "linha" e ele sobe quando o bloco aparece.
+function iniciarTitulos() {
+  document.querySelectorAll(".secao-cabeca h2, .contato-titulo").forEach((titulo) => {
+    titulo.classList.add("dividido");
+    titulo.innerHTML = `<span class="linha"><span>${titulo.innerHTML}</span></span>`;
+  });
+}
+
+// ---------- Botões "magnéticos" ----------
+// Com mouse, o botão principal é puxado de leve na direção do cursor.
+function iniciarMagnetico() {
+  if (!temMouse || menosMovimento) return;
+
+  document.querySelectorAll(".botao-primario").forEach((botao) => {
+    botao.addEventListener("mousemove", (evento) => {
+      const r = botao.getBoundingClientRect();
+      const x = evento.clientX - (r.left + r.width / 2);
+      const y = evento.clientY - (r.top + r.height / 2);
+      botao.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
+    });
+    botao.addEventListener("mouseleave", () => {
+      botao.style.transform = "";
+    });
+  });
 }
 
 // Inclina o elemento de leve na direção do mouse (efeito 3D).
 // As variáveis --rx e --ry são usadas no transform do CSS.
 function inclinarComMouse(elemento) {
   if (!temMouse || menosMovimento) return;
-  const area = elemento.closest(".hero") || elemento;
+  const area = elemento.closest("section") || elemento;
 
   area.addEventListener("mousemove", (evento) => {
     const r = elemento.getBoundingClientRect();
@@ -436,7 +374,9 @@ iniciarNavbar();
 iniciarBarraProgresso();
 iniciarIdade();
 iniciarIcones();
-iniciarPainel();
+iniciarRetrato();
+iniciarTitulos();
+iniciarMagnetico();
 iniciarVitrine();
 iniciarTextoAcende();
 iniciarRevelar();

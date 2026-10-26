@@ -20,7 +20,7 @@ index.html                      página principal (início, projetos, sobre, ski
 projetos/central-brindes/       página do estudo de caso
 css/style.css                   todo o visual do site (cores no topo, em :root)
 js/main.js                      tudo o que é dinâmico (menu, animações, idade, ícones)
-img/                            imagens, favicon e imagem de compartilhamento
+img/                            sua foto, print do projeto, favicon e imagem de compartilhamento
 demo/central-brindes/           demonstração do Central Brindes com dados fictícios
 sitemap.xml, robots.txt         ajudam o Google a encontrar as páginas
 ```
@@ -35,7 +35,9 @@ Cada parte é uma função em `js/main.js`:
 | `iniciarMenu` | Abre e fecha o menu do celular |
 | `iniciarNavbar` | Dá fundo à navbar ao rolar e desliza a pílula até a seção atual |
 | `iniciarBarraProgresso` | Barrinha âmbar no topo que acompanha a rolagem |
-| `iniciarPainel` | Mini Central Brindes do topo: envios passam por pendente → separado → entregue |
+| `iniciarRetrato` | Foto do topo: inclina com o mouse, anda dentro da moldura ao rolar e faz a bolinha girar |
+| `iniciarTitulos` | Coloca os títulos numa "máscara" para o texto subir quando aparece |
+| `iniciarMagnetico` | Botões principais puxados de leve na direção do mouse |
 | `iniciarVitrine` | O print do projeto se endireita conforme a rolagem |
 | `iniciarRevelar` | Blocos com `data-reveal` surgem ao entrar na tela (`IntersectionObserver`) |
 | `iniciarTextoAcende` | Acende as palavras do "Sobre" conforme a rolagem |
@@ -51,7 +53,7 @@ Quem ativou "reduzir movimento" no sistema vê tudo sem animação (`prefers-red
 |---|---|
 | Mudar textos | Direto no `index.html` |
 | Mudar as cores | Variáveis no começo do `css/style.css` |
-| Colocar o LinkedIn | Copie o botão do GitHub no topo e o item GitHub da lista `.canais` (contato) |
+| Trocar a foto | Substitua `img/guilherme.jpg` (de preferência 720 × 900, retrato) |
 | Adicionar um projeto | Copie um `<li>` da lista `.outros` no `index.html` |
 | Trocar o endereço do site | Procure `guilherme-rabelo.vercel.app` nos `.html`, `sitemap.xml` e `robots.txt` |
 

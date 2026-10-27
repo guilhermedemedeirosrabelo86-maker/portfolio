@@ -483,9 +483,32 @@ button {
 /* ---------- 5. Hero (início) e foto ---------- */
 
 /* overflow-x: clip corta o brilho só nas laterais (sem rolagem para o lado) */
+/* O Início fica preso no topo enquanto o Sobre sobe por cima.
+   --topo-preso vem do JS: 0 quando o Início cabe na tela; negativo quando ele
+   é mais alto que a tela (celular), para só prender depois de mostrar tudo.
+   --saida (0 a 1, também do JS) encolhe e escurece o Início enquanto é coberto. */
 .hero {
-  position: relative;
+  position: sticky;
+  top: var(--topo-preso, 0px);
+  z-index: 0;
+  display: grid;
+  min-height: calc(100svh - 4.5rem);
+  align-content: center;
   overflow-x: clip;
+  transform: scale(calc(1 - var(--saida, 0) * 0.07));
+  transform-origin: center top;
+  filter: brightness(calc(1 - var(--saida, 0) * 0.5));
+}
+
+/* O Sobre é a "tela nova": fundo próprio, cantos arredondados em cima e
+   uma sombra para parecer que está por cima do Início */
+.palco #sobre {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--linha);
+  border-radius: 2rem 2rem 0 0;
+  background: var(--fundo);
+  box-shadow: 0 -40px 80px -30px rgb(0 0 0 / 0.85);
 }
 
 /* Brilho coral atrás da foto */
@@ -1389,7 +1412,9 @@ html:has(.detalhe[open]) {
   overflow: hidden;
   padding-block: 6rem 7rem;
   border-top: 1px solid var(--linha);
-  background: linear-gradient(180deg, var(--fundo), #131d36);
+  background:
+    radial-gradient(70% 90% at 50% 100%, rgb(255 122 89 / 0.16), transparent 70%),
+    linear-gradient(180deg, var(--superficie), #131d36);
 }
 
 .contato .container {
@@ -1847,6 +1872,193 @@ html:has(.detalhe[open]) {
   from {
     transform: translateY(105%);
   }
+}
+
+/* ---------- Animações ligadas à rolagem ---------- */
+
+/* Saída do topo: --saida vai de 0 a 1 conforme o topo sai da tela (JS).
+   O texto sobe mais rápido e apaga; a foto sobe mais devagar e encolhe um
+   pouco. A diferença de velocidade é o que dá a sensação de profundidade. */
+.hero-texto {
+  transform: translateY(calc(var(--saida, 0) * -70px));
+  opacity: calc(1 - var(--saida, 0) * 0.85);
+}
+
+.retrato {
+  transform: translateY(calc(var(--saida, 0) * -25px)) scale(calc(1 - var(--saida, 0) * 0.06));
+}
+
+/* Botão "voltar ao topo" com anel de progresso */
+.voltar-topo {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 30;
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--vidro);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--tinta);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px);
+  transition: opacity 0.3s, transform 0.4s var(--suave-saida), color 0.2s;
+}
+
+.voltar-topo.visivel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.voltar-topo:hover {
+  color: var(--destaque);
+}
+
+/* O anel fica por baixo da seta, ocupando o botão todo */
+.voltar-topo-anel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* começa a encher do topo, não da direita */
+}
+
+.anel-trilha,
+.anel-progresso {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.anel-trilha {
+  stroke: var(--linha);
+}
+
+/* pathLength="100" faz o círculo medir 100: com dashoffset 100 ele está vazio,
+   com 0 está cheio. O JS muda --progresso de 0 a 1. */
+.anel-progresso {
+  stroke: var(--destaque);
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--progresso, 0) * 100);
+  stroke-linecap: round;
+}
+
+/* Título do contato: cada letra sobe sozinha, uma depois da outra (js: iniciarLetras) */
+.palavra-letras {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 0.12em 0.08em 0; /* folga para não cortar a ponta das letras */
+  margin-right: -0.12em;
+  vertical-align: top;
+}
+
+.letra {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .letra {
+    transition: transform 0.8s var(--suave-saida) calc(var(--n) * 22ms + 0.1s);
+  }
+
+  .escondido .letra {
+    transform: translateY(110%);
+  }
+}
+
+/* Transições entre seções. --t vai de 0 a 1 conforme a seção entra na tela
+   (js: iniciarTransicoes). Sem JS ou com "menos movimento", --t fica 1 e nada é cortado. */
+
+/* Projetos: começa como um cartão mais estreito e arredondado e abre até a largura toda */
+#projetos[data-transicao] {
+  background: var(--superficie);
+  clip-path: inset(0 calc((1 - var(--t, 1)) * 7%) round calc((1 - var(--t, 1)) * 2.5rem));
+}
+
+/* Contato: aparece dentro de um círculo que nasce embaixo e cresce até cobrir tudo */
+.contato[data-transicao] {
+  clip-path: circle(calc(10% + var(--t, 1) * 140%) at 50% 100%);
+}
+
+/* Cascata: as linhas da lista de projetos e das Skills entram vindo da esquerda */
+@media (prefers-reduced-motion: no-preference) {
+  .cascata.revelar.escondido {
+    transform: translateX(-40px);
+  }
+}
+
+/* ---------- Bola que segue o mouse (só em alguns títulos) ---------- */
+
+/* O texto vira "inline-block" para a bola aparecer só em cima das letras,
+   e não no espaço vazio do lado do título. */
+[data-bola] .linha > span {
+  display: inline-block;
+}
+
+/* A bola fica por cima de tudo e não pega cliques. mix-blend-mode: difference
+   "subtrai" a cor dela da cor de baixo: o fundo escuro vira coral e o texto
+   claro vira azul-esverdeado, como se as cores invertessem. */
+.bola {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+/* A <span> de dentro é que cresce e encolhe; a .bola de fora só anda (JS) */
+.bola span {
+  display: block;
+  width: 7rem;
+  height: 7rem;
+  margin: -3.5rem 0 0 -3.5rem; /* centraliza a bola na ponta do mouse */
+  border-radius: 50%;
+  background: var(--destaque);
+  transform: scale(0);
+  transition: transform 0.45s var(--suave-saida);
+}
+
+.bola.ativa span {
+  transform: scale(1);
+}
+
+/* ---------- Brincadeiras com o mouse ---------- */
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  /* O selo "GR" dá uma volta quando o mouse passa no logo */
+  .logo-selo {
+    transition: transform 0.7s var(--suave-saida);
+  }
+
+  .logo:hover .logo-selo {
+    transform: rotate(360deg);
+  }
+
+  /* Ícones das tecnologias do topo dão um pulinho */
+  .hero-stack .tags li:hover svg {
+    animation: pulinho 0.5s var(--suave-saida);
+  }
+}
+
+@keyframes pulinho {
+  40% {
+    transform: translateY(-5px) rotate(-8deg);
+  }
+}
+
+/* Bolinhas do confete do botão "Copiar" (criadas e animadas pelo JS) */
+.confete {
+  position: fixed;
+  z-index: 160;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 /* ---------- 13. Animações ---------- */

@@ -89,6 +89,10 @@
   </header>
 
   <main id="conteudo">
+    <!-- Palco: o Início fica preso (sticky) e o Sobre sobe por cima dele,
+         como uma tela nova vindo de baixo. Quando o palco acaba, o Início
+         vai embora junto e o resto da página rola normal. -->
+    <div class="palco">
     <!-- ===== Início ===== -->
     <section id="inicio" class="hero">
       <div class="container hero-grade">
@@ -101,7 +105,7 @@
           <p class="hero-chamada entrada" style="--i: 0">Desenvolvedor web em Criciúma, SC</p>
 
           <!-- Cada linha fica dentro de uma "máscara" e sobe ao carregar a página -->
-          <h1 class="hero-nome">
+          <h1 class="hero-nome" data-bola>
             <span class="linha"><span class="entrada" style="--i: 1">Guilherme</span></span>
             <span class="linha"><span class="entrada" style="--i: 2">Rabelo</span></span>
           </h1>
@@ -154,7 +158,7 @@
     <section id="sobre" class="secao secao-ancora">
       <div class="container">
         <header class="secao-cabeca" data-reveal>
-          <h2>Sobre</h2>
+          <h2 data-bola>Sobre</h2>
         </header>
 
         <!-- O JS separa este texto em palavras que "acendem" com a rolagem.
@@ -199,19 +203,21 @@
       </div>
     </section>
 
+    </div>
+
     <!-- ===== Projetos ===== -->
     <!-- Lista de projetos: passar o mouse troca a prévia ao lado; clicar abre o
          "detalhe" do projeto (um <dialog> que sobe de baixo). Os links são #ids,
          então a ficha também abre pelo endereço (ex.: .../#meu-predio). -->
-    <section id="projetos" class="secao secao-ancora">
+    <section id="projetos" class="secao secao-ancora" data-transicao>
       <div class="container">
         <header class="secao-cabeca" data-reveal>
-          <h2>Projetos</h2>
+          <h2 data-bola>Projetos</h2>
           <p>O que eu fiz até agora, no trabalho e nos estudos. Clique num projeto para ver os detalhes.</p>
         </header>
 
         <div class="seletor" data-seletor>
-          <ul class="seletor-lista" data-reveal>
+          <ul class="seletor-lista" data-cascata>
             <li>
               <a href="#central-brindes" class="seletor-item" data-previa="0">
                 <span><span class="seletor-nome">Central Brindes</span><span class="seletor-tipo">Sistema web, usado na empresa</span></span>
@@ -445,14 +451,14 @@
     <section id="skills" class="secao secao-ancora">
       <div class="container">
         <header class="secao-cabeca" data-reveal>
-          <h2>Skills</h2>
+          <h2 data-bola>Skills</h2>
           <p>Cada tecnologia e o projeto onde dá para ver ela funcionando.</p>
         </header>
 
         <!-- Cada tecnologia aponta para o projeto onde ela aparece funcionando.
              Os links levam até o projeto na própria página. -->
         <div class="usos-tabela">
-          <div class="usos-grupo" data-reveal>
+          <div class="usos-grupo" data-cascata>
             <h3>Front-end</h3>
             <ul class="usos">
               <li>
@@ -473,7 +479,7 @@
               </li>
             </ul>
           </div>
-          <div class="usos-grupo" data-reveal>
+          <div class="usos-grupo" data-cascata>
             <h3>Back-end e dados</h3>
             <ul class="usos">
               <li>
@@ -498,7 +504,7 @@
               </li>
             </ul>
           </div>
-          <div class="usos-grupo" data-reveal>
+          <div class="usos-grupo" data-cascata>
             <h3>Ferramentas</h3>
             <ul class="usos">
               <li>
@@ -516,9 +522,9 @@
     </section>
 
     <!-- ===== Contato ===== -->
-    <section id="contato" class="contato secao-ancora">
+    <section id="contato" class="contato secao-ancora" data-transicao>
       <div class="container" data-reveal>
-        <h2 class="contato-titulo">Vamos conversar sobre uma vaga ou um projeto?</h2>
+        <h2 class="contato-titulo" data-bola>Vamos conversar sobre uma vaga ou um projeto?</h2>
         <p class="contato-texto">Procuro minha primeira vaga como desenvolvedor e também faço sites pela GR Digital. O jeito mais rápido de falar comigo é pelo WhatsApp.</p>
 
         <div class="botoes">
@@ -551,5 +557,14 @@
       <p>Feito à mão com HTML, CSS e JavaScript.</p>
     </div>
   </footer>
+  <!-- Botão "voltar ao topo": aparece depois de rolar um pouco. O anel coral
+       em volta enche conforme a rolagem (js: iniciarVoltarTopo). -->
+  <a href="#" class="voltar-topo" aria-label="Voltar ao topo">
+    <svg class="voltar-topo-anel" viewBox="0 0 48 48" aria-hidden="true">
+      <circle class="anel-trilha" cx="24" cy="24" r="22" />
+      <circle class="anel-progresso" cx="24" cy="24" r="22" pathLength="100" />
+    </svg>
+    <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
+  </a>
 </body>
 </html>

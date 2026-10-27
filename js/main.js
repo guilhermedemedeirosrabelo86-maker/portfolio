@@ -176,9 +176,157 @@ function iniciarBarraProgresso() {
 // Coloca o texto do título dentro de <span class="linha"><span>…</span></span>.
 // O CSS esconde o texto embaixo da "linha" e ele sobe quando o bloco aparece.
 function iniciarTitulos() {
-  document.querySelectorAll(".secao-cabeca h2, .contato-titulo").forEach((titulo) => {
+  document.querySelectorAll(".secao-cabeca h2").forEach((titulo) => {
     titulo.classList.add("dividido");
     titulo.innerHTML = `<span class="linha"><span>${titulo.innerHTML}</span></span>`;
+  });
+}
+
+// ---------- Bola que segue o mouse em alguns títulos ----------
+// Nos textos com data-bola, aparece uma bola coral que segue o mouse e
+// inverte as cores (o efeito de cor é do CSS: mix-blend-mode).
+// Só em computador com mouse e para quem não pediu "menos movimento".
+function iniciarBola() {
+  const temMouse = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const alvos = document.querySelectorAll("[data-bola] .linha > span, [data-bola] .letras");
+  if (!temMouse || menosMovimento || alvos.length === 0) return;
+
+  const bola = document.createElement("div");
+  bola.className = "bola";
+  bola.setAttribute("aria-hidden", "true");
+  bola.innerHTML = "<span></span>";
+  document.body.append(bola);
+
+  // Onde o mouse está (mouseX/mouseY) e onde a bola está (x/y).
+  // A cada quadro a bola anda 20% do caminho até o mouse: por isso ela
+  // "persegue" o cursor com um atraso suave, em vez de grudar nele.
+  let mouseX = 0;
+  let mouseY = 0;
+  let x = 0;
+  let y = 0;
+  let primeiraVez = true;
+  let andando = false;
+
+  function seguir() {
+    x += (mouseX - x) * 0.2;
+    y += (mouseY - y) * 0.2;
+    bola.style.transform = `translate(${x}px, ${y}px)`;
+    // Para de animar quando já chegou (não gasta processamento à toa)
+    if (Math.abs(mouseX - x) > 0.1 || Math.abs(mouseY - y) > 0.1) {
+      requestAnimationFrame(seguir);
+    } else {
+      andando = false;
+    }
+  }
+
+  window.addEventListener("mousemove", (evento) => {
+    mouseX = evento.clientX;
+    mouseY = evento.clientY;
+    if (primeiraVez) {
+      // Na primeira vez a bola já nasce no mouse, sem atravessar a tela
+      x = mouseX;
+      y = mouseY;
+      primeiraVez = false;
+    }
+    if (!andando) {
+      andando = true;
+      requestAnimationFrame(seguir);
+    }
+  }, { passive: true });
+
+  alvos.forEach((alvo) => {
+    alvo.addEventListener("mouseenter", () => bola.classList.add("ativa"));
+    alvo.addEventListener("mouseleave", () => bola.classList.remove("ativa"));
+  });
+}
+
+// ---------- Saída do topo ----------
+// Conforme o Sobre cobre o Início, --saida vai de 0 a 1. O CSS usa esse número
+// para encolher e escurecer o Início, subir e apagar o texto e subir a foto
+// mais devagar.
+function iniciarSaidaTopo() {
+  const topo = document.querySelector(".hero");
+  if (!topo) return;
+
+  // Onde o Início "prende". Se ele for mais alto que a tela (celular), prende
+  // com o topo para fora (valor negativo), só quando o fim dele chega embaixo.
+  // Assim dá para ver o Início inteiro antes de o Sobre cobrir.
+  function calcularTopo() {
+    const sobra = window.innerHeight - topo.offsetHeight;
+    topo.style.setProperty("--topo-preso", `${Math.min(0, sobra)}px`);
+  }
+  calcularTopo();
+  window.addEventListener("resize", calcularTopo);
+  window.addEventListener("load", calcularTopo); // depois da foto carregar
+
+  if (menosMovimento) return;
+  aoRolar(() => {
+    const p = Math.min(Math.max(window.scrollY / topo.offsetHeight, 0), 1);
+    topo.style.setProperty("--saida", p.toFixed(3));
+  });
+}
+
+// ---------- Transições entre seções ----------
+// Para cada seção com data-transicao, calcula --t: 0 quando o topo dela
+// aparece embaixo da tela e 1 quando o topo já subiu uns 75% da tela.
+// O CSS usa --t para abrir o cartão dos Projetos e crescer o círculo do Contato.
+function iniciarTransicoes() {
+  const secoes = document.querySelectorAll("[data-transicao]");
+  if (secoes.length === 0 || menosMovimento) return;
+  aoRolar(() => {
+    secoes.forEach((secao) => {
+      const topo = secao.getBoundingClientRect().top;
+      const t = Math.min(Math.max((window.innerHeight - topo) / (window.innerHeight * 0.75), 0), 1);
+      secao.style.setProperty("--t", t.toFixed(3));
+    });
+  });
+}
+
+// ---------- Cascata ----------
+// Em vez de o bloco inteiro aparecer de uma vez, cada linha aparece um
+// pouquinho depois da anterior. Só prepara os atributos: quem anima é o
+// iniciarRevelar (por isso esta função roda antes dele).
+function iniciarCascata() {
+  document.querySelectorAll("[data-cascata]").forEach((bloco) => {
+    const itens = bloco.matches("ul") ? bloco.children : bloco.querySelectorAll("h3, li");
+    [...itens].forEach((item, i) => {
+      item.classList.add("cascata");
+      item.setAttribute("data-reveal", "");
+      item.dataset.delay = String(i * 70);
+    });
+  });
+}
+
+// ---------- Título do contato letra por letra ----------
+// Separa o título em palavras e as palavras em letras. Cada letra ganha um
+// número (--n) que o CSS usa como atraso: assim elas sobem uma depois da outra.
+// As palavras ficam inteiras (não quebram no meio) e a frase completa vai num
+// aria-label, para leitores de tela não lerem letra por letra.
+function iniciarLetras() {
+  const titulo = document.querySelector(".contato-titulo");
+  if (!titulo) return;
+  const texto = titulo.textContent.trim();
+  let n = 0;
+  const palavras = texto.split(" ").map((palavra) => {
+    const letras = [...palavra].map((letra) => `<span class="letra" style="--n: ${n++}">${letra}</span>`).join("");
+    return `<span class="palavra-letras">${letras}</span>`;
+  });
+  titulo.setAttribute("aria-label", texto);
+  titulo.innerHTML = `<span class="letras" aria-hidden="true">${palavras.join(" ")}</span>`;
+}
+
+// ---------- Botão "voltar ao topo" ----------
+// Aparece depois de rolar mais da metade da primeira tela e o anel em volta
+// mostra quanto da página já foi lida (--progresso de 0 a 1).
+function iniciarVoltarTopo() {
+  const botao = document.querySelector(".voltar-topo");
+  if (!botao) return;
+  aoRolar(() => {
+    const doc = document.documentElement;
+    const total = doc.scrollHeight - doc.clientHeight;
+    const progresso = total > 0 ? doc.scrollTop / total : 0;
+    botao.style.setProperty("--progresso", progresso.toFixed(3));
+    botao.classList.toggle("visivel", doc.scrollTop > window.innerHeight * 0.6);
   });
 }
 
@@ -440,6 +588,7 @@ function iniciarCopiar() {
     botao.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(botao.dataset.copiar);
+        soltarConfete(botao);
         botao.textContent = "Copiado";
         botao.classList.add("copiado");
         setTimeout(() => {
@@ -451,6 +600,50 @@ function iniciarCopiar() {
       }
     });
   });
+}
+
+// Solta bolinhas coloridas saindo do centro de um elemento.
+// Cada bolinha é um <span> que voa numa direção sorteada e some no fim.
+function soltarConfete(origem) {
+  if (menosMovimento) return;
+  const caixa = origem.getBoundingClientRect();
+  const centroX = caixa.left + caixa.width / 2;
+  const centroY = caixa.top + caixa.height / 2;
+  const cores = ["#ff7a59", "#eef2fb", "#5eead4", "#ffb547"];
+
+  for (let i = 0; i < 16; i++) {
+    const bolinha = document.createElement("span");
+    bolinha.className = "confete";
+    bolinha.style.left = `${centroX}px`;
+    bolinha.style.top = `${centroY}px`;
+    bolinha.style.background = cores[i % cores.length];
+    document.body.append(bolinha);
+
+    const angulo = (Math.PI * 2 * i) / 16 + Math.random() * 0.4;
+    const distancia = 55 + Math.random() * 60;
+    bolinha
+      .animate(
+        [
+          { transform: "translate(-50%, -50%) scale(1)", opacity: 1 },
+          {
+            transform: `translate(calc(-50% + ${Math.cos(angulo) * distancia}px), calc(-50% + ${Math.sin(angulo) * distancia + 20}px)) scale(0.4)`,
+            opacity: 0,
+          },
+        ],
+        { duration: 700 + Math.random() * 300, easing: "cubic-bezier(0.16, 1, 0.3, 1)" },
+      )
+      .finished.then(() => bolinha.remove());
+  }
+}
+
+// ---------- Recado no console ----------
+// Para quem abrir as ferramentas de desenvolvedor (F12) do navegador.
+function deixarRecado() {
+  console.log(
+    "%cOi! 👋%c\nSe você está olhando o código, o portfólio é feito à mão com HTML, CSS e JavaScript, sem framework.\nMeus projetos: github.com/guilhermedemedeirosrabelo86-maker\nVamos conversar? wa.me/5548998230477",
+    "font: 800 24px sans-serif; color: #ff7a59;",
+    "font: 14px sans-serif; color: inherit;",
+  );
 }
 
 // ---------- Idade ----------
@@ -522,14 +715,21 @@ iniciarEntrada();
 iniciarMenu();
 iniciarNavbar();
 iniciarBarraProgresso();
+iniciarVoltarTopo();
 iniciarIdade();
 iniciarIcones();
 iniciarTitulos();
+iniciarLetras();
+iniciarBola(); // depois dos títulos, que criam as .linha
+deixarRecado();
 iniciarVitrine();
 iniciarSeletor();
 iniciarDetalhes();
 iniciarGaleria();
 iniciarVideos();
 iniciarTextoAcende();
+iniciarSaidaTopo();
+iniciarTransicoes();
+iniciarCascata(); // antes do iniciarRevelar
 iniciarRevelar();
 iniciarCopiar();

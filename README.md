@@ -33,11 +33,16 @@ Cada parte é uma função em `js/main.js`:
 | Função | O que faz |
 |---|---|
 | `iniciarEntrada` | Anima o topo ao abrir a página (o CSS usa a classe `pronto`) |
+| `iniciarAbertura` | Tela de boas-vindas com contador de 0 a 100 (só na primeira visita da sessão) |
 | `iniciarMenu` | Abre e fecha o menu do celular |
 | `iniciarNavbar` | Dá fundo à navbar ao rolar e desliza a pílula até a seção atual |
-| `iniciarBarraProgresso` | Barrinha âmbar no topo que acompanha a rolagem |
+| `iniciarBarraProgresso` | Barrinha coral no topo que acompanha a rolagem |
 | `iniciarTitulos` | Coloca os títulos numa "máscara" para o texto subir quando aparece |
-| `iniciarVitrine` | O print do projeto se endireita conforme a rolagem |
+| `iniciarVitrine` | O print do estudo de caso se endireita conforme a rolagem |
+| `iniciarSeletor` | Lista de projetos: o mouse troca a prévia ao lado |
+| `iniciarDetalhes` | Abre e fecha o detalhe de cada projeto (um `<dialog>` que sobe de baixo) |
+| `iniciarGaleria` | Carrossel de prints do Meu Prédio |
+| `iniciarVideos` | Toca os vídeos só enquanto estão na tela |
 | `iniciarRevelar` | Blocos com `data-reveal` surgem ao entrar na tela (`IntersectionObserver`) |
 | `iniciarTextoAcende` | Acende as palavras do "Sobre" conforme a rolagem |
 | `iniciarCopiar` | Botão que copia o e-mail |
@@ -53,7 +58,7 @@ Quem ativou "reduzir movimento" no sistema vê tudo sem animação (`prefers-red
 | Mudar textos | Direto no `index.html` |
 | Mudar as cores | Variáveis no começo do `css/style.css` |
 | Trocar a foto | Substitua `img/guilherme.jpg` (de preferência 720 × 900, retrato) |
-| Adicionar um projeto | Copie um `<li>` da lista `.outros` no `index.html` |
+| Adicionar um projeto | No `index.html`, copie um `<li>` da `.seletor-lista`, uma tela da `.previa-moldura`, uma frase em `data-legendas` e um `<dialog class="detalhe">` (o `id` do dialog é o `href` do item) |
 | Trocar o endereço do site | Procure `portfolio-lyart-eta-yv04rf5tdp.vercel.app` nos `.html`, `sitemap.xml` e `robots.txt` |
 
 ## Publicar

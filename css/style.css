@@ -20,26 +20,32 @@
 
 /* Todas as cores e fontes do site ficam aqui. Mudou aqui, muda em tudo. */
 :root {
-  --noite: #0e0d0b;        /* fundo da página (preto quente) */
-  --superficie: #171512;   /* fundo de painéis */
-  --superficie-2: #201d19; /* painéis por cima de painéis */
-  --linha: #2e2a24;        /* bordas */
-  --papel: #f1ede4;        /* texto principal */
-  --suave: #c9c3b8;        /* texto secundário */
-  --poeira: #948d81;       /* texto mais fraco */
-  --ambar: #f5b301;        /* cor de destaque */
-  --ambar-fundo: rgb(245 179 1 / 0.12);
-  --verde: #3ecf8e;
-  --azul: #7fb2ff;
+  --fundo: #0b1220;        /* fundo da página (azul-marinho bem escuro) */
+  --superficie: #121b2e;   /* fundo de painéis */
+  --superficie-2: #1b2742; /* painéis por cima de painéis */
+  --linha: #27334f;        /* bordas */
+  --tinta: #eef2fb;        /* texto principal */
+  --suave: #b9c2d6;        /* texto secundário */
+  --poeira: #8a95ae;       /* texto mais fraco */
+  --destaque: #ff7a59;     /* cor de destaque (coral) */
+  --destaque-escuro: #ff9478; /* coral do botão com o mouse em cima */
+  --destaque-fundo: rgb(255 122 89 / 0.14);
+  --texto-botao: #1b0c06;            /* texto em cima da cor de destaque */
+  --vidro: rgb(11 18 32 / 0.78);     /* fundo da barra do topo ao rolar */
+  --palavra-apagada: #26324d;        /* palavras do "Sobre" antes de acender */
 
   --fonte-titulo: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
   --fonte-texto: "Geist", ui-sans-serif, system-ui, sans-serif;
+
+  /* Sombra única dos prints e da foto */
+  --sombra: 0 40px 80px -40px rgb(0 0 0 / 0.8);
 
   /* Curva de animação usada no site todo: começa rápida e freia suave */
   --suave-saida: cubic-bezier(0.16, 1, 0.3, 1);
 
   color-scheme: dark;
 }
+
 
 /* Faz padding e borda contarem dentro da largura (evita surpresas) */
 *,
@@ -67,27 +73,16 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--noite);
-  color: var(--papel);
+  background: var(--fundo);
+  color: var(--tinta);
   font-family: var(--fonte-texto);
   font-size: 1rem;
   line-height: 1.6;
 }
 
-/* Textura de "grão" bem fraca por cima de tudo: tira a cara de tela lisa */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
-  opacity: 0.05;
-  pointer-events: none;
-}
-
 ::selection {
-  background: rgb(245 179 1 / 0.35);
-  color: #fff;
+  background: var(--destaque-fundo);
+  color: var(--tinta);
 }
 
 a {
@@ -115,11 +110,11 @@ h1,
 h2,
 h3,
 h4 {
-  color: #fff;
+  color: var(--tinta);
   font-family: var(--fonte-titulo);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
 }
 
 button {
@@ -128,7 +123,7 @@ button {
 
 /* Contorno de foco bem visível para quem navega pelo teclado */
 :focus-visible {
-  outline: 2px solid var(--ambar);
+  outline: 2px solid var(--destaque);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -160,8 +155,8 @@ button {
   z-index: 60;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  background: var(--ambar);
-  color: var(--noite);
+  background: var(--destaque);
+  color: var(--texto-botao);
   font-weight: 600;
   transform: translateY(-200%);
 }
@@ -182,16 +177,39 @@ button {
   flex-shrink: 0;
 }
 
+/* Logo: selo coral com as iniciais + o nome (o nome some em telas bem estreitas) */
 .logo {
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: var(--tinta);
   font-family: var(--fonte-titulo);
-  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.logo-selo {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--destaque);
+  color: var(--texto-botao);
+  font-size: 0.9375rem;
   font-weight: 800;
   letter-spacing: -0.04em;
 }
 
-.logo span {
-  color: var(--ambar);
+.logo-nome {
+  font-size: 1.0625rem;
+}
+
+@media (max-width: 340px) {
+  .logo-nome {
+    display: none;
+  }
 }
 
 /* ---------- 3. Botões e tags ---------- */
@@ -224,23 +242,23 @@ button {
 }
 
 .botao-primario {
-  background: var(--ambar);
-  color: var(--noite);
+  background: var(--destaque);
+  color: var(--texto-botao);
   font-weight: 600;
 }
 
 .botao-primario:hover {
-  background: #ffc83d;
+  background: var(--destaque-escuro);
 }
 
 .botao-contorno {
   border-color: var(--linha);
-  color: var(--papel);
+  color: var(--tinta);
 }
 
 .botao-contorno:hover {
   border-color: var(--poeira);
-  background: rgb(255 255 255 / 0.04);
+  background: var(--superficie);
 }
 
 .botao-icone {
@@ -252,7 +270,8 @@ button {
 
 .botao-icone:hover {
   border-color: var(--poeira);
-  color: #fff;
+  background: var(--superficie);
+  color: var(--tinta);
 }
 
 .botao-pequeno {
@@ -309,8 +328,8 @@ button {
   margin-left: 0.5rem;
   padding: 0.125rem 0.5rem;
   border-radius: 999px;
-  background: var(--ambar-fundo);
-  color: var(--ambar);
+  background: var(--destaque-fundo);
+  color: var(--destaque);
   font-family: var(--fonte-texto);
   font-size: 0.6875rem;
   font-weight: 500;
@@ -320,49 +339,51 @@ button {
 
 /* ---------- 4. Navbar e barra de progresso ---------- */
 
-/* Barrinha âmbar no topo que cresce conforme a rolagem (o JS muda o scaleX) */
+/* Barrinha coral no topo que cresce conforme a rolagem (o JS muda o scaleX) */
 .barra-progresso {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
   height: 2px;
-  background: var(--ambar);
+  background: var(--destaque);
   transform: scaleX(0);
   transform-origin: left;
 }
 
-/* Começa transparente. Depois de rolar um pouco, o JS coloca .rolou e ela ganha fundo. */
+/* Barra flutuante: uma "pílula" de vidro presa no topo, com um respiro em volta.
+   Depois de rolar um pouco, o JS coloca .rolou e ela ganha sombra. */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 40;
-  border-bottom: 1px solid transparent;
-  transition: background-color 0.3s, border-color 0.3s;
+  padding-top: 0.75rem;
 }
 
-.navbar.rolou {
-  border-bottom-color: rgb(255 255 255 / 0.06);
-  background: rgb(14 13 11 / 0.72);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-}
-
-.navbar-conteudo {
+.navbar .navbar-conteudo {
   display: flex;
-  height: 4.25rem;
+  width: min(100% - 1.5rem, 74rem);
+  height: 3.75rem;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  padding: 0 0.375rem 0 0.375rem;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  background: var(--vidro);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.navbar.rolou .navbar-conteudo {
+  border-color: #33405f;
+  box-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.75);
 }
 
 .menu-desktop {
   position: relative;
   display: none; /* aparece em telas maiores, ver seção 12 */
   align-items: center;
-  padding: 0.25rem;
-  border: 1px solid rgb(255 255 255 / 0.06);
-  border-radius: 999px;
-  background: rgb(255 255 255 / 0.02);
 }
 
 .menu-desktop a {
@@ -376,7 +397,7 @@ button {
 
 .menu-desktop a:hover,
 .menu-desktop a.ativo {
-  color: #fff;
+  color: var(--tinta);
 }
 
 /* Pílula que desliza até o link da seção que está na tela (o JS posiciona) */
@@ -387,7 +408,7 @@ button {
   left: 0;
   width: 0;
   border-radius: 999px;
-  background: rgb(255 255 255 / 0.08);
+  background: var(--superficie-2);
   opacity: 0;
   transition: transform 0.45s var(--suave-saida), width 0.45s var(--suave-saida), opacity 0.3s;
 }
@@ -417,7 +438,7 @@ button {
   width: 1.125rem;
   height: 1.5px;
   border-radius: 2px;
-  background: var(--papel);
+  background: var(--tinta);
   transition: transform 0.35s var(--suave-saida);
 }
 
@@ -429,20 +450,27 @@ button {
   transform: translateY(-3.75px) rotate(-45deg);
 }
 
+/* Menu do celular: um cartão que abre logo abaixo da barra */
 .menu-celular {
-  border-top: 1px solid rgb(255 255 255 / 0.06);
-  background: rgb(14 13 11 / 0.97);
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0.75rem;
+  left: 0.75rem;
+  border: 1px solid var(--linha);
+  border-radius: 1.25rem;
+  background: var(--superficie);
+  box-shadow: 0 24px 50px -20px rgb(0 0 0 / 0.8);
 }
 
 .menu-celular .container {
   display: flex;
   flex-direction: column;
-  padding-block: 1rem 1.5rem;
+  padding: 0.5rem 1.25rem 1.25rem;
 }
 
 .menu-celular a:not(.botao) {
   padding: 0.875rem 0;
-  border-bottom: 1px solid rgb(255 255 255 / 0.05);
+  border-bottom: 1px solid var(--linha);
   font-family: var(--fonte-titulo);
   font-size: 1.5rem;
   font-weight: 600;
@@ -454,23 +482,22 @@ button {
 
 /* ---------- 5. Hero (início) e foto ---------- */
 
-/* overflow-x: clip corta o brilho só nas laterais (sem rolagem para o lado),
-   mas deixa ele vazar para baixo, sem uma linha reta no fim da seção */
+/* overflow-x: clip corta o brilho só nas laterais (sem rolagem para o lado) */
 .hero {
   position: relative;
   overflow-x: clip;
 }
 
-/* Brilho âmbar atrás da foto */
+/* Brilho coral atrás da foto */
 .hero::before {
   content: "";
   position: absolute;
-  top: 10%;
-  right: -20%;
-  width: 70vmax;
-  height: 70vmax;
+  top: 5%;
+  right: -15%;
+  width: 60vmax;
+  height: 60vmax;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgb(245 179 1 / 0.13), transparent);
+  background: radial-gradient(closest-side, rgb(255 122 89 / 0.16), transparent);
   pointer-events: none;
 }
 
@@ -492,19 +519,40 @@ button {
   font-size: 0.875rem;
 }
 
+/* Linha curta acima do nome, com um traço coral na frente */
+.hero-chamada {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  color: var(--suave);
+  font-size: 0.9375rem;
+}
+
+.hero-chamada::before {
+  content: "";
+  width: 2rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--destaque);
+}
+
 .hero-nome {
-  margin-top: 1.5rem;
-  font-size: clamp(3.5rem, 15vw, 8.5rem);
+  font-size: clamp(3.25rem, 14vw, 7rem);
   font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: -0.03em;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
 }
 
 /* Cada linha do nome é uma "janela": o texto sobe de baixo dela ao carregar */
 .hero-nome .linha {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.06em; /* não corta letras como "g" */
+  /* Folga embaixo (letras como "g") e à direita: com as letras apertadas,
+     a ponta da última letra passa da caixa e a máscara cortava ela.
+     A margem negativa devolve o espaço, então o layout não muda. */
+  padding: 0 0.12em 0.06em 0;
+  margin-right: -0.12em;
 }
 
 .hero-nome .linha > span {
@@ -512,7 +560,7 @@ button {
 }
 
 .hero-nome .linha:last-child {
-  color: var(--ambar);
+  color: var(--destaque);
 }
 
 .hero-frase {
@@ -523,7 +571,26 @@ button {
   line-height: 1.6;
 }
 
-/* Bolinha verde com uma "onda" saindo dela */
+/* Faixa "Tecnologias que uso" embaixo dos botões */
+.hero-stack {
+  max-width: 34rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--linha);
+}
+
+.hero-stack p {
+  margin-bottom: 0.75rem;
+  color: var(--poeira);
+  font-size: 0.875rem;
+}
+
+.hero-stack .tags li {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+}
+
+/* Bolinha colorida com uma "onda" saindo dela */
 .ponto-online {
   position: relative;
   display: flex;
@@ -531,14 +598,14 @@ button {
   height: 0.5rem;
   flex-shrink: 0;
   border-radius: 999px;
-  background: var(--verde);
+  background: var(--destaque);
 }
 
 .ponto-online span {
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  background: var(--verde);
+  background: var(--destaque);
   opacity: 0.6;
 }
 
@@ -555,14 +622,14 @@ button {
   object-fit: cover;
   border: 1px solid var(--linha);
   border-radius: 1.5rem;
-  box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.8);
+  box-shadow: var(--sombra);
 }
 
 /* ---------- 6. Seções ---------- */
 
 /* Compensa a navbar fixa quando um link leva até a seção (#projetos etc.) */
 .secao-ancora {
-  scroll-margin-top: 4rem;
+  scroll-margin-top: 5.5rem;
 }
 
 .secao {
@@ -597,7 +664,8 @@ button {
 .dividido .linha {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.06em;
+  padding: 0 0.12em 0.06em 0; /* mesma folga do nome no topo */
+  margin-right: -0.12em;
 }
 
 .dividido .linha > span {
@@ -605,7 +673,7 @@ button {
 }
 
 .secao-cabeca h2 {
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -618,17 +686,274 @@ button {
 
 /* ---------- 7. Projetos ---------- */
 
-.destaque-titulo {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
+/* Lista à esquerda, prévia à direita (a prévia só aparece no computador) */
+.seletor {
+  display: grid;
+  gap: 3rem;
 }
 
-.destaque-resumo {
+.seletor-lista {
+  border-top: 1px solid var(--linha);
+}
+
+.seletor-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--linha);
+  color: var(--poeira);
+}
+
+/* Barrinha coral que cresce na esquerda do item ativo */
+.seletor-item::before {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  left: 0;
+  width: 3px;
+  background: var(--destaque);
+  transform: scaleY(0);
+  transition: transform 0.5s var(--suave-saida);
+}
+
+.seletor-nome {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.875rem, 5vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  transition: color 0.3s;
+}
+
+.seletor-tipo {
+  display: block;
+  margin-top: 0.375rem;
+  font-size: 0.9375rem;
+}
+
+.seletor-nome,
+.seletor-tipo {
+  transition: color 0.3s, transform 0.5s var(--suave-saida);
+}
+
+.seletor-seta {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.5s var(--suave-saida);
+}
+
+/* Item ativo (mouse em cima, foco do teclado): anda para a direita e acende */
+.seletor-item.ativo .seletor-nome {
+  color: var(--tinta);
+}
+
+.seletor-item.ativo .seletor-tipo {
+  color: var(--suave);
+}
+
+.seletor-item.ativo::before {
+  transform: scaleY(1);
+}
+
+.seletor-item.ativo .seletor-seta {
+  border-color: var(--destaque);
+  background: var(--destaque);
+  color: var(--texto-botao);
+  transform: rotate(-45deg);
+}
+
+/* Prévia: as quatro telas empilhadas; a .ativa fica por cima */
+.seletor-previa {
+  display: none;
+}
+
+.previa-moldura {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--linha);
+  border-radius: 1rem;
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+}
+
+.previa-moldura > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  visibility: hidden;
+}
+
+.previa-moldura > .anterior {
+  z-index: 1;
+  visibility: visible;
+}
+
+.previa-moldura > .ativa {
+  z-index: 2;
+  visibility: visible;
+}
+
+.previa-legenda {
+  min-height: 3em;
+  margin-top: 1rem;
+  color: var(--poeira);
+  font-size: 0.9375rem;
+}
+
+/* ----- Detalhe do projeto: um <dialog> que sobe de baixo ----- */
+
+.detalhe {
+  position: fixed;
+  inset: auto 0 0;
+  width: 100%;
+  max-width: none;
+  max-height: 90vh;
+  margin: 0;
+  padding: 3rem 0 4rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 0;
+  border-top: 1px solid var(--linha);
+  border-radius: 1.5rem 1.5rem 0 0;
+  background: var(--superficie);
+  color: var(--tinta);
+}
+
+.detalhe::backdrop {
+  background: rgb(5 9 18 / 0.65);
+  backdrop-filter: blur(4px);
+}
+
+/* Trava a rolagem da página enquanto um detalhe está aberto */
+html:has(.detalhe[open]) {
+  overflow: hidden;
+}
+
+.detalhe-fechar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: -1.5rem 1rem 0 auto;
+  place-items: center;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  background: var(--superficie);
+  color: var(--tinta);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.detalhe-fechar:hover {
+  border-color: var(--destaque);
+  color: var(--destaque);
+}
+
+.detalhe-tipo {
+  color: var(--destaque);
+  font-size: 0.875rem;
+}
+
+.detalhe-titulo {
+  margin-top: 0.25rem;
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.detalhe-grade {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.detalhe-resumo {
   max-width: 36rem;
-  margin: 1rem 0 1.5rem;
+  margin-bottom: 1.5rem;
   color: var(--suave);
   font-size: 1.125rem;
+}
+
+/* O conteúdo do detalhe sobe um pouco depois da folha, um bloco por vez */
+@media (prefers-reduced-motion: no-preference) {
+  .detalhe[open] {
+    animation: subir-detalhe 0.6s var(--suave-saida);
+  }
+
+  .detalhe[open]::backdrop {
+    animation: aparecer 0.4s ease-out;
+  }
+
+  .detalhe[open] .container > * {
+    animation: subir-conteudo 0.7s var(--suave-saida) both;
+  }
+
+  .detalhe[open] .container > :nth-child(2) { animation-delay: 0.05s; }
+  .detalhe[open] .container > :nth-child(3) { animation-delay: 0.1s; }
+  .detalhe[open] .container > :nth-child(n + 4) { animation-delay: 0.15s; }
+
+  /* Fechando: o JS coloca .fechando, espera a animação e só então fecha */
+  .detalhe.fechando {
+    animation: descer-detalhe 0.35s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  }
+
+  .detalhe.fechando::backdrop {
+    animation: aparecer 0.35s ease-in reverse forwards;
+  }
+
+  /* A prévia nova entra "varrendo" de baixo para cima */
+  .previa-moldura > .ativa {
+    animation: varrer 0.7s var(--suave-saida);
+  }
+}
+
+@keyframes subir-detalhe {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes descer-detalhe {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes subir-conteudo {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes varrer {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: scale(1.06);
+  }
 }
 
 /* O print do sistema. --inclinacao e --escala vêm do JS conforme a rolagem. */
@@ -638,23 +963,13 @@ button {
   perspective: 1800px;
 }
 
-.vitrine::before {
-  content: "";
-  position: absolute;
-  inset: 15% 10% -5%;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgb(245 179 1 / 0.16), transparent);
-  filter: blur(20px);
-  pointer-events: none;
-}
-
 .vitrine-janela {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--linha);
   border-radius: 0.875rem;
   background: var(--superficie);
-  box-shadow: 0 50px 100px -40px rgb(0 0 0 / 0.9);
+  box-shadow: var(--sombra);
   transform: rotateX(var(--inclinacao, 0deg)) scale(var(--escala, 1));
   transform-origin: center top;
   will-change: transform;
@@ -695,7 +1010,7 @@ button {
 .historia h4::before,
 .historia-titulo::before {
   content: counter(passo, decimal-leading-zero);
-  color: var(--ambar);
+  color: var(--destaque);
   font-family: var(--fonte-texto);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -706,27 +1021,14 @@ button {
   color: var(--suave);
 }
 
-/* Segundo projeto: texto de um lado, funcionalidades do outro */
-.segundo {
-  display: grid;
-  gap: 2.5rem;
-  margin-top: 6rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--linha);
-}
-
-.destaque-titulo .selo {
-  font-size: 0.75rem;
-}
-
 .recursos {
   display: grid;
-  gap: 1.75rem;
+  gap: 1.5rem;
 }
 
 .recursos li {
   padding-left: 1rem;
-  border-left: 2px solid var(--ambar);
+  border-left: 2px solid var(--destaque);
 }
 
 .recursos h4 {
@@ -739,13 +1041,9 @@ button {
   font-size: 0.9375rem;
 }
 
-/* Prints do Meu Prédio: ocupa a largura toda, abaixo do texto e das funcionalidades */
+/* Prints do Meu Prédio, dentro do detalhe do projeto */
 .galeria {
-  grid-column: 1 / -1;
-}
-
-.galeria .vitrine-janela {
-  box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.9);
+  margin-top: 3rem;
 }
 
 /* Os prints ficam lado a lado e a rolagem "encaixa" um de cada vez */
@@ -810,7 +1108,7 @@ button {
 
 .galeria-pontos i.ativo {
   width: 18px;
-  background: var(--ambar);
+  background: var(--destaque);
 }
 
 /* Computador: pílulas no lugar dos pontinhos (aparecem a partir de 1024px) */
@@ -834,20 +1132,19 @@ button {
 }
 
 .galeria-botoes button:hover {
-  color: var(--papel);
+  color: var(--tinta);
   border-color: var(--poeira);
 }
 
 .galeria-botoes button[aria-pressed="true"] {
-  border-color: var(--ambar);
-  background: var(--ambar-fundo);
-  color: var(--ambar);
+  border-color: var(--destaque);
+  background: var(--destaque-fundo);
+  color: var(--destaque);
 }
 
 /* Telas do celular: três molduras lado a lado (no celular, uma fila que arrasta) */
 .celulares {
-  grid-column: 1 / -1;
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
 
 .celulares-fila {
@@ -881,7 +1178,7 @@ button {
   border: 1px solid var(--linha);
   border-radius: 1.75rem;
   background: var(--superficie);
-  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.9);
+  box-shadow: var(--sombra);
 }
 
 .moldura-celular img,
@@ -892,77 +1189,29 @@ button {
   border-radius: 1.375rem;
 }
 
-/* Outros projetos: lista com linhas finas em vez de cards */
-.outros {
-  margin-top: 5rem;
-  border-bottom: 1px solid var(--linha);
-}
-
-.outro {
-  position: relative;
-  display: grid;
-  gap: 1rem;
-  padding: 1.75rem 0;
-  border-top: 1px solid var(--linha);
-}
-
-.outro h3 {
-  font-size: 1.5rem;
-  letter-spacing: -0.025em;
-}
-
-.outro p {
-  margin-top: 0.25rem;
-  color: var(--poeira);
-}
-
-.outro-seta {
-  position: absolute;
-  top: 1.75rem;
-  right: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--poeira);
-  transition: transform 0.35s var(--suave-saida), color 0.2s;
-}
-
-a.outro:hover .outro-seta {
-  color: var(--ambar);
-  transform: translate(3px, -3px);
-}
-
-a.outro:hover h3 {
-  color: var(--ambar);
-}
-
-.outro h3 {
-  transition: color 0.2s;
-}
-
-
 /* ---------- 8. Sobre ---------- */
 
 /* O JS divide o texto em palavras. Começam apagadas e acendem com a rolagem. */
 .texto-acende {
-  max-width: 60rem;
+  max-width: 52rem;
   font-family: var(--fonte-titulo);
-  font-size: clamp(1.75rem, 4.2vw, 3.25rem);
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.15;
+  line-height: 1.25;
 }
 
 .texto-acende .palavra {
-  color: #34302a;
+  color: var(--palavra-apagada);
   transition: color 0.35s;
 }
 
 .texto-acende .palavra.acesa {
-  color: #fff;
+  color: var(--tinta);
 }
 
 .texto-acende .palavra.acesa.palavra-destaque {
-  color: var(--ambar);
+  color: var(--destaque);
 }
 
 .sobre-grade {
@@ -988,9 +1237,9 @@ a.outro:hover h3 {
 
 .fichas dd {
   margin-top: 0.25rem;
-  color: #fff;
+  color: var(--tinta);
   font-family: var(--fonte-titulo);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.2;
@@ -1027,12 +1276,12 @@ a.outro:hover h3 {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--ambar);
-  box-shadow: 0 0 0 4px var(--noite);
+  background: var(--destaque);
+  box-shadow: 0 0 0 4px var(--fundo);
 }
 
 .linha-tempo-curso {
-  color: #fff;
+  color: var(--tinta);
   font-family: var(--fonte-titulo);
   font-size: 1.25rem;
   font-weight: 600;
@@ -1045,49 +1294,72 @@ a.outro:hover h3 {
 
 /* ---------- 9. Skills ---------- */
 
-.skills-grade {
+/* Tabela "onde usei": tecnologia à esquerda, projetos à direita.
+   No celular o nome do projeto fica embaixo da tecnologia. */
+.usos-tabela {
   display: grid;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
-/* Barrinha âmbar à esquerda, igual às funcionalidades do Meu Prédio */
-.skills-grupo {
-  padding-left: 1rem;
-  border-left: 2px solid var(--ambar);
-}
-
-.skills-grupo h3 {
-  margin-bottom: 0.75rem;
-  color: var(--poeira);
+.usos-grupo h3 {
+  margin-bottom: 0.5rem;
+  color: var(--destaque);
   font-family: var(--fonte-texto);
   font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0;
 }
 
-.skills {
+.usos li {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem 1rem;
+  gap: 0.25rem;
+  padding-block: 0.875rem;
+  border-bottom: 1px solid var(--linha);
 }
 
-.skills li {
+.usos-tec {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--papel);
+  gap: 0.625rem;
+  color: var(--tinta);
+  font-family: var(--fonte-titulo);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.usos-tec small {
+  color: var(--poeira);
+  font-family: var(--fonte-texto);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.usos-tec svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}
+
+.usos-onde {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  padding-left: 1.75rem; /* alinha com o texto, depois do ícone */
+  color: var(--poeira);
   font-size: 0.9375rem;
 }
 
-.skills small {
-  color: var(--poeira);
-  font-size: 0.8125rem;
+.usos-onde a {
+  color: var(--suave);
+  text-decoration: underline;
+  text-decoration-color: var(--linha);
+  text-underline-offset: 0.25em;
+  transition: color 0.2s, text-decoration-color 0.2s;
 }
 
-.skills li svg {
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
+.usos-onde a:hover {
+  color: var(--destaque);
+  text-decoration-color: var(--destaque);
 }
 
 /* ---------- 10. Contato e rodapé ---------- */
@@ -1097,20 +1369,7 @@ a.outro:hover h3 {
   overflow: hidden;
   padding-block: 6rem 7rem;
   border-top: 1px solid var(--linha);
-}
-
-/* Brilho âmbar subindo do pé da página */
-.contato::before {
-  content: "";
-  position: absolute;
-  bottom: -60%;
-  left: 50%;
-  width: 120vmax;
-  height: 80vmax;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgb(245 179 1 / 0.14), transparent);
-  transform: translateX(-50%);
-  pointer-events: none;
+  background: linear-gradient(180deg, var(--fundo), #131d36);
 }
 
 .contato .container {
@@ -1118,11 +1377,11 @@ a.outro:hover h3 {
 }
 
 .contato-titulo {
-  max-width: 14ch;
-  font-size: clamp(2.75rem, 9vw, 6rem);
+  max-width: 18ch;
+  font-size: clamp(2.25rem, 6.5vw, 4.25rem);
   font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 0.95;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
 }
 
 .contato-texto {
@@ -1154,12 +1413,12 @@ a.outro:hover h3 {
   color: var(--suave);
   text-overflow: ellipsis;
   white-space: nowrap;
-  background: linear-gradient(var(--ambar), var(--ambar)) left bottom / 0 1px no-repeat;
+  background: linear-gradient(var(--destaque), var(--destaque)) left bottom / 0 1px no-repeat;
   transition: background-size 0.4s var(--suave-saida), color 0.2s;
 }
 
 .canal:hover {
-  color: #fff;
+  color: var(--tinta);
   background-size: 100% 1px;
 }
 
@@ -1177,12 +1436,12 @@ a.outro:hover h3 {
 
 .copiar:hover {
   border-color: var(--poeira);
-  color: #fff;
+  color: var(--tinta);
 }
 
 .copiar.copiado {
-  border-color: rgb(62 207 142 / 0.4);
-  color: var(--verde);
+  border-color: var(--destaque);
+  color: var(--destaque);
 }
 
 .rodape {
@@ -1200,9 +1459,10 @@ a.outro:hover h3 {
   font-size: 0.875rem;
 }
 
-.rodape .logo {
-  margin-right: 0.375rem;
-  font-size: 1rem;
+.rodape .logo-selo {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.75rem;
 }
 
 /* ---------- 11. Página do estudo de caso ---------- */
@@ -1221,7 +1481,7 @@ a.outro:hover h3 {
 }
 
 .voltar:hover {
-  color: #fff;
+  color: var(--tinta);
 }
 
 .voltar span {
@@ -1234,16 +1494,17 @@ a.outro:hover h3 {
 
 .caso-titulo {
   margin-top: 2rem;
-  font-size: clamp(3rem, 12vw, 7rem);
+  font-size: clamp(2.75rem, 10vw, 5.5rem);
   font-weight: 800;
   letter-spacing: -0.045em;
-  line-height: 0.92;
+  line-height: 0.95;
 }
 
 .caso-titulo .linha {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.06em;
+  padding: 0 0.12em 0.06em 0; /* mesma folga do nome no topo */
+  margin-right: -0.12em;
 }
 
 .caso-titulo .linha > span {
@@ -1310,7 +1571,7 @@ a.outro:hover h3 {
 
 .nao-encontrada h1 {
   margin-top: 3rem;
-  font-size: clamp(2.75rem, 9vw, 5.5rem);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 0.95;
@@ -1337,20 +1598,8 @@ a.outro:hover h3 {
     padding-inline: 1.5rem;
   }
 
-
-  .outro {
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    padding-right: 3rem;
-  }
-
-  .outro-seta {
-    top: 50%;
-    margin-top: -0.75rem;
-  }
-
   .fichas {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .rodape-conteudo {
@@ -1368,9 +1617,28 @@ a.outro:hover h3 {
     padding-block: 7rem;
   }
 
-  .historia,
-  .skills-grade {
+  .historia {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Tabela "onde usei": nome do grupo à esquerda, linhas à direita */
+  .usos-grupo {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: 2rem;
+  }
+
+  .usos-grupo h3 {
+    padding-top: 1.125rem;
+  }
+
+  .usos li {
+    grid-template-columns: 15rem 1fr;
+    align-items: center;
+  }
+
+  .usos-onde {
+    padding-left: 0;
   }
 
   .recursos {
@@ -1409,20 +1677,37 @@ a.outro:hover h3 {
 /* 1024px+ : computador */
 @media (min-width: 1024px) {
   .hero-grade {
-    min-height: min(calc(100svh - 4.25rem), 54rem);
     grid-template-columns: 1fr 0.95fr;
     align-items: center;
     gap: 4rem;
-    padding-block: 2rem 4rem;
+    padding-block: 4rem 3rem;
   }
 
   .hero-nome {
-    font-size: clamp(5rem, 9vw, 8.5rem);
+    font-size: clamp(5rem, 8vw, 7.75rem);
   }
 
-  .segundo {
-    grid-template-columns: 0.9fr 1.1fr;
+  .seletor {
+    grid-template-columns: 1fr 1.1fr;
+    align-items: start;
     gap: 4rem;
+  }
+
+  .seletor-previa {
+    position: sticky;
+    top: 6rem;
+    display: block;
+  }
+
+  .seletor-item.ativo .seletor-nome,
+  .seletor-item.ativo .seletor-tipo {
+    transform: translateX(1.25rem);
+  }
+
+  .detalhe-grade {
+    grid-template-columns: 1fr 1.15fr;
+    align-items: start;
+    gap: 3.5rem;
   }
 
   .galeria-rodape {
@@ -1440,6 +1725,96 @@ a.outro:hover h3 {
 
   .fichas {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Tela de boas-vindas (só na página inicial) ---------- */
+
+/* Escondida por padrão. Só aparece quando o <head> coloca .abrindo no <html>. */
+.abertura {
+  display: none;
+}
+
+.abrindo body {
+  overflow: hidden; /* trava a rolagem enquanto a tela está na frente */
+}
+
+.abrindo .abertura {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  background: var(--fundo);
+  /* a "cortina" sobe quando o JS coloca .saindo */
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.abertura.saindo {
+  transform: translateY(-100%);
+}
+
+.abertura-conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding-bottom: 3rem;
+}
+
+.abertura-saudacao {
+  color: var(--tinta);
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2.75rem, 11vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+/* Mesma "máscara" dos títulos: cada linha sobe de dentro dela */
+.abertura-saudacao .linha {
+  display: block;
+  overflow: hidden;
+  padding: 0 0.12em 0.06em 0;
+  margin-right: -0.12em;
+}
+
+.abertura-saudacao .linha > span {
+  display: block;
+  animation: subir-linha 0.9s var(--suave-saida) both;
+}
+
+.abertura-saudacao .linha:last-child > span {
+  animation-delay: 0.08s;
+}
+
+/* O número usa algarismos de mesma largura, para não tremer ao contar */
+.abertura-numero {
+  color: var(--destaque);
+  font-family: var(--fonte-titulo);
+  font-size: clamp(5.5rem, 26vw, 10rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+}
+
+/* Linha fina no pé da tela que enche junto com o número (o JS muda o scaleX) */
+.abertura-barra {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--destaque);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@keyframes subir-linha {
+  from {
+    transform: translateY(105%);
   }
 }
 

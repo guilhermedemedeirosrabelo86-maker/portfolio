@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Guilherme Rabelo · Desenvolvedor Web</title>
-  <meta name="description" content="Portfólio de Guilherme Rabelo: desenvolvedor web e estudante de Engenharia de Software que cria sistemas para resolver problemas reais.">
-  <meta name="theme-color" content="#0e0d0b">
+  <meta name="description" content="Portfólio de Guilherme Rabelo, estudante de Engenharia de Software em Criciúma (SC), com os projetos que fez em HTML, CSS, JavaScript e Python.">
+  <meta name="theme-color" content="#0b1220">
   <link rel="canonical" href="https://portfolio-lyart-eta-yv04rf5tdp.vercel.app/">
 
   <!-- Prévia quando o link é compartilhado (WhatsApp, LinkedIn etc.) -->
@@ -14,7 +14,7 @@
   <meta property="og:url" content="https://portfolio-lyart-eta-yv04rf5tdp.vercel.app/">
   <meta property="og:site_name" content="Guilherme Rabelo">
   <meta property="og:title" content="Guilherme Rabelo · Desenvolvedor Web">
-  <meta property="og:description" content="Portfólio de Guilherme Rabelo: desenvolvedor web e estudante de Engenharia de Software que cria sistemas para resolver problemas reais.">
+  <meta property="og:description" content="Portfólio de Guilherme Rabelo, estudante de Engenharia de Software em Criciúma (SC), com os projetos que fez em HTML, CSS, JavaScript e Python.">
   <meta property="og:image" content="https://portfolio-lyart-eta-yv04rf5tdp.vercel.app/img/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -27,27 +27,50 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..600&display=swap">
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Avisa o CSS que o JavaScript está ligado. Sem JS, nada fica escondido. -->
-  <script>document.documentElement.classList.add("js");</script>
+  <!-- Avisa o CSS que o JavaScript está ligado. Sem JS, nada fica escondido.
+       "abrindo" liga a tela de boas-vindas: só na primeira visita da sessão
+       e só para quem não pediu "menos movimento". Fica aqui no <head> para a
+       tela já aparecer no primeiro quadro, sem o site piscar antes. -->
+  <script>
+    document.documentElement.classList.add("js");
+    try {
+      const jaViu = sessionStorage.getItem("abertura-vista");
+      const menosMovimento = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!jaViu && !menosMovimento) document.documentElement.classList.add("abrindo");
+    } catch (erro) {}
+  </script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
+  <!-- Tela de boas-vindas com contador de 0 a 100 (ver iniciarAbertura no js/main.js).
+       aria-hidden: leitores de tela pulam direto para o conteúdo. -->
+  <div class="abertura" aria-hidden="true">
+    <div class="container abertura-conteudo">
+      <p class="abertura-saudacao"><span class="linha"><span>Bem-vindo ao</span></span><span class="linha"><span>meu portfólio</span></span></p>
+      <p class="abertura-numero"><span data-contador>0</span></p>
+    </div>
+    <div class="abertura-barra"></div>
+  </div>
+
   <a href="#conteudo" class="pular">Pular para o conteúdo</a>
   <div class="barra-progresso" aria-hidden="true"></div>
 
   <header class="navbar">
     <div class="container navbar-conteudo">
-      <a href="#inicio" class="logo" aria-label="Início">GR<span>.</span></a>
+      <a href="#inicio" class="logo" aria-label="Início"><span class="logo-selo">GR</span><span class="logo-nome">Guilherme Rabelo</span></a>
 
       <nav aria-label="Principal" class="menu-desktop">
         <span class="menu-indicador" aria-hidden="true"></span>
-        <a href="#projetos">Projetos</a>
         <a href="#sobre">Sobre</a>
+        <a href="#projetos">Projetos</a>
         <a href="#skills">Skills</a>
         <a href="#contato">Contato</a>
       </nav>
 
-      <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-pequeno botao-contorno navbar-conversar">Vamos conversar</a>
+      <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-pequeno botao-primario navbar-conversar">
+        <svg class="icone-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.98L2 22l5.17-1.5A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.07.89.9-3-.2-.31a8.2 8.2 0 1 1 6.85 3.75Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.16.25-.63.8-.78.97-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.72-1.33.08-.16.04-.3-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04c0 1.2.88 2.37 1 2.53.12.16 1.73 2.64 4.2 3.7 1.56.67 2.17.73 2.95.61.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.1-.22-.16-.47-.28Z" /></svg>
+        Vamos conversar
+      </a>
 
       <button type="button" class="botao-menu" aria-expanded="false" aria-controls="menu-celular" aria-label="Abrir menu">
         <span></span><span></span>
@@ -56,8 +79,8 @@
 
     <nav id="menu-celular" aria-label="Menu" class="menu-celular" hidden>
       <div class="container">
-        <a href="#projetos">Projetos</a>
         <a href="#sobre">Sobre</a>
+        <a href="#projetos">Projetos</a>
         <a href="#skills">Skills</a>
         <a href="#contato">Contato</a>
         <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-primario">Vamos conversar</a>
@@ -70,10 +93,12 @@
     <section id="inicio" class="hero">
       <div class="container hero-grade">
         <div class="hero-texto">
-          <p class="hero-status entrada" style="--i: 0">
+          <!-- <p class="hero-status entrada" style="--i: 0">
             <span class="ponto-online"><span></span></span>
             Aberto a vagas de desenvolvimento
-          </p>
+          </p> -->
+
+          <p class="hero-chamada entrada" style="--i: 0">Desenvolvedor web em Criciúma, SC</p>
 
           <!-- Cada linha fica dentro de uma "máscara" e sobe ao carregar a página -->
           <h1 class="hero-nome">
@@ -82,8 +107,8 @@
           </h1>
 
           <p class="hero-frase entrada" style="--i: 3">
-            Desenvolvedor web e estudante de Engenharia de Software em Criciúma, SC.
-            Construí sozinho o sistema de estoque e envios que a equipe da empresa onde trabalho usa todos os dias.
+            Estudante de Engenharia de Software na UNISATC, em Criciúma (SC).
+            Faço sistemas web com HTML, CSS, JavaScript e Python, e procuro minha primeira vaga como desenvolvedor.
           </p>
 
           <div class="botoes entrada" style="--i: 4">
@@ -105,208 +130,23 @@
               <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </a>
           </div>
+
+          <!-- O que eu uso, para o recrutador ver logo de cara (os ícones vêm do JS) -->
+          <div class="hero-stack entrada" style="--i: 5">
+            <p>Tecnologias que uso</p>
+            <ul class="tags" aria-label="Tecnologias que uso">
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+              <li>Python</li>
+              <li>SQL</li>
+            </ul>
+          </div>
         </div>
 
         <div class="hero-retrato entrada" style="--i: 2">
           <img class="retrato" src="img/guilherme.jpg" alt="Foto de Guilherme Rabelo, de terno e sorrindo" width="720" height="900" fetchpriority="high">
         </div>
-      </div>
-    </section>
-
-    <!-- ===== Projetos ===== -->
-    <section id="projetos" class="secao secao-ancora">
-      <div class="container">
-        <header class="secao-cabeca" data-reveal>
-          <h2>Projetos</h2>
-          <p>Sistemas que resolvem problemas reais, do layout ao banco de dados.</p>
-        </header>
-
-        <article class="destaque">
-          <div class="destaque-texto" data-reveal>
-            <h3 class="destaque-titulo">Central Brindes</h3>
-            <p class="destaque-resumo">Sistema web de estoque e envios que criei, por iniciativa própria, para a equipe de Marketing da empresa onde trabalho.</p>
-            <ul class="tags" aria-label="Tecnologias">
-              <li>HTML</li>
-              <li>CSS</li>
-              <li>JavaScript</li>
-              <li>Firebase</li>
-              <li>Cloudflare Workers</li>
-              <li>SQL</li>
-            </ul>
-            <div class="botoes">
-              <a href="projetos/central-brindes/index.html" class="botao botao-primario">
-                Ver estudo de caso
-                <svg class="icone-sm seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-              </a>
-              <a href="demo/central-brindes/index.html" target="_blank" rel="noopener noreferrer" class="botao botao-contorno">
-                Abrir a demo
-                <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
-              </a>
-            </div>
-          </div>
-
-          <!-- O print "deita" para trás e se endireita conforme a rolagem (js/main.js) -->
-          <div class="vitrine" data-vitrine>
-            <div class="vitrine-janela">
-              <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
-              <img src="img/central-brindes-painel.jpg" alt="Tela inicial do Central Brindes (demonstração com dados fictícios)" width="1536" height="730" loading="lazy">
-            </div>
-          </div>
-
-          <!-- Problema, solução e resultado: é uma sequência, por isso os números -->
-          <ol class="historia">
-            <li data-reveal>
-              <h4>Problema</h4>
-              <p>O estoque de brindes era controlado no olho, e o sistema geral da empresa vivia com dados errados e desatualizados.</p>
-            </li>
-            <li data-reveal data-delay="100">
-              <h4>Solução</h4>
-              <p>Um sistema web completo de estoque e envios pelo Correio para representantes, feito sozinho.</p>
-            </li>
-            <li data-reveal data-delay="200">
-              <h4>Resultado</h4>
-              <p>A equipe de Marketing usa o sistema no dia a dia.</p>
-            </li>
-          </ol>
-        </article>
-
-        <!-- Segundo projeto: texto e funcionalidades, e embaixo os prints com botões para trocar de tela -->
-        <article class="segundo">
-          <div class="segundo-texto" data-reveal>
-            <h3 class="destaque-titulo">Meu Prédio <span class="selo">Em desenvolvimento</span></h3>
-            <p class="destaque-resumo">App para condomínios pequenos, geridos por um síndico morador. Funciona como um aplicativo instalado no celular.</p>
-            <ul class="tags" aria-label="Tecnologias">
-              <li>Python</li>
-              <li>SQLite</li>
-              <li>JavaScript</li>
-              <li>HTML</li>
-              <li>CSS</li>
-              <li>PWA</li>
-            </ul>
-            <div class="botoes">
-              <a href="https://github.com/guilhermedemedeirosrabelo86-maker/meu-predio" target="_blank" rel="noopener noreferrer" class="botao botao-contorno">
-                <svg class="icone-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" /></svg>
-                Ver código
-              </a>
-            </div>
-          </div>
-
-          <ul class="recursos">
-            <li data-reveal>
-              <h4>Três perfis</h4>
-              <p>Síndico, morador e portaria, cada um vendo e fazendo só o que pode.</p>
-            </li>
-            <li data-reveal data-delay="100">
-              <h4>Visitas por QR Code</h4>
-              <p>O morador libera a visita e a portaria lê o QR com a câmera do celular.</p>
-            </li>
-            <li data-reveal>
-              <h4>Reservas</h4>
-              <p>Salão e churrasqueira num calendário, com regras e limite por unidade.</p>
-            </li>
-            <li data-reveal data-delay="100">
-              <h4>Prestação de contas</h4>
-              <p>Entradas, saídas, gráfico por categoria e quem pagou a taxa do mês.</p>
-            </li>
-            <li data-reveal>
-              <h4>Avisos e ocorrências</h4>
-              <p>Mural com "lido por X de Y" e ocorrências com fotos e conversa.</p>
-            </li>
-            <li data-reveal data-delay="100">
-              <h4>Backend próprio e testado</h4>
-              <p>Python sem bibliotecas externas, banco SQLite e testes automatizados da API inteira.</p>
-            </li>
-          </ul>
-
-          <!-- Carrossel: no celular arrasta com o dedo, no computador usa as pílulas.
-               O arrastar é a rolagem do próprio navegador (scroll-snap); o JS só marca a tela atual. -->
-          <div class="galeria" data-galeria data-reveal>
-            <p class="telas-rotulo">No computador <span>· visão do síndico</span></p>
-            <div class="vitrine-janela">
-              <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
-              <div class="galeria-trilho" tabindex="0" aria-label="Telas do Meu Prédio. Arraste para o lado para ver as outras.">
-                <!-- data-auto: o JS dá play quando o vídeo aparece na tela e pausa quando sai -->
-                <video src="video/meu-predio-computador.mp4" poster="img/meu-predio-computador-capa.jpg" width="1600" height="1000" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o síndico navegando pelo Meu Prédio no computador"></video>
-                <img src="img/meu-predio-inicio.jpg" alt="Tela inicial do síndico, com saldo do condomínio, taxas pagas e o que precisa de atenção" width="1600" height="1000" loading="lazy">
-                <img src="img/meu-predio-contas.jpg" alt="Prestação de contas com saldo, lançamentos e para onde foi o dinheiro" width="1600" height="1000" loading="lazy">
-                <img src="img/meu-predio-reservas.jpg" alt="Reservas para aprovar e calendário do salão de festas" width="1600" height="1000" loading="lazy">
-                <img src="img/meu-predio-avisos.jpg" alt="Mural de avisos com aviso fixado e contagem de quem leu" width="1600" height="1000" loading="lazy">
-                <img src="img/meu-predio-ocorrencia.jpg" alt="Ocorrência resolvida com a conversa entre síndico e morador" width="1600" height="1000" loading="lazy">
-                <img src="img/meu-predio-portaria.jpg" alt="Tela da portaria para validar o QR Code e ver os visitantes esperados" width="1600" height="1000" loading="lazy">
-              </div>
-            </div>
-            <div class="galeria-rodape">
-              <p class="galeria-nome" aria-hidden="true">Vídeo</p>
-              <div class="galeria-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
-            <div class="galeria-botoes" aria-label="Telas do Meu Prédio">
-              <button type="button" aria-pressed="true">Vídeo</button>
-              <button type="button" aria-pressed="false">Início</button>
-              <button type="button" aria-pressed="false">Contas</button>
-              <button type="button" aria-pressed="false">Reservas</button>
-              <button type="button" aria-pressed="false">Avisos</button>
-              <button type="button" aria-pressed="false">Ocorrências</button>
-              <button type="button" aria-pressed="false">Portaria</button>
-            </div>
-          </div>
-
-          <!-- Celular: vídeo do morador e duas telas, cada uma numa moldura de celular.
-               No celular viram uma fila que arrasta para o lado. -->
-          <div class="celulares" data-reveal>
-            <p class="telas-rotulo">No celular <span>· visão do morador, instalado como app</span></p>
-            <ul class="celulares-fila">
-              <li>
-                <div class="moldura-celular">
-                  <video src="video/meu-predio-celular.mp4" poster="img/meu-predio-celular-capa.jpg" width="540" height="1168" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o morador navegando pelo Meu Prédio no celular"></video>
-                </div>
-                <p>Tour do morador</p>
-              </li>
-              <li>
-                <div class="moldura-celular">
-                  <img src="img/meu-predio-celular-visita.jpg" alt="QR Code da visita liberada pelo morador, pronto para enviar ao visitante" width="540" height="1168" loading="lazy">
-                </div>
-                <p>Visita liberada por QR Code</p>
-              </li>
-              <li>
-                <div class="moldura-celular">
-                  <img src="img/meu-predio-celular-taxa.jpg" alt="Tela do morador com a taxa do mês paga e o histórico dos últimos meses" width="540" height="1168" loading="lazy">
-                </div>
-                <p>Taxa do mês e histórico</p>
-              </li>
-            </ul>
-          </div>
-        </article>
-
-        <ul class="outros">
-          <li data-reveal>
-            <a href="https://sitesgrdigital.com.br" target="_blank" rel="noopener noreferrer" class="outro">
-              <div>
-                <h3>GR Digital</h3>
-                <p>Site do meu negócio de criação de sites para pequenas empresas, com montador de orçamento e demos de clínica, barbearia e agenda online.</p>
-              </div>
-              <ul class="tags" aria-label="Tecnologias">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-              </ul>
-              <svg class="outro-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
-            </a>
-          </li>
-          <li data-reveal>
-            <a href="https://github.com/guilhermedemedeirosrabelo86-maker/VAGAS-REACT" target="_blank" rel="noopener noreferrer" class="outro">
-              <div>
-                <h3>OpenBoard</h3>
-                <p>Quadro de vagas de emprego em React, construído aula a aula na disciplina de Front-end da faculdade.</p>
-              </div>
-              <ul class="tags" aria-label="Tecnologias">
-                <li>React</li>
-                <li>Vite</li>
-                <li>JavaScript</li>
-              </ul>
-              <svg class="outro-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
-            </a>
-          </li>
-        </ul>
       </div>
     </section>
 
@@ -319,7 +159,7 @@
 
         <!-- O JS separa este texto em palavras que "acendem" com a rolagem.
              data-destaques: palavras que acendem em âmbar. -->
-        <p class="texto-acende" data-destaques="Engenharia Software sistema completo problema">Trabalho o dia todo, estudo Engenharia de Software e, mesmo assim, construí sozinho um sistema completo que a equipe da empresa usa todos os dias. Gosto de olhar para um problema real e transformar em software que funciona.</p>
+        <p class="texto-acende" data-destaques="">Moro em Criciúma (SC), trabalho e estudo Engenharia de Software na UNISATC. No trabalho, fiz o sistema de estoque de brindes que a equipe de Marketing usa. Agora estou estudando React e aprofundando o back-end com Python.</p>
 
         <div class="sobre-grade">
           <dl class="fichas" data-reveal>
@@ -333,8 +173,12 @@
               <dd data-nascimento="2006-03-03"></dd>
             </div>
             <div>
-              <dt>Graduação</dt>
-              <dd>Engenharia de Software, UNISATC</dd>
+              <dt>Procuro</dt>
+              <dd>Primeira vaga como desenvolvedor</dd>
+            </div>
+            <div>
+              <dt>Também faço</dt>
+              <dd>Sites para pequenas empresas, pela GR Digital</dd>
             </div>
           </dl>
 
@@ -355,38 +199,304 @@
       </div>
     </section>
 
+    <!-- ===== Projetos ===== -->
+    <!-- Lista de projetos: passar o mouse troca a prévia ao lado; clicar abre o
+         "detalhe" do projeto (um <dialog> que sobe de baixo). Os links são #ids,
+         então a ficha também abre pelo endereço (ex.: .../#meu-predio). -->
+    <section id="projetos" class="secao secao-ancora">
+      <div class="container">
+        <header class="secao-cabeca" data-reveal>
+          <h2>Projetos</h2>
+          <p>O que eu fiz até agora, no trabalho e nos estudos. Clique num projeto para ver os detalhes.</p>
+        </header>
+
+        <div class="seletor" data-seletor>
+          <ul class="seletor-lista" data-reveal>
+            <li>
+              <a href="#central-brindes" class="seletor-item" data-previa="0">
+                <span><span class="seletor-nome">Central Brindes</span><span class="seletor-tipo">Sistema web, usado na empresa</span></span>
+                <span class="seletor-seta"><svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+              </a>
+            </li>
+            <li>
+              <a href="#meu-predio" class="seletor-item" data-previa="1">
+                <span><span class="seletor-nome">Meu Prédio</span><span class="seletor-tipo">App para condomínios, em desenvolvimento</span></span>
+                <span class="seletor-seta"><svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+              </a>
+            </li>
+            <li>
+              <a href="#gr-digital" class="seletor-item" data-previa="2">
+                <span><span class="seletor-nome">GR Digital</span><span class="seletor-tipo">Site do meu negócio</span></span>
+                <span class="seletor-seta"><svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- Prévia (só no computador). As quatro ficam empilhadas; o JS marca
+               a atual com .ativa e ela entra "varrendo" por cima da anterior. -->
+          <div class="seletor-previa" aria-hidden="true" data-reveal data-delay="100">
+            <div class="previa-moldura">
+              <img class="ativa" src="img/central-brindes-painel.jpg" alt="" width="1536" height="730" loading="lazy">
+              <img src="img/meu-predio-inicio.jpg" alt="" width="1600" height="1000" loading="lazy">
+              <img src="img/gr-digital-inicio.jpg" alt="" width="1296" height="810" loading="lazy">
+            </div>
+            <p class="previa-legenda" data-legendas='["Estoque e envios de brindes para a equipe de Marketing.", "Síndico, morador e portaria num app só, com visitas por QR Code.", "Sites para pequenas empresas, com montador de orçamento."]'>Estoque e envios de brindes para a equipe de Marketing.</p>
+          </div>
+        </div>
+
+        <!-- ===== Detalhes dos projetos ===== -->
+        <dialog class="detalhe" id="central-brindes" aria-labelledby="central-brindes-titulo">
+          <button type="button" class="detalhe-fechar" aria-label="Fechar"><svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          <div class="container">
+            <p class="detalhe-tipo">Sistema web, usado na empresa</p>
+            <h3 class="detalhe-titulo" id="central-brindes-titulo">Central Brindes</h3>
+            <div class="detalhe-grade">
+              <div>
+                <p class="detalhe-resumo">Sistema web de estoque e envios de brindes, feito para a equipe de Marketing da empresa onde trabalho.</p>
+                <ul class="tags" aria-label="Tecnologias">
+                  <li>HTML</li>
+                  <li>CSS</li>
+                  <li>JavaScript</li>
+                  <li>Firebase</li>
+                  <li>Cloudflare Workers</li>
+                  <li>SQL</li>
+                </ul>
+                <div class="botoes">
+                  <a href="projetos/central-brindes/index.html" class="botao botao-primario">
+                    Ver estudo de caso
+                    <svg class="icone-sm seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                  </a>
+                  <a href="demo/central-brindes/index.html" target="_blank" rel="noopener noreferrer" class="botao botao-contorno">
+                    Abrir a demo
+                    <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="vitrine-janela">
+                <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
+                <img src="img/central-brindes-painel.jpg" alt="Tela inicial do Central Brindes (demonstração com dados fictícios)" width="1536" height="730" loading="lazy">
+              </div>
+            </div>
+            <ol class="historia">
+              <li>
+                <h4>Problema</h4>
+                <p>O estoque de brindes era controlado no olho, e o sistema geral da empresa vivia com dados errados e desatualizados.</p>
+              </li>
+              <li>
+                <h4>Solução</h4>
+                <p>Um sistema web de estoque e de envios pelo Correio para os representantes.</p>
+              </li>
+              <li>
+                <h4>Resultado</h4>
+                <p>A equipe de Marketing usa o sistema no dia a dia.</p>
+              </li>
+            </ol>
+          </div>
+        </dialog>
+
+        <dialog class="detalhe" id="meu-predio" aria-labelledby="meu-predio-titulo">
+          <button type="button" class="detalhe-fechar" aria-label="Fechar"><svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          <div class="container">
+            <p class="detalhe-tipo">App para condomínios, em desenvolvimento</p>
+            <h3 class="detalhe-titulo" id="meu-predio-titulo">Meu Prédio</h3>
+            <div class="detalhe-grade">
+              <div>
+                <p class="detalhe-resumo">App para condomínios pequenos, geridos por um síndico morador. Funciona como um aplicativo instalado no celular.</p>
+                <ul class="tags" aria-label="Tecnologias">
+                  <li>Python</li>
+                  <li>SQLite</li>
+                  <li>JavaScript</li>
+                  <li>HTML</li>
+                  <li>CSS</li>
+                  <li>PWA</li>
+                </ul>
+                <div class="botoes">
+                  <a href="https://github.com/guilhermedemedeirosrabelo86-maker/meu-predio" target="_blank" rel="noopener noreferrer" class="botao botao-primario">
+                    <svg class="icone-sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" /></svg>
+                    Ver código
+                  </a>
+                </div>
+              </div>
+              <ul class="recursos">
+                <li>
+                  <h4>Três perfis</h4>
+                  <p>Síndico, morador e portaria, cada um vendo e fazendo só o que pode.</p>
+                </li>
+                <li>
+                  <h4>Visitas por QR Code</h4>
+                  <p>O morador libera a visita e a portaria lê o QR com a câmera do celular.</p>
+                </li>
+                <li>
+                  <h4>Reservas</h4>
+                  <p>Salão e churrasqueira num calendário, com regras e limite por unidade.</p>
+                </li>
+                <li>
+                  <h4>Prestação de contas</h4>
+                  <p>Entradas, saídas, gráfico por categoria e quem pagou a taxa do mês.</p>
+                </li>
+                <li>
+                  <h4>Avisos e ocorrências</h4>
+                  <p>Mural com "lido por X de Y" e ocorrências com fotos e conversa.</p>
+                </li>
+                <li>
+                  <h4>Back-end em Python</h4>
+                  <p>Sem bibliotecas externas, com banco SQLite e testes automatizados da API.</p>
+                </li>
+              </ul>
+            </div>
+            <div class="galeria" data-galeria>
+              <p class="telas-rotulo">No computador <span>· visão do síndico</span></p>
+              <div class="vitrine-janela">
+                <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
+                <div class="galeria-trilho" tabindex="0" aria-label="Telas do Meu Prédio. Arraste para o lado para ver as outras.">
+                  <!-- data-auto: o JS dá play quando o vídeo aparece na tela e pausa quando sai -->
+                  <video src="video/meu-predio-computador.mp4" poster="img/meu-predio-computador-capa.jpg" width="1600" height="1000" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o síndico navegando pelo Meu Prédio no computador"></video>
+                  <img src="img/meu-predio-inicio.jpg" alt="Tela inicial do síndico, com saldo do condomínio, taxas pagas e o que precisa de atenção" width="1600" height="1000" loading="lazy">
+                  <img src="img/meu-predio-contas.jpg" alt="Prestação de contas com saldo, lançamentos e para onde foi o dinheiro" width="1600" height="1000" loading="lazy">
+                  <img src="img/meu-predio-reservas.jpg" alt="Reservas para aprovar e calendário do salão de festas" width="1600" height="1000" loading="lazy">
+                  <img src="img/meu-predio-avisos.jpg" alt="Mural de avisos com aviso fixado e contagem de quem leu" width="1600" height="1000" loading="lazy">
+                  <img src="img/meu-predio-ocorrencia.jpg" alt="Ocorrência resolvida com a conversa entre síndico e morador" width="1600" height="1000" loading="lazy">
+                  <img src="img/meu-predio-portaria.jpg" alt="Tela da portaria para validar o QR Code e ver os visitantes esperados" width="1600" height="1000" loading="lazy">
+                </div>
+              </div>
+              <div class="galeria-rodape">
+                <p class="galeria-nome" aria-hidden="true">Vídeo</p>
+                <div class="galeria-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="galeria-botoes" aria-label="Telas do Meu Prédio">
+                <button type="button" aria-pressed="true">Vídeo</button>
+                <button type="button" aria-pressed="false">Início</button>
+                <button type="button" aria-pressed="false">Contas</button>
+                <button type="button" aria-pressed="false">Reservas</button>
+                <button type="button" aria-pressed="false">Avisos</button>
+                <button type="button" aria-pressed="false">Ocorrências</button>
+                <button type="button" aria-pressed="false">Portaria</button>
+              </div>
+            </div>
+            <div class="celulares">
+              <p class="telas-rotulo">No celular <span>· visão do morador, instalado como app</span></p>
+              <ul class="celulares-fila">
+                <li>
+                  <div class="moldura-celular">
+                    <video src="video/meu-predio-celular.mp4" poster="img/meu-predio-celular-capa.jpg" width="540" height="1168" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o morador navegando pelo Meu Prédio no celular"></video>
+                  </div>
+                  <p>Tour do morador</p>
+                </li>
+                <li>
+                  <div class="moldura-celular">
+                    <img src="img/meu-predio-celular-visita.jpg" alt="QR Code da visita liberada pelo morador, pronto para enviar ao visitante" width="540" height="1168" loading="lazy">
+                  </div>
+                  <p>Visita liberada por QR Code</p>
+                </li>
+                <li>
+                  <div class="moldura-celular">
+                    <img src="img/meu-predio-celular-taxa.jpg" alt="Tela do morador com a taxa do mês paga e o histórico dos últimos meses" width="540" height="1168" loading="lazy">
+                  </div>
+                  <p>Taxa do mês e histórico</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </dialog>
+
+        <dialog class="detalhe" id="gr-digital" aria-labelledby="gr-digital-titulo">
+          <button type="button" class="detalhe-fechar" aria-label="Fechar"><svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          <div class="container">
+            <p class="detalhe-tipo">Site do meu negócio</p>
+            <h3 class="detalhe-titulo" id="gr-digital-titulo">GR Digital</h3>
+            <div class="detalhe-grade">
+              <div>
+                <p class="detalhe-resumo">Site do meu negócio de criação de sites para pequenas empresas, com montador de orçamento e demos de clínica, barbearia e agenda online.</p>
+                <ul class="tags" aria-label="Tecnologias">
+                  <li>HTML</li>
+                  <li>CSS</li>
+                  <li>JavaScript</li>
+                </ul>
+                <div class="botoes">
+                  <a href="https://sitesgrdigital.com.br" target="_blank" rel="noopener noreferrer" class="botao botao-primario">
+                    Abrir o site
+                    <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" /></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="vitrine-janela">
+                <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
+                <img src="img/gr-digital-inicio.jpg" alt="Página inicial do site da GR Digital" width="1296" height="810" loading="lazy">
+              </div>
+            </div>
+          </div>
+        </dialog>
+      </div>
+    </section>
+
     <!-- ===== Skills ===== -->
     <section id="skills" class="secao secao-ancora">
       <div class="container">
         <header class="secao-cabeca" data-reveal>
           <h2>Skills</h2>
-          <p>O que eu uso para construir.</p>
+          <p>Cada tecnologia e o projeto onde dá para ver ela funcionando.</p>
         </header>
 
-        <div class="skills-grade">
-          <div class="skills-grupo" data-reveal>
+        <!-- Cada tecnologia aponta para o projeto onde ela aparece funcionando.
+             Os links levam até o projeto na própria página. -->
+        <div class="usos-tabela">
+          <div class="usos-grupo" data-reveal>
             <h3>Front-end</h3>
-            <ul class="skills">
-              <li>HTML</li>
-              <li>CSS</li>
-              <li>JavaScript</li>
-              <li>React <small>(estudando)</small></li>
+            <ul class="usos">
+              <li>
+                <span class="usos-tec">HTML</span>
+                <span class="usos-onde"><a href="#central-brindes">Central Brindes</a> <a href="#meu-predio">Meu Prédio</a> <a href="#gr-digital">GR Digital</a></span>
+              </li>
+              <li>
+                <span class="usos-tec">CSS</span>
+                <span class="usos-onde"><a href="#central-brindes">Central Brindes</a> <a href="#meu-predio">Meu Prédio</a> <a href="#gr-digital">GR Digital</a></span>
+              </li>
+              <li>
+                <span class="usos-tec">JavaScript</span>
+                <span class="usos-onde"><a href="#central-brindes">Central Brindes</a> <a href="#meu-predio">Meu Prédio</a> <a href="#gr-digital">GR Digital</a></span>
+              </li>
+              <li>
+                <span class="usos-tec">React <small>(estudando)</small></span>
+                <span class="usos-onde"><span>Estudando agora</span></span>
+              </li>
             </ul>
           </div>
-          <div class="skills-grupo" data-reveal data-delay="100">
+          <div class="usos-grupo" data-reveal>
             <h3>Back-end e dados</h3>
-            <ul class="skills">
-              <li>Python</li>
-              <li>Firebase</li>
-              <li>SQL</li>
-              <li>Cloudflare Workers</li>
+            <ul class="usos">
+              <li>
+                <span class="usos-tec">Python</span>
+                <span class="usos-onde"><a href="#meu-predio">Meu Prédio</a></span>
+              </li>
+              <li>
+                <span class="usos-tec">SQL</span>
+                <span class="usos-onde"><a href="#central-brindes">Central Brindes</a></span>
+              </li>
+              <li>
+                <span class="usos-tec">SQLite</span>
+                <span class="usos-onde"><a href="#meu-predio">Meu Prédio</a></span>
+              </li>
+              <li>
+                <span class="usos-tec">Firebase</span>
+                <span class="usos-onde"><a href="#central-brindes">Central Brindes</a></span>
+              </li>
+              <li>
+                <span class="usos-tec">Cloudflare Workers</span>
+                <span class="usos-onde"><a href="#central-brindes">Central Brindes</a></span>
+              </li>
             </ul>
           </div>
-          <div class="skills-grupo" data-reveal data-delay="200">
+          <div class="usos-grupo" data-reveal>
             <h3>Ferramentas</h3>
-            <ul class="skills">
-              <li>Git</li>
-              <li>GitHub</li>
+            <ul class="usos">
+              <li>
+                <span class="usos-tec">Git</span>
+                <span class="usos-onde"><span>Em todos os projetos</span></span>
+              </li>
+              <li>
+                <span class="usos-tec">GitHub</span>
+                <span class="usos-onde"><a href="https://github.com/guilhermedemedeirosrabelo86-maker" target="_blank" rel="noopener noreferrer">Código de todos no meu perfil</a></span>
+              </li>
             </ul>
           </div>
         </div>
@@ -397,7 +507,7 @@
     <section id="contato" class="contato secao-ancora">
       <div class="container" data-reveal>
         <h2 class="contato-titulo">Vamos conversar sobre uma vaga ou um projeto?</h2>
-        <p class="contato-texto">Estou em busca de uma vaga na área de desenvolvimento e topo projetos também. O jeito mais rápido de falar comigo é pelo WhatsApp.</p>
+        <p class="contato-texto">Procuro minha primeira vaga como desenvolvedor e também faço sites pela GR Digital. O jeito mais rápido de falar comigo é pelo WhatsApp.</p>
 
         <div class="botoes">
           <a href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer" class="botao botao-primario botao-grande">
@@ -425,7 +535,7 @@
 
   <footer class="rodape">
     <div class="container rodape-conteudo">
-      <p><span class="logo">GR<span>.</span></span> Guilherme Rabelo</p>
+      <p class="logo"><span class="logo-selo">GR</span><span class="logo-nome">Guilherme Rabelo</span></p>
       <p>Feito à mão com HTML, CSS e JavaScript.</p>
     </div>
   </footer>

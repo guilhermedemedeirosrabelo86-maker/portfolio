@@ -150,7 +150,7 @@ function iniciarGaleria() {
 
   function marcar() {
     // Cada print ocupa a largura inteira do trilho, então a posição dividida
-    // pela largura dá o número do print (0 a 4).
+    // pela largura dá o número do print (0 a 6).
     const atual = Math.round(trilho.scrollLeft / trilho.clientWidth);
     nome.textContent = botoes[atual].textContent;
     pontos.forEach((ponto, i) => ponto.classList.toggle("ativo", i === atual));
@@ -163,9 +163,38 @@ function iniciarGaleria() {
     });
   });
 
-  // marcar() só mexe em 5 elementos, então pode rodar a cada rolagem.
+  // marcar() só mexe em poucos elementos, então pode rodar a cada rolagem.
   trilho.addEventListener("scroll", marcar, { passive: true });
   marcar();
+}
+
+// ---------- Vídeos do Meu Prédio ----------
+// Vídeos com data-auto tocam (sem som) só enquanto estão na tela, para não
+// gastar internet nem bateria à toa. O vídeo do computador fica dentro do
+// carrossel: quando a pessoa passa para outro print ele sai da tela e pausa.
+// Com "menos movimento" nada toca sozinho: aparecem os controles para dar play.
+function iniciarVideos() {
+  const videos = document.querySelectorAll("video[data-auto]");
+  if (menosMovimento || !("IntersectionObserver" in window)) {
+    videos.forEach((video) => (video.controls = true));
+    return;
+  }
+
+  const observador = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((entrada) => {
+        const video = entrada.target;
+        if (entrada.isIntersecting) {
+          video.play().catch(() => (video.controls = true)); // se o navegador bloquear, mostra o play
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.5 },
+  );
+
+  videos.forEach((video) => observador.observe(video));
 }
 
 // ---------- Blocos que aparecem ao rolar ----------
@@ -340,6 +369,7 @@ iniciarIcones();
 iniciarTitulos();
 iniciarVitrine();
 iniciarGaleria();
+iniciarVideos();
 iniciarTextoAcende();
 iniciarRevelar();
 iniciarCopiar();

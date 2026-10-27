@@ -221,27 +221,59 @@
           <!-- Carrossel: no celular arrasta com o dedo, no computador usa as pílulas.
                O arrastar é a rolagem do próprio navegador (scroll-snap); o JS só marca a tela atual. -->
           <div class="galeria" data-galeria data-reveal>
+            <p class="telas-rotulo">No computador <span>· visão do síndico</span></p>
             <div class="vitrine-janela">
               <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="galeria-trilho" tabindex="0" aria-label="Telas do Meu Prédio. Arraste para o lado para ver as outras.">
-                <img src="img/meu-predio-inicio.jpg" alt="Tela inicial do morador no Meu Prédio" width="1536" height="724" loading="lazy">
-                <img src="img/meu-predio-reservas.jpg" alt="Calendário de reservas da churrasqueira" width="1536" height="724" loading="lazy">
-                <img src="img/meu-predio-contas.jpg" alt="Prestação de contas do condomínio" width="1536" height="724" loading="lazy">
-                <img src="img/meu-predio-moradores.jpg" alt="Tela do síndico para convidar moradores e cadastrar unidades" width="1536" height="724" loading="lazy">
-                <img src="img/meu-predio-portaria.jpg" alt="Tela da portaria para validar o QR Code do visitante" width="1536" height="724" loading="lazy">
+                <!-- data-auto: o JS dá play quando o vídeo aparece na tela e pausa quando sai -->
+                <video src="video/meu-predio-computador.mp4" poster="img/meu-predio-computador-capa.jpg" width="1600" height="1000" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o síndico navegando pelo Meu Prédio no computador"></video>
+                <img src="img/meu-predio-inicio.jpg" alt="Tela inicial do síndico, com saldo do condomínio, taxas pagas e o que precisa de atenção" width="1600" height="1000" loading="lazy">
+                <img src="img/meu-predio-contas.jpg" alt="Prestação de contas com saldo, lançamentos e para onde foi o dinheiro" width="1600" height="1000" loading="lazy">
+                <img src="img/meu-predio-reservas.jpg" alt="Reservas para aprovar e calendário do salão de festas" width="1600" height="1000" loading="lazy">
+                <img src="img/meu-predio-avisos.jpg" alt="Mural de avisos com aviso fixado e contagem de quem leu" width="1600" height="1000" loading="lazy">
+                <img src="img/meu-predio-ocorrencia.jpg" alt="Ocorrência resolvida com a conversa entre síndico e morador" width="1600" height="1000" loading="lazy">
+                <img src="img/meu-predio-portaria.jpg" alt="Tela da portaria para validar o QR Code e ver os visitantes esperados" width="1600" height="1000" loading="lazy">
               </div>
             </div>
             <div class="galeria-rodape">
-              <p class="galeria-nome" aria-hidden="true">Início</p>
-              <div class="galeria-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+              <p class="galeria-nome" aria-hidden="true">Vídeo</p>
+              <div class="galeria-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             </div>
             <div class="galeria-botoes" aria-label="Telas do Meu Prédio">
-              <button type="button" aria-pressed="true">Início</button>
-              <button type="button" aria-pressed="false">Reservas</button>
+              <button type="button" aria-pressed="true">Vídeo</button>
+              <button type="button" aria-pressed="false">Início</button>
               <button type="button" aria-pressed="false">Contas</button>
-              <button type="button" aria-pressed="false">Moradores</button>
+              <button type="button" aria-pressed="false">Reservas</button>
+              <button type="button" aria-pressed="false">Avisos</button>
+              <button type="button" aria-pressed="false">Ocorrências</button>
               <button type="button" aria-pressed="false">Portaria</button>
             </div>
+          </div>
+
+          <!-- Celular: vídeo do morador e duas telas, cada uma numa moldura de celular.
+               No celular viram uma fila que arrasta para o lado. -->
+          <div class="celulares" data-reveal>
+            <p class="telas-rotulo">No celular <span>· visão do morador, instalado como app</span></p>
+            <ul class="celulares-fila">
+              <li>
+                <div class="moldura-celular">
+                  <video src="video/meu-predio-celular.mp4" poster="img/meu-predio-celular-capa.jpg" width="540" height="1168" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o morador navegando pelo Meu Prédio no celular"></video>
+                </div>
+                <p>Tour do morador</p>
+              </li>
+              <li>
+                <div class="moldura-celular">
+                  <img src="img/meu-predio-celular-visita.jpg" alt="QR Code da visita liberada pelo morador, pronto para enviar ao visitante" width="540" height="1168" loading="lazy">
+                </div>
+                <p>Visita liberada por QR Code</p>
+              </li>
+              <li>
+                <div class="moldura-celular">
+                  <img src="img/meu-predio-celular-taxa.jpg" alt="Tela do morador com a taxa do mês paga e o histórico dos últimos meses" width="540" height="1168" loading="lazy">
+                </div>
+                <p>Taxa do mês e histórico</p>
+              </li>
+            </ul>
           </div>
         </article>
 

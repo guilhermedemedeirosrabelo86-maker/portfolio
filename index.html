@@ -245,8 +245,12 @@
         </div>
 
         <!-- ===== Detalhes dos projetos ===== -->
-        <dialog class="detalhe" id="central-brindes" aria-labelledby="central-brindes-titulo">
-          <button type="button" class="detalhe-fechar" aria-label="Fechar"><svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+        <dialog class="detalhe" tabindex="-1" id="central-brindes" aria-labelledby="central-brindes-titulo">
+          <!-- Barra presa no topo da folha: a "alça" e o X nunca ficam por cima do texto -->
+          <div class="detalhe-barra">
+            <span class="detalhe-alca" aria-hidden="true"></span>
+            <button type="button" class="detalhe-fechar" aria-label="Fechar"><svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          </div>
           <div class="container">
             <p class="detalhe-tipo">Sistema web, usado na empresa</p>
             <h3 class="detalhe-titulo" id="central-brindes-titulo">Central Brindes</h3>
@@ -294,8 +298,12 @@
           </div>
         </dialog>
 
-        <dialog class="detalhe" id="meu-predio" aria-labelledby="meu-predio-titulo">
-          <button type="button" class="detalhe-fechar" aria-label="Fechar"><svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+        <dialog class="detalhe" tabindex="-1" id="meu-predio" aria-labelledby="meu-predio-titulo">
+          <!-- Barra presa no topo da folha: a "alça" e o X nunca ficam por cima do texto -->
+          <div class="detalhe-barra">
+            <span class="detalhe-alca" aria-hidden="true"></span>
+            <button type="button" class="detalhe-fechar" aria-label="Fechar"><svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          </div>
           <div class="container">
             <p class="detalhe-tipo">App para condomínios, em desenvolvimento</p>
             <h3 class="detalhe-titulo" id="meu-predio-titulo">Meu Prédio</h3>
@@ -399,8 +407,12 @@
           </div>
         </dialog>
 
-        <dialog class="detalhe" id="gr-digital" aria-labelledby="gr-digital-titulo">
-          <button type="button" class="detalhe-fechar" aria-label="Fechar"><svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+        <dialog class="detalhe" tabindex="-1" id="gr-digital" aria-labelledby="gr-digital-titulo">
+          <!-- Barra presa no topo da folha: a "alça" e o X nunca ficam por cima do texto -->
+          <div class="detalhe-barra">
+            <span class="detalhe-alca" aria-hidden="true"></span>
+            <button type="button" class="detalhe-fechar" aria-label="Fechar"><svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          </div>
           <div class="container">
             <p class="detalhe-tipo">Site do meu negócio</p>
             <h3 class="detalhe-titulo" id="gr-digital-titulo">GR Digital</h3>
@@ -519,7 +531,7 @@
         <ul class="canais">
           <li>
             <!-- O JS copia o e-mail ao clicar no botão ao lado -->
-            <a href="mailto:guilhermedemedeirosrabelo86@gmail.com" class="canal">guilhermedemedeirosrabelo86@gmail.com</a>
+            <a href="mailto:guilhermedemedeirosrabelo86@gmail.com" class="canal">guilhermedemedeirosrabelo86@<wbr>gmail.com</a>
             <button type="button" class="copiar" data-copiar="guilhermedemedeirosrabelo86@gmail.com">Copiar</button>
           </li>
           <li>

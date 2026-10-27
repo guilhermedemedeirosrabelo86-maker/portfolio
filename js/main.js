@@ -224,7 +224,8 @@ function iniciarSeletor() {
     atual = i;
   }
 
-  itens[0].classList.add("ativo");
+  // A prévia só aparece no computador; no celular nenhum item começa marcado
+  if (window.matchMedia("(min-width: 1024px)").matches) itens[0].classList.add("ativo");
   itens.forEach((item, i) => {
     item.addEventListener("mouseenter", () => ativar(i));
     item.addEventListener("focus", () => ativar(i));
@@ -241,6 +242,8 @@ function iniciarDetalhes() {
   function abrir(detalhe) {
     if (detalhe.open) return;
     detalhe.showModal(); // modal: prende o foco dentro e o Esc fecha
+    // O foco vai para a folha (e não para o X), para não aparecer o anel de foco no X
+    detalhe.focus();
     detalhe.scrollTop = 0;
     history.replaceState(null, "", `#${detalhe.id}`); // endereço compartilhável
   }

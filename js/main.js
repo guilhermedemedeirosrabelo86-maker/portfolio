@@ -6,7 +6,11 @@
 // =========================================================
 
 // O usuário pediu "menos movimento" nas configurações do sistema?
-const menosMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Se ele mudar a configuração com a página aberta, a variável acompanha.
+// (O que já foi ligado ao abrir a página só muda depois de recarregar.)
+const consultaMovimento = window.matchMedia("(prefers-reduced-motion: reduce)");
+let menosMovimento = consultaMovimento.matches;
+consultaMovimento.addEventListener("change", (evento) => (menosMovimento = evento.matches));
 
 // ---------- Entrada da página ----------
 // Espera as fontes carregarem (para o texto não "pular") e coloca a classe
@@ -29,13 +33,14 @@ function iniciarEntrada() {
     return;
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(mostrar);
-  setTimeout(mostrar, 700); // se as fontes demorarem, mostra assim mesmo
+  setTimeout(mostrar, 300); // se as fontes demorarem, mostra assim mesmo
 }
 
 // ---------- Tela de boas-vindas ----------
-// Conta de 0 a 100 em cerca de 1,6 s. O número só chega a 100 quando a
-// página terminou de carregar (fontes e foto); até lá ele para em 92.
-// No 100 a tela sobe como uma cortina e o topo do site entra por baixo.
+// Conta de 0 a 100 em cerca de 0,6 s e a tela sobe como uma cortina
+// (tudo leva menos de 1 s). Um clique, toque ou tecla encerra na hora.
+// Enquanto ela está na frente, o resto da página fica "inert": o Tab
+// não consegue cair num link escondido atrás dela.
 function iniciarAbertura(quandoSair) {
   const raiz = document.documentElement;
   const tela = document.querySelector(".abertura");
@@ -46,45 +51,54 @@ function iniciarAbertura(quandoSair) {
   }
   const numero = tela.querySelector("[data-contador]");
   const barra = tela.querySelector(".abertura-barra");
-  const duracao = 1600;
+  const duracao = 600;
   const inicio = performance.now();
+  let saiu = false;
 
-  let carregou = false;
-  const carregar = () => (carregou = true);
-  if (document.readyState === "complete") carregar();
-  else window.addEventListener("load", carregar);
-  setTimeout(carregar, 4000); // internet lenta: não prende a pessoa aqui
+  // Tudo o que está no <body>, menos a própria tela, fica inerte
+  const resto = [...document.body.children].filter((el) => el !== tela);
+  resto.forEach((el) => (el.inert = true));
 
   // Começa rápido e vai freando perto do fim
   const frear = (t) => 1 - Math.pow(1 - t, 3);
 
   function quadro(agora) {
-    const tempo = Math.min((agora - inicio) / duracao, 1);
-    let progresso = frear(tempo);
-    if (!carregou) progresso = Math.min(progresso, 0.92);
-
+    if (saiu) return;
+    const progresso = frear(Math.min((agora - inicio) / duracao, 1));
     numero.textContent = Math.round(progresso * 100);
     barra.style.transform = `scaleX(${progresso})`;
 
     if (progresso < 1) {
       requestAnimationFrame(quadro);
     } else {
-      setTimeout(sair, 250); // segura o "100" um instante na tela
+      setTimeout(sair, 80); // segura o "100" um instante na tela
     }
   }
 
   function sair() {
+    if (saiu) return;
+    saiu = true;
+    window.removeEventListener("pointerdown", sair);
+    window.removeEventListener("keydown", sair);
     try {
       sessionStorage.setItem("abertura-vista", "sim");
     } catch (erro) {}
+    // Libera a página já, para o Tab (ou o clique) funcionar sem esperar a cortina
+    resto.forEach((el) => (el.inert = false));
     tela.classList.add("saindo");
-    setTimeout(quandoSair, 350); // o topo começa a entrar enquanto a cortina sobe
+    quandoSair(); // o topo entra enquanto a cortina sobe
     // Quando a cortina termina de subir: destrava a rolagem e some com a tela.
     // O setTimeout garante isso mesmo se o "transitionend" não vier (aba em segundo plano).
     const terminar = () => raiz.classList.remove("abrindo");
     tela.addEventListener("transitionend", terminar, { once: true });
-    setTimeout(terminar, 1200);
+    setTimeout(terminar, 500);
   }
+
+  // Clique, toque ou qualquer tecla: pula a contagem
+  window.addEventListener("pointerdown", sair);
+  window.addEventListener("keydown", sair);
+  // Plano B: se algo der errado na contagem, a tela sai sozinha mesmo assim
+  setTimeout(sair, 1500);
 
   requestAnimationFrame(quadro);
 }
@@ -383,32 +397,55 @@ function iniciarSeletor() {
 // ---------- Detalhe do projeto (a folha que sobe) ----------
 // Todo link para #central-brindes, #meu-predio etc. abre o <dialog> do
 // projeto em vez de rolar a página. Vale para a lista e para a tabela de Skills.
+// Abrir cria uma entrada no histórico (pushState): assim o botão "voltar" do
+// celular fecha a folha em vez de sair do site.
 function iniciarDetalhes() {
   const detalhes = document.querySelectorAll(".detalhe");
   if (!detalhes.length) return;
+  let empurrou = false; // fomos nós que colocamos o #projeto no histórico?
+  let voltarFoco = null; // para onde o foco vai ao fechar (quem chegou pelo endereço)
 
-  function abrir(detalhe) {
+  function abrir(detalhe, peloEndereco) {
     if (detalhe.open) return;
+    // A capa dos vídeos só é baixada quando o detalhe abre (fica no data-poster)
+    detalhe.querySelectorAll("video[data-poster]").forEach((video) => {
+      video.poster = video.dataset.poster;
+      video.removeAttribute("data-poster");
+    });
     detalhe.showModal(); // modal: prende o foco dentro e o Esc fecha
     // O foco vai para a folha (e não para o X), para não aparecer o anel de foco no X
     detalhe.focus();
     detalhe.scrollTop = 0;
-    history.replaceState(null, "", `#${detalhe.id}`); // endereço compartilhável
+    detalhe.dispatchEvent(new Event("abriu")); // avisa a galeria que o detalhe abriu
+    if (peloEndereco) {
+      // O endereço já tem o #projeto. Ao fechar, o foco vai para o item da lista.
+      voltarFoco = document.querySelector(`.seletor-item[href="#${detalhe.id}"]`);
+    } else {
+      history.pushState(null, "", `#${detalhe.id}`); // endereço compartilhável
+      empurrou = true;
+    }
   }
 
-  function fechar(detalhe) {
+  // peloVoltar: a pessoa apertou "voltar" e o navegador já tirou o #projeto.
+  // O endereço é arrumado no evento "close" (lá embaixo), que sempre acontece.
+  function fechar(detalhe, peloVoltar) {
     if (!detalhe.open || detalhe.classList.contains("fechando")) return;
-    history.replaceState(null, "", "#projetos");
+    if (peloVoltar) empurrou = false; // o navegador já desfez a entrada
     if (menosMovimento) {
       detalhe.close();
       return;
     }
-    // Primeiro desce (animação do CSS), depois fecha de verdade
+    // Primeiro desce (animação do CSS), depois fecha de verdade.
+    // Só vale o fim da animação da própria folha, não a dos filhos.
+    // O setTimeout garante o fechamento mesmo se o "animationend" não vier.
     detalhe.classList.add("fechando");
-    detalhe.addEventListener("animationend", () => {
-      detalhe.classList.remove("fechando");
-      detalhe.close();
-    }, { once: true });
+    function fim(evento) {
+      if (evento && evento.target !== detalhe) return;
+      detalhe.removeEventListener("animationend", fim);
+      if (detalhe.classList.contains("fechando")) detalhe.close(); // ainda não fechou
+    }
+    detalhe.addEventListener("animationend", fim);
+    setTimeout(fim, 450);
   }
 
   document.addEventListener("click", (evento) => {
@@ -432,11 +469,34 @@ function iniciarDetalhes() {
     detalhe.addEventListener("click", (evento) => {
       if (evento.target === detalhe && evento.clientY < detalhe.getBoundingClientRect().top) fechar(detalhe);
     });
+    // Fechou: quem chegou pelo endereço não tinha nada focado antes, então o
+    // foco iria para o <body>. Mandamos para o projeto certo na lista.
+    // Também é aqui que o endereço é arrumado: o "close" acontece de qualquer jeito
+    // (X, Esc, voltar ou o navegador fechando direto), então nada fica preso.
+    detalhe.addEventListener("close", () => {
+      detalhe.classList.remove("fechando");
+      if (empurrou) {
+        // Desfaz a entrada que o abrir() criou. O popstate que vem depois não
+        // acha folha aberta e não faz nada (por isso não vira um laço).
+        empurrou = false;
+        history.back();
+      } else if (location.hash === `#${detalhe.id}`) {
+        history.replaceState(null, "", location.pathname + location.search); // só tira o #
+      }
+      if (voltarFoco) voltarFoco.focus();
+      voltarFoco = null;
+    });
+  });
+
+  // Botão "voltar" do navegador ou do celular: fecha a folha que estiver aberta
+  window.addEventListener("popstate", () => {
+    const aberto = document.querySelector(".detalhe[open]");
+    if (aberto) fechar(aberto, true);
   });
 
   // Quem chega com o endereço .../#meu-predio já vê o detalhe aberto
   const inicial = document.getElementById(location.hash.slice(1));
-  if (inicial && inicial.classList.contains("detalhe")) abrir(inicial);
+  if (inicial && inicial.classList.contains("detalhe")) abrir(inicial, true);
 }
 
 // ---------- Carrossel do Meu Prédio ----------
@@ -450,6 +510,7 @@ function iniciarGaleria() {
   const nome = galeria.querySelector(".galeria-nome");
   const pontos = galeria.querySelectorAll(".galeria-pontos i");
   const botoes = galeria.querySelectorAll(".galeria-botoes button");
+  const botaoVideo = galeria.querySelector(".video-botao");
 
   function marcar() {
     // A galeria fica dentro do detalhe do Meu Prédio. Fechado, ele não tem
@@ -460,7 +521,13 @@ function iniciarGaleria() {
     const atual = Math.round(trilho.scrollLeft / trilho.clientWidth);
     nome.textContent = botoes[atual].textContent;
     pontos.forEach((ponto, i) => ponto.classList.toggle("ativo", i === atual));
-    botoes.forEach((botao, i) => botao.setAttribute("aria-pressed", String(i === atual)));
+    // aria-current marca a tela que está à mostra (só a atual tem o atributo)
+    botoes.forEach((botao, i) => {
+      if (i === atual) botao.setAttribute("aria-current", "true");
+      else botao.removeAttribute("aria-current");
+    });
+    // O botão de pausar só faz sentido enquanto o vídeo (o print 0) está na tela
+    if (botaoVideo) botaoVideo.classList.toggle("fora", atual !== 0);
   }
 
   botoes.forEach((botao, i) => {
@@ -471,6 +538,11 @@ function iniciarGaleria() {
 
   // marcar() só mexe em poucos elementos, então pode rodar a cada rolagem.
   trilho.addEventListener("scroll", marcar, { passive: true });
+  // Ao reabrir o detalhe, confere de novo qual print está na tela
+  // (o navegador mantém a posição, mas sem avisar com um "scroll")
+  galeria.closest(".detalhe")?.addEventListener("abriu", () => {
+    requestAnimationFrame(marcar);
+  });
   marcar();
 }
 
@@ -478,22 +550,46 @@ function iniciarGaleria() {
 // Vídeos com data-auto tocam (sem som) só enquanto estão na tela, para não
 // gastar internet nem bateria à toa. O vídeo do computador fica dentro do
 // carrossel: quando a pessoa passa para outro print ele sai da tela e pausa.
-// Com "menos movimento" nada toca sozinho: aparecem os controles para dar play.
+// Cada vídeo tem um botão de pausar/tocar (.video-botao). Se a pessoa pausar,
+// o vídeo não volta a tocar sozinho. Com "menos movimento" nada toca sozinho.
 function iniciarVideos() {
   const videos = document.querySelectorAll("video[data-auto]");
-  if (menosMovimento || !("IntersectionObserver" in window)) {
-    videos.forEach((video) => (video.controls = true));
-    return;
-  }
 
+  videos.forEach((video) => {
+    const caixa = video.closest(".vitrine-janela, .moldura-celular");
+    const botao = caixa && caixa.querySelector(".video-botao");
+    if (!botao) return;
+    botao.hidden = false; // sem JS o botão não funcionaria, então começa escondido
+
+    // O rótulo e o ícone seguem o vídeo, pause quem pausar (a pessoa ou a rolagem)
+    function atualizar() {
+      botao.setAttribute("aria-label", video.paused ? "Tocar vídeo" : "Pausar vídeo");
+      botao.classList.toggle("pausado", video.paused);
+    }
+    video.addEventListener("play", atualizar);
+    video.addEventListener("pause", atualizar);
+    atualizar();
+
+    botao.addEventListener("click", () => {
+      if (video.paused) {
+        delete video.dataset.pausado;
+        video.play().catch(() => {});
+      } else {
+        video.dataset.pausado = "sim"; // a pessoa pausou: a rolagem não dá play de novo
+        video.pause();
+      }
+    });
+  });
+
+  if (!("IntersectionObserver" in window)) return;
   const observador = new IntersectionObserver(
     (entradas) => {
       entradas.forEach((entrada) => {
         const video = entrada.target;
-        if (entrada.isIntersecting) {
-          video.play().catch(() => (video.controls = true)); // se o navegador bloquear, mostra o play
-        } else {
+        if (!entrada.isIntersecting) {
           video.pause();
+        } else if (!menosMovimento && !video.dataset.pausado) {
+          video.play().catch(() => {}); // se o navegador bloquear, o botão continua em "Tocar"
         }
       });
     },
@@ -583,20 +679,28 @@ function iniciarTextoAcende() {
 }
 
 // ---------- Botão "Copiar" do e-mail ----------
+// O <span role="status"> ao lado do botão avisa o resultado para leitores de tela.
 function iniciarCopiar() {
   document.querySelectorAll("[data-copiar]").forEach((botao) => {
+    const aviso = botao.parentElement.querySelector("[role='status']");
+    function avisar(texto) {
+      if (aviso) aviso.textContent = texto;
+    }
     botao.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(botao.dataset.copiar);
         soltarConfete(botao);
         botao.textContent = "Copiado";
         botao.classList.add("copiado");
+        avisar("E-mail copiado");
         setTimeout(() => {
           botao.textContent = "Copiar";
           botao.classList.remove("copiado");
+          avisar(""); // limpa, para avisar de novo no próximo clique
         }, 2000);
       } catch {
         botao.textContent = "Não deu para copiar";
+        avisar("Não deu para copiar");
       }
     });
   });

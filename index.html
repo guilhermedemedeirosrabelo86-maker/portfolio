@@ -25,21 +25,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..600&display=swap">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2">
 
   <!-- Avisa o CSS que o JavaScript está ligado. Sem JS, nada fica escondido.
-       "abrindo" liga a tela de boas-vindas: só na primeira visita da sessão
-       e só para quem não pediu "menos movimento". Fica aqui no <head> para a
-       tela já aparecer no primeiro quadro, sem o site piscar antes. -->
+       "abrindo" liga a tela de boas-vindas: só na primeira visita da sessão,
+       só para quem não pediu "menos movimento" e só se o endereço não tiver
+       um # (quem chega por um link para #meu-predio vai direto ao ponto).
+       Fica aqui no <head> para a tela já aparecer no primeiro quadro. -->
   <script>
     document.documentElement.classList.add("js");
     try {
       const jaViu = sessionStorage.getItem("abertura-vista");
       const menosMovimento = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (!jaViu && !menosMovimento) document.documentElement.classList.add("abrindo");
+      if (!jaViu && !menosMovimento && !location.hash) document.documentElement.classList.add("abrindo");
     } catch (erro) {}
   </script>
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js?v=2" defer></script>
 </head>
 <body>
   <!-- Tela de boas-vindas com contador de 0 a 100 (ver iniciarAbertura no js/main.js).
@@ -57,7 +58,7 @@
 
   <header class="navbar">
     <div class="container navbar-conteudo">
-      <a href="#inicio" class="logo" aria-label="Início"><span class="logo-selo">GR</span><span class="logo-nome">Guilherme Rabelo</span></a>
+      <a href="#inicio" class="logo" aria-label="Guilherme Rabelo, início"><span class="logo-selo">GR</span><span class="logo-nome">Guilherme Rabelo</span></a>
 
       <nav aria-label="Principal" class="menu-desktop">
         <span class="menu-indicador" aria-hidden="true"></span>
@@ -149,7 +150,7 @@
         </div>
 
         <div class="hero-retrato entrada" style="--i: 2">
-          <img class="retrato" src="img/guilherme.jpg" alt="Foto de Guilherme Rabelo, de terno e sorrindo" width="720" height="900" fetchpriority="high">
+          <img class="retrato" src="img/guilherme.jpg" srcset="img/guilherme-560.webp 560w, img/guilherme-720.webp 720w" sizes="(max-width: 1023px) min(72vw, 21rem), 25rem" alt="Foto de Guilherme Rabelo, de terno e sorrindo" width="720" height="900" fetchpriority="high">
         </div>
       </div>
     </section>
@@ -242,9 +243,9 @@
                a atual com .ativa e ela entra "varrendo" por cima da anterior. -->
           <div class="seletor-previa" aria-hidden="true" data-reveal data-delay="100">
             <div class="previa-moldura">
-              <img class="ativa" src="img/central-brindes-painel.jpg" alt="" width="1536" height="730" loading="lazy">
-              <img src="img/meu-predio-inicio.jpg" alt="" width="1600" height="1000" loading="lazy">
-              <img src="img/gr-digital-inicio.jpg" alt="" width="1296" height="810" loading="lazy">
+              <img class="ativa" src="img/central-brindes-painel.jpg" srcset="img/central-brindes-painel-960.webp 960w" sizes="(min-width: 1024px) 45vw, 100vw" alt="" width="1536" height="730" loading="lazy" decoding="async">
+              <img src="img/meu-predio-inicio.jpg" srcset="img/meu-predio-inicio-960.webp 960w" sizes="(min-width: 1024px) 45vw, 100vw" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+              <img src="img/gr-digital-inicio.jpg" srcset="img/gr-digital-inicio-960.webp 960w" sizes="(min-width: 1024px) 45vw, 100vw" alt="" width="1296" height="810" loading="lazy" decoding="async">
             </div>
             <p class="previa-legenda" data-legendas='["Estoque e envios de brindes para a equipe de Marketing.", "Síndico, morador e portaria num app só, com visitas por QR Code.", "Sites para pequenas empresas, com montador de orçamento."]'>Estoque e envios de brindes para a equipe de Marketing.</p>
           </div>
@@ -284,7 +285,10 @@
               </div>
               <div class="vitrine-janela">
                 <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
-                <img src="img/central-brindes-painel.jpg" alt="Tela inicial do Central Brindes (demonstração com dados fictícios)" width="1536" height="730" loading="lazy">
+                <picture>
+                  <source type="image/webp" srcset="img/central-brindes-painel-960.webp 960w, img/central-brindes-painel.jpg 1536w" sizes="(min-width: 1024px) 55vw, 100vw">
+                  <img src="img/central-brindes-painel.jpg" alt="Tela inicial do Central Brindes (demonstração com dados fictícios)" width="1536" height="730" loading="lazy" decoding="async">
+                </picture>
               </div>
             </div>
             <ol class="historia">
@@ -362,49 +366,64 @@
               <p class="telas-rotulo">No computador <span>· visão do síndico</span></p>
               <div class="vitrine-janela">
                 <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
-                <div class="galeria-trilho" tabindex="0" aria-label="Telas do Meu Prédio. Arraste para o lado para ver as outras.">
+                <div class="galeria-trilho" tabindex="0" role="region" aria-label="Telas do Meu Prédio. Arraste para o lado para ver as outras.">
                   <!-- data-auto: o JS dá play quando o vídeo aparece na tela e pausa quando sai -->
-                  <video src="video/meu-predio-computador.mp4" poster="img/meu-predio-computador-capa.jpg" width="1600" height="1000" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o síndico navegando pelo Meu Prédio no computador"></video>
-                  <img src="img/meu-predio-inicio.jpg" alt="Tela inicial do síndico, com saldo do condomínio, taxas pagas e o que precisa de atenção" width="1600" height="1000" loading="lazy">
-                  <img src="img/meu-predio-contas.jpg" alt="Prestação de contas com saldo, lançamentos e para onde foi o dinheiro" width="1600" height="1000" loading="lazy">
-                  <img src="img/meu-predio-reservas.jpg" alt="Reservas para aprovar e calendário do salão de festas" width="1600" height="1000" loading="lazy">
-                  <img src="img/meu-predio-avisos.jpg" alt="Mural de avisos com aviso fixado e contagem de quem leu" width="1600" height="1000" loading="lazy">
-                  <img src="img/meu-predio-ocorrencia.jpg" alt="Ocorrência resolvida com a conversa entre síndico e morador" width="1600" height="1000" loading="lazy">
-                  <img src="img/meu-predio-portaria.jpg" alt="Tela da portaria para validar o QR Code e ver os visitantes esperados" width="1600" height="1000" loading="lazy">
+                  <video src="video/meu-predio-computador.mp4" data-poster="img/meu-predio-computador-capa-960.webp" width="1600" height="1000" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o síndico navegando pelo Meu Prédio no computador"></video>
+                  <img src="img/meu-predio-inicio.jpg" srcset="img/meu-predio-inicio-960.webp 960w, img/meu-predio-inicio.jpg 1600w" sizes="(min-width: 1024px) 60vw, 100vw" alt="Tela inicial do síndico, com saldo do condomínio, taxas pagas e o que precisa de atenção" width="1600" height="1000" loading="lazy" decoding="async">
+                  <img src="img/meu-predio-contas.jpg" srcset="img/meu-predio-contas-960.webp 960w, img/meu-predio-contas.jpg 1600w" sizes="(min-width: 1024px) 60vw, 100vw" alt="Prestação de contas com saldo, lançamentos e para onde foi o dinheiro" width="1600" height="1000" loading="lazy" decoding="async">
+                  <img src="img/meu-predio-reservas.jpg" srcset="img/meu-predio-reservas-960.webp 960w, img/meu-predio-reservas.jpg 1600w" sizes="(min-width: 1024px) 60vw, 100vw" alt="Reservas para aprovar e calendário do salão de festas" width="1600" height="1000" loading="lazy" decoding="async">
+                  <img src="img/meu-predio-avisos.jpg" srcset="img/meu-predio-avisos-960.webp 960w, img/meu-predio-avisos.jpg 1600w" sizes="(min-width: 1024px) 60vw, 100vw" alt="Mural de avisos com aviso fixado e contagem de quem leu" width="1600" height="1000" loading="lazy" decoding="async">
+                  <img src="img/meu-predio-ocorrencia.jpg" srcset="img/meu-predio-ocorrencia-960.webp 960w, img/meu-predio-ocorrencia.jpg 1600w" sizes="(min-width: 1024px) 60vw, 100vw" alt="Ocorrência resolvida com a conversa entre síndico e morador" width="1600" height="1000" loading="lazy" decoding="async">
+                  <img src="img/meu-predio-portaria.jpg" srcset="img/meu-predio-portaria-960.webp 960w, img/meu-predio-portaria.jpg 1600w" sizes="(min-width: 1024px) 60vw, 100vw" alt="Tela da portaria para validar o QR Code e ver os visitantes esperados" width="1600" height="1000" loading="lazy" decoding="async">
                 </div>
+                <!-- Pausar/tocar o vídeo: o JS mostra o botão e troca o ícone e o rótulo -->
+                <button type="button" class="video-botao" aria-label="Pausar vídeo" hidden>
+                  <svg class="icone-sm icone-pausar" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z" /></svg>
+                  <svg class="icone-sm icone-tocar" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                </button>
               </div>
               <div class="galeria-rodape">
-                <p class="galeria-nome" aria-hidden="true">Vídeo</p>
+                <p class="galeria-nome">Vídeo</p>
                 <div class="galeria-pontos" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
               </div>
-              <div class="galeria-botoes" aria-label="Telas do Meu Prédio">
-                <button type="button" aria-pressed="true">Vídeo</button>
-                <button type="button" aria-pressed="false">Início</button>
-                <button type="button" aria-pressed="false">Contas</button>
-                <button type="button" aria-pressed="false">Reservas</button>
-                <button type="button" aria-pressed="false">Avisos</button>
-                <button type="button" aria-pressed="false">Ocorrências</button>
-                <button type="button" aria-pressed="false">Portaria</button>
+              <div class="galeria-botoes" role="group" aria-label="Escolher tela do Meu Prédio">
+                <button type="button" aria-current="true">Vídeo</button>
+                <button type="button">Início</button>
+                <button type="button">Contas</button>
+                <button type="button">Reservas</button>
+                <button type="button">Avisos</button>
+                <button type="button">Ocorrências</button>
+                <button type="button">Portaria</button>
               </div>
             </div>
             <div class="celulares">
               <p class="telas-rotulo">No celular <span>· visão do morador, instalado como app</span></p>
-              <ul class="celulares-fila">
+              <ul class="celulares-fila" tabindex="0" role="region" aria-label="Telas no celular">
                 <li>
                   <div class="moldura-celular">
-                    <video src="video/meu-predio-celular.mp4" poster="img/meu-predio-celular-capa.jpg" width="540" height="1168" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o morador navegando pelo Meu Prédio no celular"></video>
+                    <video src="video/meu-predio-celular.mp4" data-poster="img/meu-predio-celular-capa-360.webp" width="540" height="1168" muted loop playsinline preload="none" data-auto aria-label="Vídeo: o morador navegando pelo Meu Prédio no celular"></video>
+                    <button type="button" class="video-botao" aria-label="Pausar vídeo" hidden>
+                      <svg class="icone-sm icone-pausar" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z" /></svg>
+                      <svg class="icone-sm icone-tocar" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                    </button>
                   </div>
                   <p>Tour do morador</p>
                 </li>
                 <li>
                   <div class="moldura-celular">
-                    <img src="img/meu-predio-celular-visita.jpg" alt="QR Code da visita liberada pelo morador, pronto para enviar ao visitante" width="540" height="1168" loading="lazy">
+                    <picture>
+                      <source type="image/webp" srcset="img/meu-predio-celular-visita-540.webp 540w" sizes="15rem">
+                      <img src="img/meu-predio-celular-visita.jpg" alt="QR Code da visita liberada pelo morador, pronto para enviar ao visitante" width="540" height="1168" loading="lazy" decoding="async">
+                    </picture>
                   </div>
                   <p>Visita liberada por QR Code</p>
                 </li>
                 <li>
                   <div class="moldura-celular">
-                    <img src="img/meu-predio-celular-taxa.jpg" alt="Tela do morador com a taxa do mês paga e o histórico dos últimos meses" width="540" height="1168" loading="lazy">
+                    <picture>
+                      <source type="image/webp" srcset="img/meu-predio-celular-taxa-540.webp 540w" sizes="15rem">
+                      <img src="img/meu-predio-celular-taxa.jpg" alt="Tela do morador com a taxa do mês paga e o histórico dos últimos meses" width="540" height="1168" loading="lazy" decoding="async">
+                    </picture>
                   </div>
                   <p>Taxa do mês e histórico</p>
                 </li>
@@ -439,7 +458,10 @@
               </div>
               <div class="vitrine-janela">
                 <div class="vitrine-barra" aria-hidden="true"><i></i><i></i><i></i></div>
-                <img src="img/gr-digital-inicio.jpg" alt="Página inicial do site da GR Digital" width="1296" height="810" loading="lazy">
+                <picture>
+                  <source type="image/webp" srcset="img/gr-digital-inicio-960.webp 960w, img/gr-digital-inicio.jpg 1296w" sizes="(min-width: 1024px) 55vw, 100vw">
+                  <img src="img/gr-digital-inicio.jpg" alt="Página inicial do site da GR Digital" width="1296" height="810" loading="lazy" decoding="async">
+                </picture>
               </div>
             </div>
           </div>
@@ -539,6 +561,8 @@
             <!-- O JS copia o e-mail ao clicar no botão ao lado -->
             <a href="mailto:guilhermedemedeirosrabelo86@gmail.com" class="canal">guilhermedemedeirosrabelo86@<wbr>gmail.com</a>
             <button type="button" class="copiar" data-copiar="guilhermedemedeirosrabelo86@gmail.com">Copiar</button>
+            <!-- Avisa leitores de tela se deu certo copiar (o JS escreve aqui) -->
+            <span class="so-leitor" role="status"></span>
           </li>
           <li>
             <a href="https://github.com/guilhermedemedeirosrabelo86-maker" target="_blank" rel="noopener noreferrer" class="canal">GitHub</a>

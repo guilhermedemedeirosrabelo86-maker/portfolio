@@ -18,7 +18,7 @@ npx serve .
 ```
 index.html                      página principal (início, projetos, sobre, skills, contato)
 projetos/central-brindes/       página do estudo de caso
-quarto/                         versão criativa: o portfólio como um quarto em 3D (só computador)
+quarto/                         versão criativa: o portfólio como um quarto em 3D (no celular, versão leve)
 css/style.css                   todo o visual do site (cores no topo, em :root)
 js/main.js                      tudo o que é dinâmico (menu, animações, idade, ícones)
 js/quarto.js, css/quarto.css    o quarto 3D (Three.js vem de uma CDN, sem instalar nada)

@@ -27,8 +27,8 @@
 // dá para clicar e usar o teclado.
 // =========================================================
 
-import { QUARTO, CORES_LED, skills, montarFundo } from "./quarto-fundo.js?v=15";
-import { montarDecoracao } from "./quarto-decoracao.js?v=15";
+import { QUARTO, CORES_LED, skills, montarFundo } from "./quarto-fundo.js?v=16";
+import { montarDecoracao } from "./quarto-decoracao.js?v=16";
 
 const pagina = document.querySelector(".quarto");
 const canvas = pagina.querySelector("canvas");
@@ -39,6 +39,12 @@ const navegador = pagina.querySelector(".navegador");
 
 // "Menos movimento": a câmera pula direto, sem viagem, e nada fica balançando.
 const menosMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Versão leve (celular): o mesmo quarto, mas sem sombras e com menos pixels,
+// os cards sobem de baixo e o navegador do monitor ocupa a tela inteira.
+const versaoLeve = window.matchMedia("(max-width: 899px), (max-height: 500px)").matches;
+// Tela de toque (celular, tablet): o dedo gira mais que o mouse
+const toque = window.matchMedia("(pointer: coarse)").matches;
 
 // ---------- Ajudantes de conta ----------
 const limitar = (n) => Math.min(Math.max(n, 0), 1);
@@ -148,8 +154,9 @@ async function iniciarQuarto() {
 function montarQuarto(THREE, RoundedBoxGeometry) {
   // ===== Renderizadores =====
   const renderizador = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
-  renderizador.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderizador.shadowMap.enabled = true;
+  renderizador.setPixelRatio(Math.min(window.devicePixelRatio, versaoLeve ? 1.25 : 1.5));
+  // No celular, sem sombras: é o que mais pesa para a placa de vídeo dele
+  renderizador.shadowMap.enabled = !versaoLeve;
   // PCF com "radius" dá borda suave e é mais barata que a PCFSoft
   renderizador.shadowMap.type = THREE.PCFShadowMap;
   // A sombra só é recalculada quando algo se mexe (o livro), não todo quadro
@@ -301,16 +308,23 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
 
   // A página HTML do navegador (no index.html) fica com 1024 px de largura,
   // na proporção da tela. encaixarNavegador() a coloca bem em cima da tela 3D.
+  // (No celular, a página de 1024 px ficaria minúscula: lá ela ocupa a tela
+  // inteira, com a classe "cheio", e não é encaixada no monitor.)
   const LARGURA_PX = 1024;
   navegador.hidden = false;
-  navegador.style.width = `${LARGURA_PX}px`;
-  navegador.style.height = `${Math.round((LARGURA_PX * ALTURA_TELA) / LARGURA_TELA)}px`;
+  if (versaoLeve) {
+    navegador.classList.add("cheio");
+  } else {
+    navegador.style.width = `${LARGURA_PX}px`;
+    navegador.style.height = `${Math.round((LARGURA_PX * ALTURA_TELA) / LARGURA_TELA)}px`;
+  }
 
   // Projeta dois cantos da tela 3D para pixels da página e estica a página
   // HTML até eles. Funciona porque a câmera para bem de frente para o monitor.
   const cantoA = new THREE.Vector3();
   const cantoB = new THREE.Vector3();
   function encaixarNavegador() {
+    if (versaoLeve) return;
     cantoA.set(-LARGURA_TELA / 2, ALTURA_TELA / 2, 0);
     cantoB.set(LARGURA_TELA / 2, -ALTURA_TELA / 2, 0);
     tela.localToWorld(cantoA).project(camera); // vira coordenada de -1 a 1
@@ -764,6 +778,11 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
     "guarda-roupa": { pos: new THREE.Vector3(0.3, 1.3, 2.65), alvo: new THREE.Vector3(3.9, 1.2, 2.65), fov: 50 },
     monitor: { pos: new THREE.Vector3(), alvo: new THREE.Vector3(), fov: FOV_PERTO }, // calculada em ajustarTamanho()
   };
+  // No celular o card fica embaixo: o guarda-roupa vai para o meio da tela
+  if (versaoLeve) {
+    vistas["guarda-roupa"].pos.set(0.9, 1.3, 3.6);
+    vistas["guarda-roupa"].alvo.set(3.9, 1.25, 3.6);
+  }
 
   // ===== Olhar em volta =====
   // A pessoa fica parada no OLHO e gira a cabeça: "giro" é para os lados e
@@ -784,12 +803,22 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
     return { pos: OLHO.clone(), alvo: OLHO.clone().add(direcao), fov: FOV_QUARTO };
   }
 
+  // As vistas foram pensadas para tela deitada (16:9). Numa tela em pé, o
+  // mesmo "fov" mostraria uma fatia fininha do quarto. fovNaTela() abre o
+  // campo de visão vertical para manter a mesma largura de antes (até 90°).
+  function fovNaTela(fovBase) {
+    if (camera.aspect >= 1.3) return fovBase;
+    const meiaLargura = Math.tan(THREE.MathUtils.degToRad(fovBase / 2)) * (16 / 9);
+    const vertical = THREE.MathUtils.radToDeg(2 * Math.atan(meiaLargura / camera.aspect));
+    return Math.min(vertical, 90);
+  }
+
   // De frente para o monitor, perto o bastante para a tela ocupar ~72% da
   // altura, mas ainda vendo a moldura e a mesa (não é tela cheia).
   function calcularVistaMonitor() {
     const centro = new THREE.Vector3();
     tela.getWorldPosition(centro);
-    const tangente = Math.tan(THREE.MathUtils.degToRad(FOV_PERTO / 2));
+    const tangente = Math.tan(THREE.MathUtils.degToRad(fovNaTela(FOV_PERTO) / 2));
     const pelaAltura = ALTURA_TELA / (2 * tangente * 0.72);
     const pelaLargura = LARGURA_TELA / (2 * tangente * camera.aspect * 0.86);
     // Mira um pouco abaixo do centro, para o botão de ligar aparecer embaixo da tela
@@ -1214,7 +1243,8 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
     if (focado || viagem || arrasto.andou <= 6) return;
     pagina.classList.add("arrastando");
     apagarDestaque();
-    girarVisao(dx * 0.0025, dy * 0.0025);
+    const sensibilidade = toque ? 0.005 : 0.0025; // o dedo anda menos pixels que o mouse
+    girarVisao(dx * sensibilidade, dy * sensibilidade);
   });
   const soltar = () => {
     pagina.classList.remove("arrastando");
@@ -1283,6 +1313,7 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
   }
 
   let quadroAnterior = 0;
+  let subir = 0; // quanto a imagem sobe no celular (0 a 0,2 da altura)
   function desenhar(agora) {
     agendado = false;
     let mexendo = false;
@@ -1318,9 +1349,27 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
     }
     camera.position.copy(posicao);
     camera.lookAt(alvo);
-    if (camera.fov !== fov) {
-      camera.fov = fov;
+    const fovAgora = fovNaTela(fov);
+    if (camera.fov !== fovAgora) {
+      camera.fov = fovAgora;
       camera.updateProjectionMatrix();
+    }
+
+    // Celular em pé com um objeto em foco: o card cobre a parte de baixo da
+    // tela, então a imagem "sobe" um pouco (setViewOffset desloca o quadro)
+    const subirAlvo = versaoLeve && focado && camera.aspect < 1 ? 0.2 : 0;
+    if (Math.abs(subir - subirAlvo) > 0.001) {
+      subir += (subirAlvo - subir) * (menosMovimento ? 1 : 0.12);
+      mexendo = true;
+    } else {
+      subir = subirAlvo;
+    }
+    if (subir > 0.001) {
+      const l = pagina.clientWidth;
+      const a = pagina.clientHeight;
+      camera.setViewOffset(l, a, 0, a * subir, l, a);
+    } else if (camera.view && camera.view.enabled) {
+      camera.clearViewOffset();
     }
 
     // Luz acendendo ou apagando aos poucos (~300 ms)
@@ -1491,7 +1540,9 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
   }
 
   // ===== Primeiro quadro =====
-  dica.textContent = "Está escuro. Arraste para olhar em volta: o interruptor fica na parede à sua direita.";
+  dica.textContent = toque
+    ? "Está escuro. Arraste o dedo para olhar em volta: o interruptor fica na parede à sua direita."
+    : "Está escuro. Arraste para olhar em volta: o interruptor fica na parede à sua direita.";
   desenharCodigo();
   ajustarTamanho();
   // (?semaquecer no endereço pula o aquecimento, só para comparar nos testes)
@@ -1508,7 +1559,7 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
   //   3. desenha o quarto olhando para 4 lados (com o guarda-roupa aberto),
   //      medindo o tempo. Se a máquina for lenta, baixa a resolução.
   function aquecer() {
-    camera.fov = fov;
+    camera.fov = fovNaTela(fov);
     camera.updateProjectionMatrix();
     renderizador.compile(cena, camera);
     cena.traverse((o) => {
@@ -1541,25 +1592,6 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
   }
 }
 
-// ---------- Celular e telas pequenas ----------
-// O quarto foi pensado para computador. Em tela pequena, avisa e oferece
-// voltar ao site (ou ver assim mesmo).
-function telaPequena() {
-  return window.matchMedia("(max-width: 899px)").matches;
-}
-
-if (telaPequena()) {
-  mostrarAviso("O quarto em 3D foi feito para computador. No celular, o site normal é mais confortável.", true);
-  const verMesmo = document.createElement("button");
-  verMesmo.type = "button";
-  verMesmo.className = "botao botao-contorno botao-pequeno";
-  verMesmo.textContent = "Ver assim mesmo";
-  verMesmo.addEventListener("click", () => {
-    verMesmo.remove();
-    mostrarAviso("Montando o quarto…", false);
-    iniciarQuarto();
-  });
-  carregando.append(verMesmo);
-} else {
-  iniciarQuarto();
-}
+// ---------- Começa ----------
+// No celular abre a versão leve (ver "versaoLeve" no começo do arquivo).
+iniciarQuarto();

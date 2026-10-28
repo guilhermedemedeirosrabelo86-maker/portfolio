@@ -19,6 +19,8 @@
   display: block;
   width: 100%;
   height: 100%;
+  /* No toque, arrastar o dedo gira a visão (em vez de rolar ou dar zoom) */
+  touch-action: none;
 }
 
 /* No meio do quarto, arrastar gira a visão */
@@ -947,5 +949,146 @@
   .quarto-topo,
   .atalhos {
     transition: none;
+  }
+}
+
+/* =========================================================
+   Versão leve: celular (e telas baixas, como celular deitado)
+   O quarto é o mesmo; muda o lugar das coisas na tela:
+   - os cards sobem de baixo, como uma gaveta;
+   - os atalhos viram uma fileira que rola para o lado;
+   - o navegador do monitor ocupa a tela inteira (classe "cheio").
+   ========================================================= */
+@media (max-width: 899px), (max-height: 500px) {
+  .quarto-topo {
+    top: 1rem;
+    left: 1rem;
+    gap: 1rem;
+  }
+
+  .quarto-titulo h1 {
+    font-size: 1.75rem;
+  }
+
+  .quarto-voltar {
+    top: 1rem;
+    left: 1rem;
+  }
+
+  /* Dica embaixo, acima dos atalhos, com quebra de linha */
+  .quarto-dica {
+    top: auto;
+    bottom: 4.25rem;
+    width: max-content;
+    max-width: calc(100% - 2rem);
+    text-align: center;
+  }
+
+  .atalhos {
+    right: 0;
+    bottom: 0.75rem;
+    left: 0;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 0 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    translate: none;
+  }
+
+  .atalhos button {
+    flex-shrink: 0;
+    padding: 0.6rem 0.9rem; /* área de toque maior */
+  }
+
+  /* Cards: gaveta que sobe de baixo */
+  .painel,
+  .painel-esquerda,
+  .painel-skills {
+    top: auto;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    width: auto;
+    max-height: 52vh;
+    max-height: 52dvh;
+    padding: 1.25rem 1.25rem 1.1rem;
+    overflow-y: auto;
+    translate: 0 1.5rem;
+  }
+
+  .painel.aberto {
+    translate: 0 0;
+  }
+
+  .painel-skills {
+    max-height: 58vh;
+    max-height: 58dvh;
+  }
+
+  .painel h2 {
+    margin: 0.6rem 0 0.4rem;
+    font-size: 1.6rem;
+  }
+
+  /* ----- Navegador do monitor em tela cheia ----- */
+  .navegador.cheio {
+    position: fixed;
+    inset: 0;
+    z-index: 8;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+
+  .cheio .busca-logo {
+    font-size: 52px;
+  }
+
+  .cheio .busca-form,
+  .cheio .busca-topo .busca-form {
+    width: 100%;
+  }
+
+  .cheio .busca-inicio {
+    padding: 20px 16px;
+  }
+
+  .cheio .busca-topo {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .cheio .busca-resultados {
+    padding: 12px 16px 24px;
+  }
+
+  .cheio .resultado {
+    flex-direction: column;
+  }
+
+  .cheio .resultado img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .cheio .projeto-pagina {
+    grid-template-columns: 1fr;
+    padding: 20px 16px;
+  }
+
+  .cheio .projeto-pagina h2 {
+    font-size: 32px;
+  }
+
+  .cheio .projeto-detalhes {
+    grid-template-columns: 1fr;
+  }
+
+  .cheio .projeto-rodape {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 }

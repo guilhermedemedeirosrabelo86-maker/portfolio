@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meu quarto em 3D · Guilherme Rabelo</title>
+  <meta name="description" content="O portfólio de Guilherme Rabelo em 3D: um quarto com o monitor dos projetos, o notebook com o GitHub, o celular com o WhatsApp, o guarda-roupa com as skills e um pouco sobre ele.">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..600&display=swap">
+  <!-- O visual base (cores, fontes, botões) é o mesmo do site; quarto.css só tem o desta página -->
+  <link rel="stylesheet" href="../css/style.css?v=15">
+  <link rel="stylesheet" href="../css/quarto.css?v=15">
+
+  <!-- Three.js (biblioteca de 3D) vem de uma CDN, com a versão fixa.
+       O importmap diz ao navegador onde achar "three" quando o quarto.js pedir. -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="../js/quarto.js?v=15"></script>
+</head>
+<body class="pagina-quarto">
+  <main class="quarto" aria-label="Meu quarto em 3D">
+    <!-- A cena 3D é só enfeite (aria-hidden): tudo o que ela faz também está
+         nos botões "Objetos do quarto" e nos painéis abaixo -->
+    <canvas aria-hidden="true"></canvas>
+
+    <!-- Aparece enquanto o 3D carrega (e com a mensagem de erro, se der errado) -->
+    <div class="quarto-carregando" role="status">
+      <p>Montando o quarto…</p>
+      <a href="../" class="botao botao-contorno botao-pequeno" hidden>Voltar ao site</a>
+    </div>
+
+    <header class="quarto-topo">
+      <a href="../" class="botao botao-contorno botao-pequeno quarto-sair">
+        <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+        Voltar ao site
+      </a>
+      <div class="quarto-titulo">
+        <p>Entre e fique à vontade</p>
+        <h1>Meu canto</h1>
+      </div>
+    </header>
+
+    <div class="etiqueta" aria-hidden="true"></div>
+    <button type="button" class="quarto-voltar">
+      <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+      Voltar ao quarto
+    </button>
+    <p class="quarto-dica" aria-live="polite"></p>
+
+    <!-- Os mesmos destinos dos objetos, para quem usa teclado ou leitor de tela -->
+    <nav class="atalhos" aria-label="Objetos do quarto">
+      <button type="button" data-ir="monitor">Monitor · Projetos</button>
+      <button type="button" data-ir="notebook">Notebook · GitHub</button>
+      <button type="button" data-ir="celular">Celular · WhatsApp</button>
+      <button type="button" data-ir="quadro">Quadro · Sobre mim</button>
+      <button type="button" data-ir="livro">Livro · Formação</button>
+      <button type="button" data-ir="guarda-roupa">Guarda-roupa · Skills</button>
+      <button type="button" data-acao-quarto="luz" aria-pressed="false">Interruptor · Luz</button>
+      <button type="button" data-acao-quarto="led">Controle · LED</button>
+    </nav>
+
+    <!-- Painéis de cada objeto (os textos são os mesmos do site) -->
+    <section class="painel" data-painel="notebook" aria-labelledby="painel-notebook">
+      <p class="painel-tipo">Notebook</p>
+      <h2 id="painel-notebook">O código fica no GitHub</h2>
+      <p>Faço sistemas web com HTML, CSS, JavaScript e Python. O código de todos os projetos está no meu perfil.</p>
+      <a class="botao botao-primario" href="https://github.com/guilhermedemedeirosrabelo86-maker" target="_blank" rel="noopener noreferrer">Abrir meu GitHub</a>
+    </section>
+
+    <section class="painel" data-painel="celular" aria-labelledby="painel-celular">
+      <p class="painel-tipo">Celular</p>
+      <h2 id="painel-celular">Vamos conversar?</h2>
+      <p>Procuro minha primeira vaga como desenvolvedor e também faço sites pela GR Digital. O jeito mais rápido de falar comigo é pelo WhatsApp.</p>
+      <a class="botao botao-primario" href="https://wa.me/5548998230477?text=Ol%C3%A1%2C%20Guilherme!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer">Chamar no WhatsApp</a>
+    </section>
+
+    <section class="painel painel-esquerda" data-painel="quadro" aria-labelledby="painel-quadro">
+      <p class="painel-tipo">Quadro</p>
+      <h2 id="painel-quadro">Sobre mim</h2>
+      <p>Moro em Criciúma (SC), trabalho e estudo Engenharia de Software na UNISATC. No trabalho, fiz o sistema de estoque de brindes que a equipe de Marketing usa. Agora estou estudando React e aprofundando o back-end com Python.</p>
+      <dl>
+        <div><dt>Procuro</dt><dd>Primeira vaga como desenvolvedor</dd></div>
+        <div><dt>Também faço</dt><dd>Sites para pequenas empresas, pela GR Digital</dd></div>
+      </dl>
+    </section>
+
+    <section class="painel" data-painel="livro" aria-labelledby="painel-livro">
+      <p class="painel-tipo">Livro</p>
+      <h2 id="painel-livro">Formação</h2>
+      <ol class="painel-linha">
+        <li>Engenharia de Software<span>UNISATC, em andamento</span></li>
+        <li>Ensino médio<span>Colégio Universitário, concluído em 2024</span></li>
+      </ol>
+    </section>
+
+    <!-- Guarda-roupa: a lista vem da lista "skills" do quarto-fundo.js -->
+    <section class="painel painel-esquerda painel-skills" data-painel="guarda-roupa" aria-labelledby="painel-skills">
+      <p class="painel-tipo">Guarda-roupa</p>
+      <h2 id="painel-skills">Skills</h2>
+      <p>Clique num troféu (ou num nome da lista) para ver mais.</p>
+      <!-- A skill escolhida (o quarto.js preenche) -->
+      <div class="skill-detalhe" aria-live="polite" hidden></div>
+      <ul class="skills-lista"></ul>
+    </section>
+
+    <!-- ===== O navegador dentro do monitor =====
+         Aparece quando a câmera entra na tela. Uma página de busca, os
+         resultados e uma página para cada projeto (montadas pelo quarto.js). -->
+    <section class="navegador" aria-label="Navegador do monitor: meus projetos" hidden>
+      <div class="navegador-barra">
+        <button type="button" class="navegador-botao" data-acao="voltar" aria-label="Página anterior">
+          <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+        </button>
+        <button type="button" class="navegador-botao" data-acao="avancar" aria-label="Próxima página">
+          <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </button>
+        <button type="button" class="navegador-botao" data-acao="inicio" aria-label="Página inicial da busca">
+          <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7M5 10v10h14V10" /></svg>
+        </button>
+        <p class="navegador-endereco"><span>busca.guilherme</span><span data-endereco></span></p>
+        <button type="button" class="navegador-botao navegador-fechar" data-acao="fechar" aria-label="Desligar o monitor e voltar ao quarto">
+          <svg class="icone-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+      <div class="navegador-pagina" tabindex="-1"></div>
+    </section>
+  </main>
+</body>
+</html>

@@ -447,6 +447,24 @@ button {
   display: none;
 }
 
+/* "Ver em 3D" (leva ao quarto/) e "Vamos conversar", lado a lado */
+.navbar-acoes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* O quarto 3D foi feito para computador: o botão só aparece em tela grande */
+.navbar-3d {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .navbar-3d {
+    display: inline-flex;
+  }
+}
+
 /* Botão de menu do celular: duas linhas que viram um X */
 .botao-menu {
   position: relative;

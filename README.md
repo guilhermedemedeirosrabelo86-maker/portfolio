@@ -18,8 +18,13 @@ npx serve .
 ```
 index.html                      página principal (início, projetos, sobre, skills, contato)
 projetos/central-brindes/       página do estudo de caso
+quarto/                         versão criativa: o portfólio como um quarto em 3D (só computador)
 css/style.css                   todo o visual do site (cores no topo, em :root)
 js/main.js                      tudo o que é dinâmico (menu, animações, idade, ícones)
+js/quarto.js, css/quarto.css    o quarto 3D (Three.js vem de uma CDN, sem instalar nada)
+js/quarto-fundo.js              a outra metade do quarto: cama, guarda-roupa (skills), LED e interruptor
+js/quarto-decoracao.js          enfeites: canto gamer, lives, PC, futebol (TV, videogame, som e bola são clicáveis)
+js/quarto-som.js                música da caixa de som, gerada no navegador (Web Audio API)
 img/                            sua foto, print do projeto, favicon e imagem de compartilhamento
 demo/central-brindes/           demonstração do Central Brindes com dados fictícios
 404.html                        página de "não encontrada" (Vercel e GitHub Pages usam sozinhos)

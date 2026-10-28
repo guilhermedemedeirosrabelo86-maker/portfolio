@@ -23,8 +23,8 @@
 // ela diz se ainda tem algo se mexendo (para pedir o próximo quadro).
 // =========================================================
 
-import { QUARTO } from "./quarto-fundo.js?v=16";
-import { criarSom } from "./quarto-som.js?v=16";
+import { QUARTO } from "./quarto-fundo.js?v=18";
+import { criarSom } from "./quarto-som.js?v=18";
 
 export function montarDecoracao({ THREE, cena, caixa, mat, textura, materialTela, clicavel }) {
   const { esquerda, direita, frente, fundo } = QUARTO;

@@ -27,8 +27,8 @@
 // dá para clicar e usar o teclado.
 // =========================================================
 
-import { QUARTO, CORES_LED, skills, montarFundo } from "./quarto-fundo.js?v=16";
-import { montarDecoracao } from "./quarto-decoracao.js?v=16";
+import { QUARTO, CORES_LED, skills, montarFundo } from "./quarto-fundo.js?v=18";
+import { montarDecoracao } from "./quarto-decoracao.js?v=18";
 
 const pagina = document.querySelector(".quarto");
 const canvas = pagina.querySelector("canvas");
@@ -575,22 +575,27 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
     ctx.font = "600 20px sans-serif";
     ctx.fillText("minha história", l / 2, a / 2 + 50);
   });
-  const paginaImagem = textura(360, 260, (ctx, l, a) => {
-    ctx.fillStyle = "#f4efe6";
+  // Página com o dobro de resolução e letras grandes, para dar para ler de perto
+  const paginaImagem = textura(720, 520, (ctx, l, a) => {
+    ctx.fillStyle = "#f6f1e7";
     ctx.fillRect(0, 0, l, a);
     ctx.fillStyle = "#1b0c06";
-    ctx.font = "800 34px sans-serif";
-    ctx.fillText("Formação", 24, 54);
+    ctx.font = "800 70px sans-serif";
+    ctx.fillText("Formação", 44, 100);
     ctx.fillStyle = "#ff7a59";
-    ctx.fillRect(24, 70, 50, 4);
-    ctx.fillStyle = "#3a2a22";
-    ctx.font = "600 20px sans-serif";
-    ctx.fillText("Engenharia de Software", 24, 118);
-    ctx.fillText("Ensino médio", 24, 188);
-    ctx.font = "16px sans-serif";
-    ctx.fillText("UNISATC, em andamento", 24, 142);
-    ctx.fillText("Colégio Universitário, 2024", 24, 212);
+    ctx.fillRect(44, 124, 90, 8);
+    const item = (titulo, detalhe, y) => {
+      ctx.fillStyle = "#1b0c06";
+      ctx.font = "700 42px sans-serif";
+      ctx.fillText(titulo, 44, y);
+      ctx.fillStyle = "#5a463a";
+      ctx.font = "500 34px sans-serif";
+      ctx.fillText(detalhe, 44, y + 46);
+    };
+    item("Engenharia de Software", "UNISATC, em andamento", 226);
+    item("Ensino médio", "Colégio Universitário, 2024", 376);
   });
+  paginaImagem.t.anisotropy = renderizador.capabilities.getMaxAnisotropy(); // nítida mesmo vista de lado
   const miolo = caixa(0.36, 0.06, 0.26, 0xf4efe6, 0.006);
   miolo.position.y = 0.03;
   const paginaLivro = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.245), mat(0xffffff, { map: paginaImagem.t }));
@@ -773,7 +778,8 @@ function montarQuarto(THREE, RoundedBoxGeometry) {
     notebook: { pos: new THREE.Vector3(-0.35, 1.25, -1.35), alvo: new THREE.Vector3(-0.95, 0.92, -2.25), fov: FOV_PERTO },
     celular: { pos: new THREE.Vector3(0.6, 1.1, -1.55), alvo: new THREE.Vector3(0.95, 0.9, -2.2), fov: FOV_PERTO },
     quadro: { pos: new THREE.Vector3(-0.9, 1.9, -0.75), alvo: new THREE.Vector3(-2.05, 1.9, -2.96), fov: FOV_PERTO },
-    livro: { pos: new THREE.Vector3(1.75, 2.75, -1.55), alvo: new THREE.Vector3(2.4, 1.74, -2.76), fov: FOV_PERTO },
+    // Bem em cima do livro aberto, para a página dar para ler (o livro fica à esquerda do card)
+    livro: { pos: new THREE.Vector3(2.4, 2.5, -1.95), alvo: new THREE.Vector3(2.62, 1.74, -2.7), fov: FOV_PERTO },
     // De frente para o guarda-roupa, com ele à direita da tela (o painel fica à esquerda)
     "guarda-roupa": { pos: new THREE.Vector3(0.3, 1.3, 2.65), alvo: new THREE.Vector3(3.9, 1.2, 2.65), fov: 50 },
     monitor: { pos: new THREE.Vector3(), alvo: new THREE.Vector3(), fov: FOV_PERTO }, // calculada em ajustarTamanho()
